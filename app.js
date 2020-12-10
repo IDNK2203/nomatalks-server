@@ -10,8 +10,8 @@ var logger = require("morgan");
 
 const connectDb = require("./config/db");
 var indexRouter = require("./routes/index");
-var profilesRouter = require("./routes/profiles");
-var filesRouter = require("./routes/files");
+var magazineRouter = require("./routes/magazine");
+// var filesRouter = require("./routes/files");
 
 // connect to db
 connectDb();
@@ -30,8 +30,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/files", filesRouter);
-app.use("/profiles", profilesRouter);
+app.use("/magazine", magazineRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -4,16 +4,30 @@ const cloudinary = require("cloudinary");
 const path = require("path");
 const fs = require("fs");
 const router = express.Router();
+const pdfMimeTypes = ["application/pdf"];
 const fileMimeTypes = [
   "image/jpeg",
   "image/png",
   "image/gif",
   "application/pdf",
 ];
+const imageFileMimeTypes = ["image/jpeg", "image/png", "image/gif"];
+
+// configure cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+});
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join("public", "files"));
+    cb(
+      null,
+      imageFileMimeTypes.includes(file.mimetype)
+        ? path.join("public/upload/", "image")
+        : path.join("public/upload/", "files")
+    );
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname + "-" + Date.now());
@@ -26,15 +40,18 @@ var upload = multer({
     cb(null, fileMimeTypes.includes(file.mimetype));
   },
 });
-// configure cloudinary
-// cloudinary.config({
-//   cloud_name: process.env.CLOUD_NAME,
-//   api_key: process.env.API_KEY,
-//   api_secret: process.env.API_SECRET,
-// });
 
-router.post("/", upload.single("coverImage"), function (req, res, next) {
-  console.log(req.body, req.file);
+const multiUpload = upload.fields([
+  { name: "digitalMagazine" },
+  { name: "coverImage" },
+]);
+//  { magazine: magazine }
+router.get("/create", async (req, res) => {
+  res.render("create");
+});
+
+router.post("/", multiUpload, function (req, res, next) {
+  console.log(req.body, req.files);
   res.redirect("/");
   // get file path and create unique file name
   // const path = req.file.path;

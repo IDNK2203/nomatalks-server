@@ -34,9 +34,7 @@
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-link active" href="/">Home</a>
-              <a class="nav-link" href="/profile">Profile</a>
-              <a class="nav-link" href="/files">PDFs</a>
-              <!-- <a class="nav-link" href="./">Details</a> -->
+              <a class="nav-link" href="/magazine/create">Create</a>
             </div>
           </div>
         </div>
@@ -45,50 +43,38 @@
     <div class="jumbotron jumbotron-fluid create-banner">
       <div class="overlay"></div>
       <div class="container">
-        <h1 class="display-4">File Bunker</h1>
+        <h1 class="display-4">File Bunker Magazine</h1>
         <p class="lead">Welcome to File Bunker</p>
       </div>
     </div>
 
-    <div class="blog-form">
-      <div class="container">
-        <form class="form" action="/profiles" method="POST" enctype="multipart/form-data">
-          <div class="form-group">
-            <label for="title">Title</label>
-            <input
-              class="form-control"
-              name="title"
-              id="title"
-              type="text"
-              placeholder="Default input"
-            />
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Email address</label>
-            <input
-              type="email"
-              class="form-control"
-              id="exampleFormControlInput1"
-              placeholder="name@example.com"
-              name="email"
-            />
-          </div>
-          <div class="form-group">
-            <label for="coverImage">Example file input</label>
-            <input type="file" class="form-control-file coverImage" name="coverImage" id="coverImage">
-          </div>
-          <!-- <div class="form-group">
-            <label for="bookFiles">Example file input</label>
-            <input type="file" class="form-control-file bookFiles" id="bookFiles">
-          </div> -->
+    <div class="magazine-content">
+      <div class="magazine-header">
+        <h2 class="magazine-issue">
 
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        </h2>
+        <div class="magazine-publishedAt">
+
+        </div>
+        <div class="magazine-author">
+
+        </div>
+      </div>
+      <div class="magazine-imgHolder">
+        <img src="" alt="">
+      </div>
+      <div class="magazine-description">
+        <div class="magazine-snippet">
+
+        </div>
+        <div class="magazine-download">
+          <a href=""></a>
+        </div>
       </div>
     </div>
 
     <footer>
-      <div class="container center my-3">
+      <div class="container text-center my-3">
         <p>Copyright &copy; Net Ninja 2020</p>
       </div>
     </footer>

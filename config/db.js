@@ -10,7 +10,7 @@ const connect = async () => {
         useFindAndModify: true,
       }
     );
-    console.log(connectValue.connection.host);
+    console.log(`MONGODB CONNECTED:${connectValue.connection.host}`);
   } catch (error) {
     console.error(error);
     process.exit(1);
