@@ -3,6 +3,7 @@ const multer = require("multer");
 const cloudinary = require("cloudinary");
 const path = require("path");
 const fs = require("fs");
+const Magazine = require("../models/magazine");
 const router = express.Router();
 const pdfMimeTypes = ["application/pdf"];
 const fileMimeTypes = [
@@ -30,7 +31,13 @@ var storage = multer.diskStorage({
     );
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname + "-" + Date.now());
+    cb(
+      null,
+      path.basename(file.originalname, ".pdf") +
+        "-" +
+        Date.now() +
+        path.extname(file.originalname)
+    );
   },
 });
 
@@ -50,27 +57,58 @@ router.get("/create", async (req, res) => {
   res.render("create");
 });
 
-router.post("/", multiUpload, function (req, res, next) {
+router.post("/", multiUpload, async (req, res, next) => {
   console.log(req.body, req.files);
-  res.redirect("/");
   // get file path and create unique file name
-  // const path = req.file.path;
-  // const uniqueFileName = `${req.file.originalname}${new Date().toISOString}`;
-  // uploadToCloudinary(path, uniqueFileName, res);
+  let magazine;
+  try {
+    magazine = new Magazine({
+      issue: req.body.issue,
+      snippet: req.body.snippet,
+      author: req.body.author,
+    });
+    const { path: filePath, originalname } = req.files.coverImage[0];
+
+    const fileExtName = path.extname(originalname);
+    const uniqueFileName = path.basename(originalname, fileExtName);
+    await uploadToCloudinaryAndSave(filePath, uniqueFileName, magazine);
+    savePdf(req, magazine);
+    const newMagazine = await magazine.save();
+    res.redirect("/magazine");
+  } catch (error) {
+    console.error(error);
+  }
 });
 
-let uploadToCloudinary = async (path, uniqueFileName, res) => {
+router.get("/", async (req, res) => {
   try {
-    const imageObj = await cloudinary.uploader.upload(path, {
-      public_id: `blog/${uniqueFileName}`,
+    const magazines = await Magazine.find();
+    res.render("index", { magazines: magazines });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+let savePdf = (req, magazine) => {
+  let { originalname, filename } = req.files.digitalMagazine[0];
+  let originalName = path.basename(originalname, ".pdf");
+  const url = `/upload/files/${filename}`;
+  magazine.magazineTitle = originalName;
+  magazine.magazineUrl = url;
+};
+
+let uploadToCloudinaryAndSave = async (path, uniqueFileName, magazine) => {
+  try {
+    const imageObj = await cloudinary.v2.uploader.upload(path, {
+      public_id: uniqueFileName,
+      folder: "file-bunker",
       tags: "blog",
     });
-    res.json(imageObj);
+    magazine.coverImage = imageObj.url;
     fs.unlinkSync(path);
   } catch (error) {
     console.error(error);
   }
 };
 
-// console.log(path.join("public", "images"));
 module.exports = router;

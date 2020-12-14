@@ -11,7 +11,7 @@ var logger = require("morgan");
 const connectDb = require("./config/db");
 var indexRouter = require("./routes/index");
 var magazineRouter = require("./routes/magazine");
-// var filesRouter = require("./routes/files");
+const magazineFilePath = `${__dirname}/public/upload/file`;
 
 // connect to db
 connectDb();

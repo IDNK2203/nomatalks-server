@@ -12,7 +12,7 @@ const magazineSchema = new Schema(
       type: String,
       required: true,
     },
-    sinppet: {
+    snippet: {
       type: String,
       required: true,
     },
@@ -21,6 +21,10 @@ const magazineSchema = new Schema(
       required: true,
     },
     magazineUrl: {
+      type: String,
+      required: true,
+    },
+    magazineTitle: {
       type: String,
       required: true,
     },

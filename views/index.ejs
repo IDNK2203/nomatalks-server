@@ -33,7 +33,7 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link active" href="/">Home</a>
+              <a class="nav-link active" href="/magazine">Home</a>
               <a class="nav-link" href="/magazine/create">Create</a>
             </div>
           </div>
@@ -48,29 +48,34 @@
       </div>
     </div>
 
+     
     <div class="magazine-content">
-      <div class="magazine-header">
-        <h2 class="magazine-issue">
-
-        </h2>
-        <div class="magazine-publishedAt">
-
+      <% magazines.forEach( item =>{ %> 
+        <div class="magazine-header">
+          <h2 class="magazine-issue">
+            <%= item.issue %> 
+          </h2>
+          <div class="magazine-publishedAt">
+            <%= item.createdAt %>
+          </div>
+          <div class="magazine-author">
+             <%= item.author %> 
+          </div>
         </div>
-        <div class="magazine-author">
-
+        <div class="magazine-imgHolder">
+          <img src="<%= item.coverImage %>" alt="">
         </div>
-      </div>
-      <div class="magazine-imgHolder">
-        <img src="" alt="">
-      </div>
-      <div class="magazine-description">
-        <div class="magazine-snippet">
-
-        </div>
-        <div class="magazine-download">
-          <a href=""></a>
-        </div>
-      </div>
+        <div class="magazine-description">
+          <div class="magazine-snippet">
+            <%= item.snippet%> 
+          </div>
+          <div class="magazine-download">
+            <a href="<%=item.magazineUrl%>" download="<%= item.magazineTitle %>.pdf">
+              <%= item.magazineTitle %> 
+            </a>
+          </div>
+        </div>      
+      <% }) %>
     </div>
 
     <footer>
