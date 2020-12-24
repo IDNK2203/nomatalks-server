@@ -17,7 +17,7 @@
   </head>
   <body>
     <header class="header">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-warning">
+      <nav class="navbar navbar-expand-lg navbar-dark  bg-danger  admin-navbar">
         <div class="container">
           <a class="navbar-brand" href="#">Navbar</a>
           <button
@@ -33,8 +33,8 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link active" href="/magazine">Home</a>
-              <a class="nav-link" href="/magazine/create">Create</a>
+              <a class="nav-link active" href="/admin/magazine">Home</a>
+              <a class="nav-link" href="/admin/magazine/create">Create</a>
             </div>
           </div>
         </div>
@@ -44,53 +44,14 @@
       <div class="overlay"></div>
       <div class="container">
         <h1 class="display-4">File Bunker</h1>
-        <p class="lead">Welcome to File Bunker</p>
+        <p class="lead">Create a Magazine Post</p>
       </div>
     </div>
 
     <div class="blog-form">
       <div class="container">
-        <form class="form" action="/magazine" method="POST" enctype="multipart/form-data">
-          <div class="form-group">
-            <label for="issue">Issue</label>
-            <input
-              class="form-control"
-              name="issue"
-              id="issue"
-              type="text"
-              placeholder="Default input"
-            />
-          </div>
-          <div class="form-group">
-            <label for="snippet">Snippet</label>
-            <input
-              class="form-control"
-              name="snippet"
-              id="snippet"
-              type="text"
-              placeholder="Default input"
-            />
-          </div>
-          <div class="form-group">
-            <label for="author">Author</label>
-            <input
-              class="form-control"
-              name="author"
-              id="author"
-              type="text"
-              placeholder="Default input"
-            />
-          </div>
-          <div class="form-group">
-            <label for="digitalMagazine">Mazagine Pdf</label>
-            <input type="file" class="form-control-file digitalMagazine" name="digitalMagazine" id="digitalMagazine">
-          </div>
-          <div class="form-group">
-            <label for="coverImage">Magazine cover Image </label>
-            <input type="file" class="form-control-file coverImage" name="coverImage" id="coverImage">
-          </div>
-
-          <button type="submit" class="btn btn-primary">Submit</button>
+        <form class="form" action="/admin/magazine" method="POST" enctype="multipart/form-data">
+          <%- include("./partials/_form.ejs") %> 
         </form>
       </div>
     </div>

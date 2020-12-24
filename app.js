@@ -7,11 +7,13 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+const methodOverride = require("method-override");
+const ejsLayouts = require("express-ejs-layouts");
 
 const connectDb = require("./config/db");
 var indexRouter = require("./routes/index");
 var magazineRouter = require("./routes/magazine");
-const magazineFilePath = `${__dirname}/public/upload/file`;
+var adminMagazineRouter = require("./routes/admin/magazine");
 
 // connect to db
 connectDb();
@@ -22,7 +24,10 @@ var app = express();
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+// app.set("layout", "layouts/layout");
+// app.use(ejsLayouts);
 
+app.use(methodOverride("_method"));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -30,6 +35,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
+app.use("/admin/magazine", adminMagazineRouter);
 app.use("/magazine", magazineRouter);
 
 // catch 404 and forward to error handler

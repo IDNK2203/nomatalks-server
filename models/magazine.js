@@ -8,10 +8,12 @@ const magazineSchema = new Schema(
       type: String,
       required: true,
     },
-    coverImage: {
-      type: String,
-      required: true,
-    },
+    coverImage: [
+      {
+        url: String,
+        publicId: String,
+      },
+    ],
     snippet: {
       type: String,
       required: true,

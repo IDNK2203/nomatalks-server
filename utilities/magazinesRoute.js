@@ -12,23 +12,38 @@ let savePdf = (req, magazine) => {
 
 let uploadToCloudinaryAndSave = async (req, magazine) => {
   try {
-    const { path: filePath, originalname } = req.files.coverImage[0];
-    const fileExtName = path.extname(originalname);
-    const uniqueFileName = path.basename(originalname, fileExtName);
+    const { path: filePath, filename } = req.files.coverImage[0];
+    const fileExtName = path.extname(filename);
+    const uniqueFileName = path.basename(filename, fileExtName);
 
     const imageObj = await cloudinary.v2.uploader.upload(filePath, {
       public_id: uniqueFileName,
       folder: "file-bunker",
       tags: "blog",
     });
-    magazine.coverImage = imageObj.url;
+    // console.log(imageObj);
+    magazine.coverImage[0].url = imageObj.url;
+    magazine.coverImage[0].publicId = imageObj.public_id;
     fs.unlinkSync(filePath);
   } catch (error) {
     console.error(error);
   }
 };
 
+const deleteFromCloudinary = (publicId) => {
+  cloudinary.v2.api.delete_resources([publicId], function (error, result) {
+    console.log(result, error);
+  });
+};
+
+const deletePdf = (filePath) => {
+  const fullpath = path.join("public", filePath);
+  fs.unlinkSync(fullpath);
+};
+
 module.exports = {
   savePdf,
   uploadToCloudinaryAndSave,
+  deleteFromCloudinary,
+  deletePdf,
 };

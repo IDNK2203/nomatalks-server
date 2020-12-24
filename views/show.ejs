@@ -34,7 +34,6 @@
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-link active" href="/magazine">Home</a>
-              <a class="nav-link" href="/admin/magazine">Admin</a>
             </div>
           </div>
         </div>
@@ -50,36 +49,32 @@
 
      
     <div class="magazine-content">
-      <% magazines.forEach( item =>{ %> 
-        
+
         <div class="magazine-header">
           <h2 class="magazine-issue">
-            <%= item.issue %> 
+            <%= magazine.issue %> 
           </h2>
           <div class="magazine-publishedAt">
-            <%= item.createdAt %>
+            <%= magazine.createdAt %>
           </div>
           <div class="magazine-author">
-             <%= item.author %> 
+             <%= magazine.author %> 
           </div>
         </div>
         <div class="magazine-imgHolder">
-          <a href="/magazine/<%= item.id %>">
-          
-            <img src="<%= item.coverImage[0].url %>" alt="">
-          </a>  
+          <img src="<%= magazine.coverImage %>" alt="">
         </div>
         <div class="magazine-description">
           <div class="magazine-snippet">
-            <%= item.snippet%> 
+            <%= magazine.snippet%> 
           </div>
           <div class="magazine-download">
-            <a href="<%=item.magazineUrl%>" download="<%= item.magazineTitle %>.pdf">
-              <%= item.magazineTitle %> 
+            <a href="<%=magazine.magazineUrl%>" download="<%= magazine.magazineTitle %>.pdf">
+              <%= magazine.magazineTitle %> 
             </a>
           </div>
         </div>      
-      <% }) %>
+
     </div>
 
     <footer>

@@ -17,7 +17,7 @@
   </head>
   <body>
     <header class="header">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-warning">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-danger  admin-navbar">
         <div class="container">
           <a class="navbar-brand" href="#">Navbar</a>
           <button
@@ -33,8 +33,8 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link active" href="/magazine">Home</a>
-              <a class="nav-link" href="/admin/magazine">Admin</a>
+              <a class="nav-link active" href="/admin/magazine">Home</a>
+              <a class="nav-link" href="/admin/magazine/create">Create</a>
             </div>
           </div>
         </div>
@@ -43,43 +43,17 @@
     <div class="jumbotron jumbotron-fluid create-banner">
       <div class="overlay"></div>
       <div class="container">
-        <h1 class="display-4">File Bunker Magazine</h1>
-        <p class="lead">Welcome to File Bunker</p>
+        <h1 class="display-4">File Bunker</h1>
+        <p class="lead">Edit a Magazine Post</p>
       </div>
     </div>
 
-     
-    <div class="magazine-content">
-      <% magazines.forEach( item =>{ %> 
-        
-        <div class="magazine-header">
-          <h2 class="magazine-issue">
-            <%= item.issue %> 
-          </h2>
-          <div class="magazine-publishedAt">
-            <%= item.createdAt %>
-          </div>
-          <div class="magazine-author">
-             <%= item.author %> 
-          </div>
-        </div>
-        <div class="magazine-imgHolder">
-          <a href="/magazine/<%= item.id %>">
-          
-            <img src="<%= item.coverImage[0].url %>" alt="">
-          </a>  
-        </div>
-        <div class="magazine-description">
-          <div class="magazine-snippet">
-            <%= item.snippet%> 
-          </div>
-          <div class="magazine-download">
-            <a href="<%=item.magazineUrl%>" download="<%= item.magazineTitle %>.pdf">
-              <%= item.magazineTitle %> 
-            </a>
-          </div>
-        </div>      
-      <% }) %>
+    <div class="blog-form">
+      <div class="container">
+        <form class="form" action="/admin/magazine/<%= magazine.id %>?_method=PUT"  method="POST" enctype="multipart/form-data">
+          <%- include("./partials/_form.ejs") %> 
+        </form>
+      </div>
     </div>
 
     <footer>
