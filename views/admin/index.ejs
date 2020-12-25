@@ -1,88 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>File Bunker</title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-      integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
-      crossorigin="anonymous"
-    />
-    <!-- <link rel="stylesheet" href="./css/main.css" /> -->
-  </head>
-  <body>
-    <header class="header">
-      <nav class="navbar navbar-expand-lg navbar-dark  bg-danger admin-navbar">
-        <div class="container">
-          <a class="navbar-brand" href="#">Navbar</a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-              <a class="nav-link active" href="/magazine">Public</a>
-              <a class="nav-link active" href="/admin/magazine">Home</a>
-              <a class="nav-link" href="/admin/magazine/create">Create</a>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </header>
-    <div class="jumbotron jumbotron-fluid create-banner">
-      <div class="overlay"></div>
-      <div class="container">
-        <h1 class="display-4">File Bunker Magazine</h1>
-        <p class="lead">Welcome to File Bunker</p>
-      </div>
-    </div>
-
-     
-    <div class="magazine-content">
-      <% magazines.forEach( magazine =>{ %> 
-        <div class="magazine-header">
-          <h2 class="magazine-issue"> <%# magazine.id %> 
-            <%= magazine.issue %> 
-          </h2>
-          <form action="/admin/magazine/<%= magazine.id %>?_method=DELETE" method="post">
-            <button type="submit">Delete</button>
-          </form>
-          <a href="/admin/magazine/edit/<%= magazine.id %>">Edit</a>
-          <!-- <a href="/admin/magazine/<%# magazine.id %>">Show</a> -->
-        </div>      
-      <% }) %>
-    </div>
-
-    <footer>
-      <div class="container text-center my-3">
-        <p>Copyright &copy; Net Ninja 2020</p>
-      </div>
-    </footer>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-      crossorigin="anonymous"
-    ></script>
-    </script>
-    <!-- <script src="index.js"></script> -->
-    <!-- <script src="./form-data.js"></script> -->
-  </body>
-</html>
+<div class="magazine-content">
+  <% magazines.forEach( magazine =>{ %>
+  <div class="magazine-header">
+    <h2 class="magazine-issue"><%# magazine.id %> <%= magazine.issue %></h2>
+    <form
+      action="/admin/magazine/<%= magazine.id %>?_method=DELETE"
+      method="post"
+    >
+      <button type="submit">Delete</button>
+    </form>
+    <a href="/admin/magazine/edit/<%= magazine.id %>">Edit</a>
+    <!-- <a href="/admin/magazine/<%# magazine.id %>">Show</a> -->
+  </div>
+  <% }) %>
+</div>

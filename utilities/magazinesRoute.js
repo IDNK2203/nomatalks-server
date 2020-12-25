@@ -21,7 +21,6 @@ let uploadToCloudinaryAndSave = async (req, magazine) => {
       folder: "file-bunker",
       tags: "blog",
     });
-    // console.log(imageObj);
     magazine.coverImage[0].url = imageObj.url;
     magazine.coverImage[0].publicId = imageObj.public_id;
     fs.unlinkSync(filePath);

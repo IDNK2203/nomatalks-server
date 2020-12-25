@@ -14,12 +14,14 @@ const {
 } = require("../../utilities/magazinesRoute");
 
 router.get("/create", async (req, res) => {
-  res.render("admin/create", { magazine: new Magazine({}) });
+  res.render("admin/create", {
+    magazine: new Magazine({}),
+    layout: "layouts/dashboard",
+  });
 });
 
 router.post("/", multer, async (req, res, next) => {
   // console.log(req.body, req.files);
-  // get file path and create unique file name
   let magazine;
   try {
     magazine = new Magazine({
@@ -31,7 +33,6 @@ router.post("/", multer, async (req, res, next) => {
     await uploadToCloudinaryAndSave(req, magazine);
     savePdf(req, magazine);
     const newMagazine = await magazine.save();
-
     res.redirect("/magazine");
   } catch (error) {
     console.error(error);
@@ -41,7 +42,10 @@ router.post("/", multer, async (req, res, next) => {
 router.get("/", async (req, res) => {
   try {
     const magazines = await Magazine.find();
-    res.render("admin/index", { magazines: magazines });
+    res.render("admin/index", {
+      magazines: magazines,
+      layout: "layouts/dashboard",
+    });
   } catch (error) {
     console.log(error);
   }
@@ -50,7 +54,7 @@ router.get("/", async (req, res) => {
 router.get("/edit/:id", async (req, res) => {
   try {
     let mag = await Magazine.findById(req.params.id);
-    res.render("admin/edit", { magazine: mag });
+    res.render("admin/edit", { magazine: mag, layout: "layouts/dashboard" });
   } catch (error) {
     // if(mag == null){
     res.redirect("/admin/magazine");
@@ -60,9 +64,7 @@ router.get("/edit/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    const id = req.params.id;
-    // console.log(id);
-    let mag = await Magazine.findById(id);
+     let mag = await Magazine.findById(req.params.id);
     deleteFromCloudinary(mag.coverImage[0].publicId);
     deletePdf(mag.magazineUrl);
     mag.remove();
