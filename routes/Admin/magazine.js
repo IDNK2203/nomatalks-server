@@ -12,9 +12,12 @@ const {
   deleteFromCloudinary,
   deletePdf,
 } = require("../../utilities/magazinesRoute");
+const { authCheck, adminCheck } = require("../../utilities/auth");
+
+router.use(authCheck);
 
 router.get("/create", async (req, res) => {
-  res.render("admin/create", {
+  res.render("admin/magazine/create", {
     magazine: new Magazine({}),
     layout: "layouts/dashboard",
   });
@@ -42,7 +45,7 @@ router.post("/", multer, async (req, res, next) => {
 router.get("/", async (req, res) => {
   try {
     const magazines = await Magazine.find();
-    res.render("admin/index", {
+    res.render("admin/magazine/index", {
       magazines: magazines,
       layout: "layouts/dashboard",
     });
@@ -54,7 +57,10 @@ router.get("/", async (req, res) => {
 router.get("/edit/:id", async (req, res) => {
   try {
     let mag = await Magazine.findById(req.params.id);
-    res.render("admin/edit", { magazine: mag, layout: "layouts/dashboard" });
+    res.render("admin/magazine/edit", {
+      magazine: mag,
+      layout: "layouts/dashboard",
+    });
   } catch (error) {
     // if(mag == null){
     res.redirect("/admin/magazine");
@@ -64,7 +70,7 @@ router.get("/edit/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-     let mag = await Magazine.findById(req.params.id);
+    let mag = await Magazine.findById(req.params.id);
     deleteFromCloudinary(mag.coverImage[0].publicId);
     deletePdf(mag.magazineUrl);
     mag.remove();

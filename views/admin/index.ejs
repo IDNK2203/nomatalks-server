@@ -1,15 +1,2 @@
-<div class="magazine-content">
-  <% magazines.forEach( magazine =>{ %>
-  <div class="magazine-header">
-    <h2 class="magazine-issue"><%# magazine.id %> <%= magazine.issue %></h2>
-    <form
-      action="/admin/magazine/<%= magazine.id %>?_method=DELETE"
-      method="post"
-    >
-      <button type="submit">Delete</button>
-    </form>
-    <a href="/admin/magazine/edit/<%= magazine.id %>">Edit</a>
-    <!-- <a href="/admin/magazine/<%# magazine.id %>">Show</a> -->
-  </div>
-  <% }) %>
-</div>
+<h1 class="mt-4">Dashboard</h1>
+<p class="lead mb-3">Welcome <%= user.name %></p>

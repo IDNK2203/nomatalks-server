@@ -9,16 +9,25 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const methodOverride = require("method-override");
 const ejsLayouts = require("express-ejs-layouts");
+const mongoose = require("mongoose");
+const passport = require("passport");
+const session = require("express-session");
+const mongoStore = require("connect-mongo")(session);
+var flash = require("connect-flash");
 
-const connectDb = require("./config/db");
+// connect to db
+require("./config/db")();
+
+//load other config files
+require("./config/passport");
+// setup server
+
+// application routes
 var indexRouter = require("./routes/index");
 var magazineRouter = require("./routes/magazine");
 var adminMagazineRouter = require("./routes/admin/magazine");
+var authRouter = require("./routes/auth");
 
-// connect to db
-connectDb();
-
-// setup server
 var app = express();
 
 // view engine setup
@@ -27,6 +36,7 @@ app.set("view engine", "ejs");
 app.use(ejsLayouts);
 app.set("layout", "layouts/main");
 
+// boilerplate middleware
 app.use(methodOverride("_method"));
 app.use(logger("dev"));
 app.use(express.json());
@@ -34,9 +44,38 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// primary middlewares
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    saveUninitialized: true,
+    resave: false,
+    store: new mongoStore({
+      mongooseConnection: mongoose.connection,
+      collection: "session",
+    }),
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24,
+    },
+  })
+);
+
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.error = req.flash("error");
+  res.locals.error_msg = req.flash("error_msg");
+  next();
+});
+
 app.use("/", indexRouter);
 app.use("/admin/magazine", adminMagazineRouter);
 app.use("/magazine", magazineRouter);
+app.use("/auth", authRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
