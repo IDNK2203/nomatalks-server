@@ -7,7 +7,7 @@ router.get("/", function (req, res, next) {
   res.redirect("/magazine");
 });
 
-router.get("/dashboard", authCheck, function (req, res, next) {
+router.get("/dashboard", authCheck, adminCheck, function (req, res, next) {
   res.render("admin/index", { user: req.user, layout: "layouts/dashboard" });
 });
 

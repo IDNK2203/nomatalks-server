@@ -1,3 +1,21 @@
+<%- include("./partials/errMessage.ejs")%>
+
+<h2>Search for magazine</h2>
+<form action="/magazine" method="get">
+  <div class="form-group">
+    <label for="exampleFormControlInput1">issue</label>
+    <input
+      type="search"
+      class="form-control"
+      name="magIssue"
+      id="exampleFormControlInput1"
+      placeholder="issue 1"
+      value="<%=searchOpts.magIssue%>"
+    />
+  </div>
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
 <div class="magazine-content">
   <% magazines.forEach( item =>{ %>
   <div class="magazine-header">
@@ -9,14 +27,6 @@
     <a href="/magazine/<%= item.id %>">
       <img src="<%= item.coverImage[0].url %>" alt="" />
     </a>
-  </div>
-  <div class="magazine-description">
-    <div class="magazine-snippet"><%= item.snippet%></div>
-    <div class="magazine-download">
-      <a href="<%=item.magazineUrl%>" download="<%= item.magazineTitle %>.pdf">
-        <%= item.magazineTitle %>
-      </a>
-    </div>
   </div>
   <% }) %>
 </div>

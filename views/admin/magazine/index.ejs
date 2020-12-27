@@ -1,15 +1,27 @@
-<div class="magazine-content">
-  <% magazines.forEach( magazine =>{ %>
-  <div class="magazine-header">
-    <h2 class="magazine-issue"><%= magazine.issue %></h2>
-    <form
-      action="/admin/magazine/<%= magazine.id %>?_method=DELETE"
-      method="post"
-    >
-      <button type="submit">Delete</button>
-    </form>
-    <a href="/admin/magazine/edit/<%= magazine.id %>">Edit</a>
-    <!-- <a href="/admin/magazine/<%# magazine.id %>">Show</a> -->
-  </div>
-  <% }) %>
-</div>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Issue</th>
+      <th scope="col">Delete</th>
+      <th scope="col">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% magazines.forEach( (magazine , index )=>{ %>
+    <tr>
+      <th scope="row"><%= index+1 %></th>
+      <td><%= magazine.issue %></td>
+      <td><a href="/admin/magazine/edit/<%= magazine.id %>">Edit</a></td>
+      <td>
+        <form
+          action="/admin/magazine/<%= magazine.id %>?_method=DELETE"
+          method="post"
+        >
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>

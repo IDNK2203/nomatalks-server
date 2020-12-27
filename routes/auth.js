@@ -3,34 +3,16 @@ const router = express.Router();
 const User = require("../models/user");
 const passport = require("passport");
 const { passwordGen } = require("../utilities/password");
+const { regValidation } = require("../utilities/auth");
 
 // login routes
-router.post("/register", (req, res, next) => {
+router.post("/register", async (req, res, next) => {
   const { name, password, email, password2 } = req.body;
-  // console.log(req.body);
-  // handle form validation
   let error = [];
-  if (!name || !email || !password || !password2) {
-    error.push({ msg: "fill all input fields" });
-  }
-  if (password !== password2) {
-    error.push({ msg: "passwords do not match" });
-  }
-  if (password.length < 3) {
-    error.push({ msg: "password should be at least 6 characters" });
-  }
-  console.log(error);
-  if (error.length > 0) {
-    res.render("register", {
-      name,
-      email,
-      password,
-      password2,
-      valError: error,
-    });
-  } else {
-    // check if user exists
-    User.findOne({ email: email }).then((user) => {
+  try {
+    con = await regValidation(req, res, error, next);
+    if (con) {
+      const user = await User.findOne({ email: email });
       if (user) {
         error.push({ msg: "email is already registered" });
         res.render("register", {
@@ -39,27 +21,25 @@ router.post("/register", (req, res, next) => {
           password,
           password2,
           valError: error,
+          layout: "layouts/auth",
         });
       } else {
-        // create a new user
         let newUser = new User({
           name,
           email,
         });
-        passwordGen(password, 10)
-          .then((paswordHash) => {
-            newUser.password = paswordHash;
-            newUser.save();
-            req.flash("success_msg", "you are now resgistered you can login ");
-            res.redirect("/auth/login");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        const paswordHash = await passwordGen(password, 10);
+        newUser.password = paswordHash;
+        newUser.save();
+        req.flash("success_msg", "you are now resgistered you can login ");
+        res.redirect("/auth/login");
       }
-    });
+    }
+  } catch (error) {
+    console.log(error);
   }
 });
+//
 
 router.post(
   "/login",
@@ -67,8 +47,7 @@ router.post(
     successRedirect: "/dashboard",
     failureRedirect: "/auth/login",
     failureFlash: true,
-  }),
-  (req, res, next) => {}
+  })
 );
 
 router.get("/logout", (req, res, next) => {
@@ -78,10 +57,10 @@ router.get("/logout", (req, res, next) => {
 });
 // register routes
 router.get("/register", (req, res, next) => {
-  res.render("register");
+  res.render("register", { layout: "layouts/auth" });
 });
 router.get("/login", (req, res, next) => {
-  res.render("login");
+  res.render("login", { layout: "layouts/auth" });
 });
 
 module.exports = router;
