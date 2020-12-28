@@ -1,18 +1,18 @@
 const express = require("express");
 const path = require("path");
-const Magazine = require("../../models/magazine");
+const Magazine = require("../models/magazine");
 const router = express.Router();
 // configs
-const multer = require("../../config/multer");
-require("../../config/cloudinary");
+const multer = require("../config/multer");
+require("../config/cloudinary");
 // utilities
 const {
   savePdf,
   uploadToCloudinaryAndSave,
   deleteFromCloudinary,
   deletePdf,
-} = require("../../utilities/magazinesRoute");
-const { authCheck, adminCheck } = require("../../utilities/auth");
+} = require("../utilities/magazinesRoute");
+const { authCheck, adminCheck } = require("../utilities/auth");
 
 router.use(authCheck);
 router.use(adminCheck);

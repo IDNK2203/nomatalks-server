@@ -32,7 +32,7 @@ require("./config/passport");
 // application routes
 var indexRouter = require("./routes/index");
 var magazineRouter = require("./routes/magazine");
-var adminMagazineRouter = require("./routes/admin/magazine");
+var adminMagazineRouter = require("./routes/adminMagazine");
 var authRouter = require("./routes/auth");
 
 // view engine setup
