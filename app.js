@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === "production") {
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
-var cookieParser = require("cookie-parser");
+// var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const methodOverride = require("method-override");
 const ejsLayouts = require("express-ejs-layouts");
@@ -46,7 +46,6 @@ app.use(methodOverride("_method"));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // primary middlewares
