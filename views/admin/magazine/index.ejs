@@ -5,6 +5,7 @@
       <th scope="col">Issue</th>
       <th scope="col">Delete</th>
       <th scope="col">Edit</th>
+      <th scope="col">status</th>
     </tr>
   </thead>
   <tbody>
@@ -21,6 +22,7 @@
           <button type="submit" class="btn btn-danger">Delete</button>
         </form>
       </td>
+      <td><%= magazine.privateStatus==true?"private" :"public" %></td>
     </tr>
     <% }) %>
   </tbody>

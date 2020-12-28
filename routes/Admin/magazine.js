@@ -25,14 +25,17 @@ router.get("/create", async (req, res) => {
 });
 
 router.post("/", multer, async (req, res, next) => {
-  // console.log(req.body, req.files);
+  console.log(req.body);
   let magazine;
+
+  console.log(req.body.privateStatus == "on" ? true : false);
   try {
     magazine = new Magazine({
       issue: req.body.issue,
       snippet: req.body.snippet,
       author: req.body.author,
       coverImage: [{ url: null, publicId: null }],
+      privateStatus: req.body.privateStatus == "on" ? true : false,
     });
     await uploadToCloudinaryAndSave(req, magazine);
     savePdf(req, magazine);
@@ -91,6 +94,7 @@ router.put("/:id", multer, async (req, res) => {
     mag.issue = req.body.issue;
     mag.snippet = req.body.snippet;
     mag.author = req.body.author;
+    mag.privateStatus = req.body.privateStatus == "on" ? true : false;
     if (req.files.coverImage != null && req.files.coverImage != "") {
       deleteFromCloudinary(mag.coverImage[0].publicId);
       await uploadToCloudinaryAndSave(req, mag);

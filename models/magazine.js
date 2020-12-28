@@ -30,6 +30,10 @@ const magazineSchema = new Schema(
       type: String,
       required: true,
     },
+    privateStatus: {
+      type: Boolean,
+      default: true,
+    },
   },
   { timestamps: true }
 );

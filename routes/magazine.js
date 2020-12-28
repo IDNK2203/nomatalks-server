@@ -8,7 +8,11 @@ router.get("/", async (req, res) => {
     query.regex("issue", new RegExp(req.query.magIssue, "i")).limit(10);
   }
   try {
-    const magazines = await query.sort({ createdAt: "desc" }).exec();
+    const magazines = await query
+      .sort({ createdAt: "desc" })
+      .where("privateStatus")
+      .equals("false")
+      .exec();
     let searchOpts = req.query;
     res.render("index", { magazines, searchOpts });
   } catch (error) {
