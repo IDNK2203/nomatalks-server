@@ -2,6 +2,10 @@
 const dotenv = require("dotenv");
 dotenv.config({ path: `${__dirname}/config/config.env` });
 
+if (process.env.NODE_ENV === "production") {
+  dotenv.config({ path: `${__dirname}/config/dist.env` });
+}
+
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
