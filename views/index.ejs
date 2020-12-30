@@ -2,18 +2,26 @@
 
 <h2>Search for magazine</h2>
 <form action="/magazine" method="get">
-  <div class="form-group">
-    <label for="exampleFormControlInput1">issue</label>
+  <div class="input-group mb-3">
     <input
       type="search"
       class="form-control"
-      name="magIssue"
-      id="exampleFormControlInput1"
       placeholder="issue 1"
       value="<%=searchOpts.magIssue%>"
+      name="magIssue"
+      aria-label="Recipient's username"
+      aria-describedby="button-addon2"
     />
+    <div class="input-group-append">
+      <button
+        class="btn btn-outline-secondary"
+        type="submit"
+        id="button-addon2"
+      >
+        Search
+      </button>
+    </div>
   </div>
-  <button type="submit" class="btn btn-primary">Search</button>
 </form>
 
 <div class="magazine-content">

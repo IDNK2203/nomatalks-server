@@ -31,24 +31,41 @@
     value="<%= typeof magazine.author != 'undefined' ? magazine.author : ''%>"
   />
 </div>
-<div class="form-group">
-  <label for="digitalMagazine">Mazagine Pdf</label>
-  <input
-    type="file"
-    class="form-control-file digitalMagazine"
-    name="digitalMagazine"
-    id="digitalMagazine"
-  />
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroupFileAddon01"
+      >Upload Magazine</span
+    >
+  </div>
+  <div class="custom-file">
+    <input
+      type="file"
+      class="custom-file-input"
+      id="inputGroupFile01"
+      name="digitalMagazine"
+      aria-describedby="inputGroupFileAddon01"
+    />
+    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+  </div>
 </div>
-<div class="form-group">
-  <label for="coverImage">Magazine cover Image </label>
-  <input
-    type="file"
-    class="form-control-file coverImage"
-    name="coverImage"
-    id="coverImage"
-  />
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroupFileAddon01"
+      >Upload Cover Image</span
+    >
+  </div>
+  <div class="custom-file">
+    <input
+      type="file"
+      class="custom-file-input"
+      name="coverImage"
+      id="inputGroupFile01"
+      aria-describedby="inputGroupFileAddon01"
+    />
+    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+  </div>
 </div>
+
 <div class="custom-control custom-switch mb-2">
   <input
     type="checkbox"
