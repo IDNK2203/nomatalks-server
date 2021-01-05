@@ -1,0 +1,23 @@
+<% magazines.forEach( (magazine , index )=>{ %>
+<div class="magazine-content">
+  <div class="magazine-header">
+    <h2 class="magazine-issue"><%= magazine.issue %></h2>
+    <div class="magazine-publishedAt"><%= magazine.createdAt %></div>
+    <div class="magazine-author"><%= magazine.author %></div>
+  </div>
+  <div class="magazine-imgHolder">
+    <img src="<%= magazine.coverImage[0].url %>" alt="" />
+  </div>
+  <div class="magazine-description">
+    <div class="magazine-snippet"><%= magazine.snippet%></div>
+    <div class="magazine-download">
+      <a
+        href="<%=magazine.magazineUrl%>"
+        download="<%= magazine.magazineTitle %>.pdf"
+      >
+        <%= magazine.magazineTitle %>
+      </a>
+    </div>
+  </div>
+</div>
+<% }) %>

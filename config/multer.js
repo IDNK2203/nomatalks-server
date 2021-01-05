@@ -8,6 +8,7 @@ const fileMimeTypes = [
   "image/gif",
   "application/pdf",
 ];
+const pdfFileMimeTypes = ["application/pdf"];
 const imageFileMimeTypes = ["image/jpeg", "image/png", "image/gif"];
 
 var storage = multer.diskStorage({
@@ -33,8 +34,22 @@ var storage = multer.diskStorage({
 var upload = multer({
   storage: storage,
   fileFilter: (req, file, cb) => {
-    cb(null, fileMimeTypes.includes(file.mimetype));
+    if (
+      file.fieldname == "digitalMagazine" &&
+      pdfFileMimeTypes.includes(file.mimetype)
+    ) {
+      cb(null, true);
+    } else if (
+      file.fieldname == "coverImage" &&
+      imageFileMimeTypes.includes(file.mimetype)
+    ) {
+      cb(null, true);
+    } else {
+      req.fileValidationError = `wrong file format at ${file.fieldname}`;
+      cb(null, false);
+    }
   },
+
   limits: {
     fileSize: 1024 * 1024 * 1,
   },
@@ -45,4 +60,7 @@ const multiUpload = upload.fields([
   { name: "coverImage" },
 ]);
 
+// console.log(req.file);
+// console.log(req.files);
+// console.log(file);
 module.exports = multiUpload;

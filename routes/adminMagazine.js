@@ -1,9 +1,10 @@
 const express = require("express");
 const path = require("path");
+var multer = require("multer");
 const Magazine = require("../models/magazine");
 const router = express.Router();
 // configs
-const multer = require("../config/multer");
+const multerConfig = require("../config/multer");
 require("../config/cloudinary");
 // utilities
 const {
@@ -11,48 +12,72 @@ const {
   uploadToCloudinaryAndSave,
   deleteFromCloudinary,
   deletePdf,
+  basicGetRequestPresets,
+  validationRules,
+  validate,
+  returnErrMsg,
+  multerValidation_POST,
+  multerValidation_PUT,
 } = require("../utilities/magazinesRoute");
 const { authCheck, adminCheck } = require("../utilities/auth");
 
-router.use(authCheck);
-router.use(adminCheck);
+router.use(authCheck, adminCheck);
+// router.use(adminCheck);
 
 router.get("/create", async (req, res) => {
-  res.render("admin/magazine/create", {
-    magazine: new Magazine({}),
-    layout: "layouts/dashboard",
-  });
+  basicGetRequestPresets(req, res, "create", new Magazine({}));
 });
 
-router.post("/", multer, async (req, res, next) => {
-  console.log(req.body);
-  let magazine;
-
-  console.log(req.body.privateStatus == "on" ? true : false);
+router.get("/privateStatus", async (req, res) => {
+  let query = Magazine.find();
   try {
-    magazine = new Magazine({
-      issue: req.body.issue,
-      snippet: req.body.snippet,
-      author: req.body.author,
-      coverImage: [{ url: null, publicId: null }],
-      privateStatus: req.body.privateStatus == "on" ? true : false,
+    const magazines = await query
+      .sort({ createdAt: "desc" })
+      .where("privateStatus")
+      .equals("true")
+      .exec();
+    res.render("admin/magazine/privateStatus", {
+      magazines,
+      layout: "layouts/dashboard",
     });
-    await uploadToCloudinaryAndSave(req, magazine);
-    savePdf(req, magazine);
-    const newMagazine = await magazine.save();
-    res.redirect("/magazine");
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 });
+
+router.post(
+  "/",
+  multerValidation_POST(multerConfig),
+  validationRules(),
+  validate("create"),
+  async (req, res, next) => {
+    let magazine;
+    const { author, snippet, issue } = req.newBody;
+    try {
+      magazine = new Magazine({
+        coverImage: [{ url: null, publicId: null }],
+        privateStatus: req.body.privateStatus == "on" ? true : false,
+        issue: issue,
+        snippet: snippet,
+        author: author,
+      });
+      await uploadToCloudinaryAndSave(req, res, magazine, next);
+      savePdf(req, magazine);
+      const newMagazine = await magazine.save();
+      res.redirect("/admin/magazine");
+    } catch (error) {
+      let errMsg;
+      errMsg = returnErrMsg(error);
+      basicGetRequestPresets(req, res, "create", magazine, errMsg);
+      console.error(error);
+    }
+  }
+);
 
 router.get("/", async (req, res) => {
   try {
     const magazines = await Magazine.find();
-    res.render("admin/magazine/index", {
-      magazines: magazines,
-      layout: "layouts/dashboard",
-    });
+    basicGetRequestPresets(req, res, "index", magazines);
   } catch (error) {
     console.log(error);
   }
@@ -61,14 +86,9 @@ router.get("/", async (req, res) => {
 router.get("/edit/:id", async (req, res) => {
   try {
     let mag = await Magazine.findById(req.params.id);
-    res.render("admin/magazine/edit", {
-      magazine: mag,
-      layout: "layouts/dashboard",
-    });
+    basicGetRequestPresets(req, res, "edit", mag);
   } catch (error) {
-    // if(mag == null){
     res.redirect("/admin/magazine");
-    // }
   }
 });
 
@@ -76,41 +96,54 @@ router.delete("/:id", async (req, res) => {
   try {
     let mag = await Magazine.findById(req.params.id);
     deleteFromCloudinary(mag.coverImage[0].publicId);
-    deletePdf(mag.magazineUrl);
-    mag.remove();
+    await mag.remove();
     res.redirect("/admin/magazine");
+    deletePdf(mag.magazineUrl);
   } catch (error) {
-    // if(mag == null){
+    console.log(error);
     res.redirect("/magazine");
-    // }
   }
 });
 
-router.put("/:id", multer, async (req, res) => {
-  let mag;
-  try {
-    const id = req.params.id;
-    mag = await Magazine.findById(id);
-    mag.issue = req.body.issue;
-    mag.snippet = req.body.snippet;
-    mag.author = req.body.author;
-    mag.privateStatus = req.body.privateStatus == "on" ? true : false;
-    if (req.files.coverImage != null && req.files.coverImage != "") {
-      deleteFromCloudinary(mag.coverImage[0].publicId);
-      await uploadToCloudinaryAndSave(req, mag);
-    }
-    if (req.files.digitalMagazine != null && req.files.digitalMagazine != "") {
-      deletePdf(mag.magazineUrl);
-      savePdf(req, mag);
-    }
-    await mag.save();
-    res.redirect("/magazine");
-  } catch (error) {
-    console.log(error);
-    if (mag == null) {
+router.put(
+  "/:id",
+  multerValidation_PUT(multerConfig),
+  validationRules(),
+  validate("edit"),
+  async (req, res, next) => {
+    let mag;
+    try {
+      mag = await Magazine.findById(req.params.id);
+      const { author, snippet, issue } = req.newBody;
+      mag.issue = issue;
+      mag.snippet = snippet;
+      mag.author = author;
+      mag.privateStatus = req.body.privateStatus == "on" ? true : false;
+      if (req.files.coverImage != null && req.files.coverImage != "") {
+        deleteFromCloudinary(mag.coverImage[0].publicId);
+        await uploadToCloudinaryAndSave(req, res, mag, next);
+      }
+      if (
+        req.files.digitalMagazine != null &&
+        req.files.digitalMagazine != ""
+      ) {
+        deletePdf(mag.magazineUrl);
+        savePdf(req, mag);
+      }
+      await mag.save();
       res.redirect("/admin/magazine");
+    } catch (error) {
+      console.log(error);
+      if (mag == null) {
+        res.redirect("/admin/magazine");
+      } else {
+        let errMsg;
+        errMsg = returnErrMsg(error);
+        basicGetRequestPresets(req, res, "edit", mag, errMsg);
+        console.error(error);
+      }
     }
   }
-});
+);
 
 module.exports = router;

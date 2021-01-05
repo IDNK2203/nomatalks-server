@@ -3,15 +3,18 @@ const router = express.Router();
 const User = require("../models/user");
 const passport = require("passport");
 const { passwordGen } = require("../utilities/password");
-const { regValidation } = require("../utilities/auth");
+const { validationRules, validate } = require("../utilities/auth");
 
 // login routes
-router.post("/register", async (req, res, next) => {
-  const { name, password, email, password2 } = req.body;
-  let error = [];
-  try {
-    con = await regValidation(req, res, error, next);
-    if (con) {
+
+router.post(
+  "/register",
+  validationRules(),
+  validate,
+  async (req, res, next) => {
+    const { name, password, email, password2 } = req.newBody;
+    let error = [];
+    try {
       const user = await User.findOne({ email: email });
       if (user) {
         error.push({ msg: "email is already registered" });
@@ -30,17 +33,15 @@ router.post("/register", async (req, res, next) => {
         });
         const paswordHash = await passwordGen(password, 10);
         newUser.password = paswordHash;
-        newUser.save();
+        await newUser.save();
         req.flash("success_msg", "you are now resgistered you can login ");
         res.redirect("/auth/login");
       }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
   }
-});
-//
-
+);
 router.post(
   "/login",
   passport.authenticate("local", {
