@@ -33,6 +33,8 @@ require("./config/passport");
 var indexRouter = require("./routes/index");
 var magazineRouter = require("./routes/magazine");
 var adminMagazineRouter = require("./routes/adminMagazine");
+var adminBlogRouter = require("./routes/adminBlog");
+var blogRouter = require("./routes/blog");
 var authRouter = require("./routes/auth");
 
 // view engine setup
@@ -81,6 +83,8 @@ app.use((req, res, next) => {
 app.use("/", indexRouter);
 app.use("/admin/magazine", adminMagazineRouter);
 app.use("/magazine", magazineRouter);
+app.use("/admin/blog", adminBlogRouter);
+app.use("/blog", blogRouter);
 app.use("/auth", authRouter);
 
 // catch 404 and forward to error handler

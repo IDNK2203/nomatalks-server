@@ -58,10 +58,10 @@ router.get("/logout", (req, res, next) => {
 });
 // register routes
 router.get("/register", (req, res, next) => {
-  res.render("register", { layout: "layouts/auth" });
+  res.render("auth/register", { layout: "layouts/auth" });
 });
 router.get("/login", (req, res, next) => {
-  res.render("login", { layout: "layouts/auth" });
+  res.render("auth/login", { layout: "layouts/auth" });
 });
 
 module.exports = router;

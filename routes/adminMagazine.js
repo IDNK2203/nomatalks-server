@@ -22,8 +22,9 @@ const {
 const { authCheck, adminCheck } = require("../utilities/auth");
 
 router.use(authCheck, adminCheck);
-// router.use(adminCheck);
 
+// @desc show create magazine page
+// @route /admin/magazine/create
 router.get("/create", async (req, res) => {
   basicGetRequestPresets(req, res, "create", new Magazine({}));
 });

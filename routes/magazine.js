@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
       .equals("false")
       .exec();
     let searchOpts = req.query;
-    res.render("index", { magazines, searchOpts });
+    res.render("magazine/index", { magazines, searchOpts });
   } catch (error) {
     console.log(error);
   }
@@ -24,7 +24,7 @@ router.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const magazine = await Magazine.findById(id);
-    res.render("show", { magazine });
+    res.render("magazine/show", { magazine });
   } catch (error) {
     console.log(error);
   }

@@ -1,0 +1,85 @@
+<div class="form-group">
+  <label for="issue">title</label>
+  <input
+    class="form-control"
+    name="title"
+    id="title"
+    type="text"
+    placeholder="Default input"
+    value="<%= typeof BlogPost.title != 'undefined' ? BlogPost.title  : ''%>"
+  />
+</div>
+<div class="form-group">
+  <label for="snippet">Snippet</label>
+  <input
+    class="form-control"
+    name="snippet"
+    id="snippet"
+    type="text"
+    placeholder="Default input"
+    value="<%= typeof BlogPost.snippet != 'undefined' ? BlogPost.snippet : ''%>"
+  />
+</div>
+<div class="form-group">
+  <label for="author">Guest author</label>
+  <input
+    class="form-control"
+    name="guestAuthor"
+    id="guestAuthor"
+    type="text"
+    placeholder="Default input"
+    value="<%= typeof BlogPost.guestAuthor != 'undefined' ? BlogPost.guestAuthor : ''%>"
+  />
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroupFileAddon01"
+      >Upload Cover Image</span
+    >
+  </div>
+  <div class="custom-file">
+    <input
+      type="file"
+      class="custom-file-input"
+      name="blogPostCI"
+      id="inputGroupFile01"
+      aria-describedby="inputGroupFileAddon01"
+    />
+    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+  </div>
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <label class="input-group-text" for="inputGroupSelect01">Options</label>
+  </div>
+  <select class="custom-select" id="inputGroupSelect01" name="category">
+    <option selected>Choose...</option>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+  </select>
+</div>
+<div class="form-group">
+  <label for="exampleFormControlTextarea1">Body</label>
+  <textarea
+    name="body"
+    class="form-control"
+    id="exampleFormControlTextarea1"
+    rows="3"
+  ></textarea>
+</div>
+
+<div class="custom-control custom-switch mb-2">
+  <input
+    type="checkbox"
+    class="custom-control-input status custom-control-lg"
+    id="customSwitch1"
+    name="privateStatus"
+  />
+  <label class="custom-control-label" for="customSwitch1"
+    >Public or Private</label
+  >
+</div>
+
+<button type="submit" class="btn btn-primary">Submit</button>
