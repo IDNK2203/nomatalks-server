@@ -23,12 +23,22 @@
 </form>
 
 <% blogs.forEach(blog => { %>
-<div class="card" style="width: 18rem">
-  <img src="<%=blog.blogPostCI[0].url %>" class="card-img-top" alt="..." />
-  <div class="card-body">
-    <h5 class="card-title"><%= blog.title %></h5>
-    <p class="card-text"><%= blog.snippet %></p>
-    <a href="/blog/<%= blog.slug %>" class="btn btn-primary">view</a>
+<div class="card mb-3" style="max-width: 540px">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="<%=blog.blogPostCI[0].url %>" class="card-img" alt="..." />
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"><%= blog.title %></h5>
+        <p class="card-text"><%= blog.snippet %></p>
+        <p class="card-text">
+          <small class="text-muted"
+            ><%= formatDate(blog.publistedAt ,"MMM Do YY" ) %></small
+          >
+        </p>
+      </div>
+    </div>
   </div>
 </div>
 <% }) %>

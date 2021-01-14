@@ -1,0 +1,40 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Date</th>
+        <th scope="col">status</th>
+        <th scope="col">category</th>
+        <th scope="col">Ops</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% blogs.forEach( (blog , index )=>{ %>
+      <tr>
+        <th scope="row"><%= index+1 %></th>
+        <td>
+          <% if (blog.status=== "public") {%>
+          <a href="/blog/<%= blog.slug %> "> <%= blog.title %> </a>
+          <% } else{%>
+          <a href="/admin/blog/<%= blog.slug %> "> <%= blog.title %> </a>
+          <%} %>
+        </td>
+        <td><%= formatDate(blog.createdAt, 'YYYY DD MMMM') %></td>
+        <td><%= blog.status %></td>
+        <td><%= blog.category || "Tech" %></td>
+        <td>
+          <a
+            href="/admin/blog/edit/<%= blog.id %>"
+            class="btn btn-secondary btn-float"
+          >
+            <i class="fas fa-edit fa-small"></i>
+          </a>
+          <%- include("./partials/_deleteBtn.ejs", {blog}) %>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

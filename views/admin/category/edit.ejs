@@ -1,0 +1,9 @@
+<h2>Edit this Blog Category</h2>
+
+<form
+  class="form"
+  action="/admin/category/<%= category.id %>?_method=PUT"
+  method="POST"
+>
+  <%- include("./partials/_formInput.ejs") %>
+</form>

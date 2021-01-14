@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+const slugify = require("slugify");
 const Schema = mongoose.Schema;
 
 const magazineSchema = new Schema(
@@ -18,6 +19,11 @@ const magazineSchema = new Schema(
       type: String,
       required: true,
     },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     author: {
       type: String,
       required: true,
@@ -30,13 +36,21 @@ const magazineSchema = new Schema(
       type: String,
       required: true,
     },
-    privateStatus: {
-      type: Boolean,
-      default: true,
+    status: {
+      type: String,
+      required: true,
+      enum: ["public", "private"],
     },
   },
   { timestamps: true }
 );
+
+magazineSchema.pre("validate", function (next) {
+  this.issue
+    ? (this.slug = slugify(this.issue, { lower: true, strict: true }))
+    : console.log("title is not defined");
+  next();
+});
 
 const Magazine = mongoose.model("magazine", magazineSchema);
 

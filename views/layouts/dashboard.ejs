@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>File Bunker</title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
     <script defer src="/javascript/bs-custom-file-input.js"></script>
     <link
       rel="stylesheet"
@@ -12,16 +11,17 @@
       integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="https://bootswatch.com/4/litera/bootstrap.min.css"
-    />
+    <!-- <link
+        rel="stylesheet"
+        href="https://bootswatch.com/4/litera/bootstrap.min.css"
+        /> -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
       integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -45,9 +45,6 @@
               <a class="nav-link" href="#"
                 >Profile <span class="sr-only">(current)</span></a
               >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">comments</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/">public</a>
@@ -95,6 +92,25 @@
                 <a class="dropdown-item" href="/admin/blog/draft">Draft</a>
               </div>
             </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="/admin/category"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Category
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/admin/category">Manage</a>
+                <a class="dropdown-item" href="/admin/category/create"
+                  >Create</a
+                >
+              </div>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="/auth/logout">Logout</a>
             </li>
@@ -117,7 +133,10 @@
         <p>Copyright &copy; Net Ninja 2020</p>
       </div>
     </footer>
-
+    <script
+      src="https://cdn.tiny.cloud/1/mi5i085g3kakle3h44w66bzkbapdj3i5oj4h7w0asjffnqli/tinymce/5/tinymce.min.js"
+      referrerpolicy="origin"
+    ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -130,5 +149,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+    <script src="/javascript/tinymce.js"></script>
   </body>
 </html>

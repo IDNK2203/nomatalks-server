@@ -10,9 +10,10 @@ router.get("/", async (req, res) => {
   try {
     const magazines = await query
       .sort({ createdAt: "desc" })
-      .where("privateStatus")
-      .equals("false")
+      .where("status")
+      .equals("public")
       .exec();
+
     let searchOpts = req.query;
     res.render("magazine/index", { magazines, searchOpts });
   } catch (error) {
@@ -20,10 +21,13 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:slug", async (req, res) => {
   try {
-    const id = req.params.id;
-    const magazine = await Magazine.findById(id);
+    // const id = req.params.slug;
+    const magazine = await Magazine.findOne({ slug: req.params.slug })
+      .where("status")
+      .equals("public")
+      .exec();
     res.render("magazine/show", { magazine });
   } catch (error) {
     console.log(error);

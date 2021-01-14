@@ -1,6 +1,4 @@
 const express = require("express");
-const path = require("path");
-var multer = require("multer");
 const Magazine = require("../models/magazine");
 const router = express.Router();
 // configs
@@ -10,15 +8,16 @@ require("../config/cloudinary");
 const {
   savePdf,
   uploadToCloudinaryAndSave,
-  deleteFromCloudinary,
   deletePdf,
   basicGetRequestPresets,
   validationRules,
   validate,
-  returnErrMsg,
-  multerValidation_POST,
-  multerValidation_PUT,
+  multerValidation,
 } = require("../utilities/magazinesRoute");
+const {
+  deleteFromCloudinary,
+  returnErrMsg,
+} = require("../utilities/globalUtils");
 const { authCheck, adminCheck } = require("../utilities/auth");
 
 router.use(authCheck, adminCheck);
@@ -29,38 +28,21 @@ router.get("/create", async (req, res) => {
   basicGetRequestPresets(req, res, "create", new Magazine({}));
 });
 
-router.get("/privateStatus", async (req, res) => {
-  let query = Magazine.find();
-  try {
-    const magazines = await query
-      .sort({ createdAt: "desc" })
-      .where("privateStatus")
-      .equals("true")
-      .exec();
-    res.render("admin/magazine/privateStatus", {
-      magazines,
-      layout: "layouts/dashboard",
-    });
-  } catch (error) {
-    console.log(error);
-  }
-});
-
 router.post(
   "/",
-  multerValidation_POST(multerConfig),
+  multerValidation(multerConfig, "create"),
   validationRules(),
   validate("create"),
   async (req, res, next) => {
     let magazine;
-    const { author, snippet, issue } = req.newBody;
+    const { author, snippet, issue, status } = req.newBody;
     try {
       magazine = new Magazine({
         coverImage: [{ url: null, publicId: null }],
-        privateStatus: req.body.privateStatus == "on" ? true : false,
         issue: issue,
         snippet: snippet,
         author: author,
+        status: status,
       });
       await uploadToCloudinaryAndSave(req, res, magazine, next);
       savePdf(req, magazine);
@@ -108,18 +90,18 @@ router.delete("/:id", async (req, res) => {
 
 router.put(
   "/:id",
-  multerValidation_PUT(multerConfig),
+  multerValidation(multerConfig, "edit"),
   validationRules(),
   validate("edit"),
   async (req, res, next) => {
     let mag;
     try {
       mag = await Magazine.findById(req.params.id);
-      const { author, snippet, issue } = req.newBody;
+      const { author, snippet, issue, status } = req.newBody;
       mag.issue = issue;
       mag.snippet = snippet;
       mag.author = author;
-      mag.privateStatus = req.body.privateStatus == "on" ? true : false;
+      mag.status = status;
       if (req.files.coverImage != null && req.files.coverImage != "") {
         deleteFromCloudinary(mag.coverImage[0].publicId);
         await uploadToCloudinaryAndSave(req, res, mag, next);
@@ -146,5 +128,14 @@ router.put(
     }
   }
 );
+
+router.get("/:slug", async (req, res) => {
+  try {
+    const magazine = await Magazine.findOne({ slug: req.params.slug });
+    res.render("magazine/show", { magazine });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 module.exports = router;

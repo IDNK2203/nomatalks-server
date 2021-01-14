@@ -36,6 +36,7 @@ var adminMagazineRouter = require("./routes/adminMagazine");
 var adminBlogRouter = require("./routes/adminBlog");
 var blogRouter = require("./routes/blog");
 var authRouter = require("./routes/auth");
+const adminCategoryRouter = require("./routes/adminCategory");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -71,11 +72,15 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+const { formatDate } = require("./helpers/locals");
+
 app.use((req, res, next) => {
+  // errors
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error = req.flash("error");
   res.locals.error_msg = req.flash("error_msg");
   res.locals.user = req.user;
+  res.locals.formatDate = formatDate;
   // console.log(res.locals.user, req.user);
   next();
 });
@@ -86,6 +91,7 @@ app.use("/magazine", magazineRouter);
 app.use("/admin/blog", adminBlogRouter);
 app.use("/blog", blogRouter);
 app.use("/auth", authRouter);
+app.use("/admin/category", adminCategoryRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

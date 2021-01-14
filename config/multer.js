@@ -40,7 +40,7 @@ var upload = multer({
     ) {
       cb(null, true);
     } else if (
-      file.fieldname == "coverImage" &&
+      (file.fieldname == "coverImage" || file.fieldname == "blogPostCI") &&
       imageFileMimeTypes.includes(file.mimetype)
     ) {
       cb(null, true);
@@ -58,9 +58,7 @@ var upload = multer({
 const multiUpload = upload.fields([
   { name: "digitalMagazine" },
   { name: "coverImage" },
+  { name: "blogPostCI" },
 ]);
 
-// console.log(req.file);
-// console.log(req.files);
-// console.log(file);
 module.exports = multiUpload;

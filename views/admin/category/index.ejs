@@ -1,0 +1,34 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">name</th>
+        <th scope="col">Date</th>
+        <th scope="col">Ops</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% categories.forEach( (category , index )=>{ %>
+      <tr>
+        <th scope="row"><%= index+1 %></th>
+        <td>
+          <a href="/blog/category/<%= category.name %>">
+            <%= category.name %>
+          </a>
+        </td>
+        <td><%= formatDate(category.createdAt, 'YYYY DD MMMM') %></td>
+        <td>
+          <a
+            href="/admin/category/edit/<%= category.id %>"
+            class="btn btn-secondary btn-float"
+          >
+            <i class="fas fa-edit fa-small"></i>
+          </a>
+          <%- include("./partials/_deleteBtn.ejs", {category}) %>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

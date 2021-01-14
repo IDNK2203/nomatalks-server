@@ -6,7 +6,7 @@
     id="title"
     type="text"
     placeholder="Default input"
-    value="<%= typeof BlogPost.title != 'undefined' ? BlogPost.title  : ''%>"
+    value="<%= typeof blog.title != 'undefined' ? blog.title  : ''%>"
   />
 </div>
 <div class="form-group">
@@ -17,7 +17,7 @@
     id="snippet"
     type="text"
     placeholder="Default input"
-    value="<%= typeof BlogPost.snippet != 'undefined' ? BlogPost.snippet : ''%>"
+    value="<%= typeof blog.snippet != 'undefined' ? blog.snippet : ''%>"
   />
 </div>
 <div class="form-group">
@@ -28,58 +28,84 @@
     id="guestAuthor"
     type="text"
     placeholder="Default input"
-    value="<%= typeof BlogPost.guestAuthor != 'undefined' ? BlogPost.guestAuthor : ''%>"
+    value="<%= typeof blog.guestAuthor != 'undefined' ? blog.guestAuthor : ''%>"
   />
 </div>
 
-<div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="inputGroupFileAddon01"
-      >Upload Cover Image</span
-    >
+<div class="row">
+  <div class="col">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroupFileAddon01"
+          >Upload Cover Image</span
+        >
+      </div>
+      <div class="custom-file">
+        <input
+          type="file"
+          class="custom-file-input"
+          name="blogPostCI"
+          id="inputGroupFile01"
+          aria-describedby="inputGroupFileAddon01"
+        />
+        <label class="custom-file-label" for="inputGroupFile01"
+          >Choose file</label
+        >
+      </div>
+    </div>
   </div>
-  <div class="custom-file">
-    <input
-      type="file"
-      class="custom-file-input"
-      name="blogPostCI"
-      id="inputGroupFile01"
-      aria-describedby="inputGroupFileAddon01"
-    />
-    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+  <div class="col">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="inputGroupSelect01"
+          >Categories</label
+        >
+      </div>
+      <select class="custom-select" id="inputGroupSelect01" name="category">
+        <% categories.forEach(cate =>{ %> <% if ( cate.name == blog.category ) {
+        %>
+        <option selected><%= cate.name %></option>
+        <% } %>
+        <option><%= cate.name %></option>
+        <% }) %>
+      </select>
+    </div>
   </div>
 </div>
-<div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <label class="input-group-text" for="inputGroupSelect01">Options</label>
+<div class="row">
+  <div class="col">
+    <div class="form-group">
+      <label for="author">Publish Date</label>
+      <% const pubDate = blog.publishedAt.toISOString().split('T')[0] %> <input
+      class="form-control" name="publishedAt" id="publishedAt" type="date"
+      value="<%= typeof blog.publishedAt != 'undefined'? pubDate :"" %>" />
+    </div>
   </div>
-  <select class="custom-select" id="inputGroupSelect01" name="category">
-    <option selected>Choose...</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
-  </select>
+  <div class="col">
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Status</label>
+      <select class="form-control" name="status" id="exampleFormControlSelect1">
+        <% if (typeof blog.status != 'undefined' && blog.status === "private") {
+        %>
+        <option selected value="private">Private</option>
+        <option value="public">Public</option>
+        <% } else { %>
+        <option selected value="public">Public</option>
+        <option value="private">Private</option>
+        <% } %>
+      </select>
+    </div>
+  </div>
 </div>
+
 <div class="form-group">
   <label for="exampleFormControlTextarea1">Body</label>
-  <textarea
-    name="body"
-    class="form-control"
-    id="exampleFormControlTextarea1"
-    rows="3"
-  ></textarea>
-</div>
-
-<div class="custom-control custom-switch mb-2">
-  <input
-    type="checkbox"
-    class="custom-control-input status custom-control-lg"
-    id="customSwitch1"
-    name="privateStatus"
-  />
-  <label class="custom-control-label" for="customSwitch1"
-    >Public or Private</label
+  <textarea name="blogBody" class="form-control" id="blogPostBody" rows="3">
+    <%= typeof blog.sanitizedHtml != 'undefined' ? blog.sanitizedHtml : ''%>
+    </textarea
   >
 </div>
-
-<button type="submit" class="btn btn-primary">Submit</button>
+<div class="d-flex">
+  <a href="/admin/blog" class="btn btn-secondary mr-2"> cancel</a>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</div>

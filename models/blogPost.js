@@ -1,5 +1,13 @@
 const mongoose = require("mongoose");
 
+const slugify = require("slugify");
+const createDOMPurify = require("dompurify");
+const wordCount = require("html-word-count");
+const { JSDOM } = require("jsdom");
+
+const window = new JSDOM("").window;
+const DOMPurify = createDOMPurify(window);
+
 const blogPostSchema = new mongoose.Schema(
   {
     title: {
@@ -17,7 +25,7 @@ const blogPostSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    body: {
+    blogBody: {
       type: String,
       required: true,
     },
@@ -28,11 +36,11 @@ const blogPostSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
-      trim: true,
     },
-    privateStatus: {
-      type: Boolean,
-      default: true,
+    status: {
+      type: String,
+      required: true,
+      enum: ["public", "private"],
     },
     blogPostCI: [
       {
@@ -40,9 +48,10 @@ const blogPostSchema = new mongoose.Schema(
         publicId: String,
       },
     ],
-    author: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
+      required: true,
     },
     guestAuthor: {
       type: String,
@@ -54,6 +63,25 @@ const blogPostSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+blogPostSchema.pre("validate", function (next) {
+  this.title
+    ? (this.slug = slugify(this.title, { lower: true, strict: true }))
+    : console.log("title is not defined");
+  this.blogBody
+    ? (this.sanitizedHtml = DOMPurify.sanitize(this.blogBody))
+    : console.log("title is not defined");
+  next();
+});
+
+blogPostSchema.virtual("estReadTime").get(function () {
+  const wC = wordCount(this.blogBody);
+  let timeInMin = 1 + Math.floor(wC / 130);
+  timeInMin === 1
+    ? (timeInMin = `about ${timeInMin} min`)
+    : (timeInMin = `about ${timeInMin} mins`);
+  return timeInMin;
+});
 
 const BlogPost = mongoose.model("blogpost", blogPostSchema);
 

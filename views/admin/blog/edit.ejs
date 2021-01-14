@@ -1,0 +1,11 @@
+<h2>Edit this Blog Post</h2>
+<div class="blog-form">
+  <form
+    class="form"
+    action="/admin/blog/<%= blog.id %>?_method=PUT"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    <%- include("./partials/_form.ejs") %>
+  </form>
+</div>
