@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const connect = async () => {
   try {
     const connectValue = await mongoose.connect(
-      process.env.DATABASEURL || "mongodb://localhost/file-bunker",
+      process.env.DATABASEURL || "mongodb://localhost:27017/file-bunker",
       {
         useUnifiedTopology: true,
         useNewUrlParser: true,

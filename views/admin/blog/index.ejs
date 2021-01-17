@@ -21,7 +21,7 @@
           <a href="/admin/blog/<%= blog.slug %> "> <%= blog.title %> </a>
           <%} %>
         </td>
-        <td><%= formatDate(blog.createdAt, 'YYYY DD MMMM') %></td>
+        <td><%= formatDate(blog.createdAt, 'MMMM Do YYYY, h:mm:ss a') %></td>
         <td><%= blog.status %></td>
         <td><%= blog.category || "Tech" %></td>
         <td>

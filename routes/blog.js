@@ -1,6 +1,8 @@
 const express = require("express");
 const BlogPost = require("../models/blogPost");
 const router = express.Router();
+
+const AppError = require("../helpers/appError");
 // utilities
 router.get("/", async (req, res) => {
   try {
@@ -36,13 +38,16 @@ router.get("/results", async (req, res) => {
   }
 });
 
-router.get("/:slug", async (req, res) => {
+router.get("/:slug", async (req, res, next) => {
   try {
     const blog = await BlogPost.findOne({ slug: req.params.slug })
       .populate("user")
       .where("status")
       .equals("public")
       .exec();
+    if (!blog) {
+      return next(new AppError("No blog found with that slug", 404));
+    }
     res.render("blog/show", { blog });
   } catch (error) {
     console.log(error);

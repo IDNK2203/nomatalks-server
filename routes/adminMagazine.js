@@ -35,14 +35,13 @@ router.post(
   validate("create"),
   async (req, res, next) => {
     let magazine;
-    const { author, snippet, issue, status } = req.newBody;
     try {
       magazine = new Magazine({
         coverImage: [{ url: null, publicId: null }],
-        issue: issue,
-        snippet: snippet,
-        author: author,
-        status: status,
+        issue: req.newBody.issue,
+        snippet: req.newBody.snippet,
+        author: req.newBody.author,
+        status: req.newBody.status,
       });
       await uploadToCloudinaryAndSave(req, res, magazine, next);
       savePdf(req, magazine);
@@ -97,11 +96,10 @@ router.put(
     let mag;
     try {
       mag = await Magazine.findById(req.params.id);
-      const { author, snippet, issue, status } = req.newBody;
-      mag.issue = issue;
-      mag.snippet = snippet;
-      mag.author = author;
-      mag.status = status;
+      mag.issue = req.newBody.issue;
+      mag.snippet = req.newBody.snippet;
+      mag.author = req.newBody.author;
+      mag.status = req.newBody.status;
       if (req.files.coverImage != null && req.files.coverImage != "") {
         deleteFromCloudinary(mag.coverImage[0].publicId);
         await uploadToCloudinaryAndSave(req, res, mag, next);

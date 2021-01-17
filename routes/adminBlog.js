@@ -1,13 +1,11 @@
 const express = require("express");
-const path = require("path");
 const BlogPost = require("../models/blogPost");
-const Category = require("../models/category");
 const router = express.Router();
 // configs
 const multerConfig = require("../config/multer");
 require("../config/cloudinary");
 
-// utilities
+// blog route utilities
 const {
   uploadToCloudinaryAndSave,
   basicGetRequestPresets,
@@ -15,11 +13,14 @@ const {
   validate,
   multerValidation,
 } = require("../utilities/blogRoute");
-// utilities
+
+// global route utilities
 const {
   returnErrMsg,
   deleteFromCloudinary,
 } = require("../utilities/globalUtils");
+
+// authentication utilities
 const { authCheck, adminCheck } = require("../utilities/auth");
 
 router.use(authCheck, adminCheck);
@@ -35,44 +36,39 @@ router.post(
   validate("create"),
   async (req, res, next) => {
     let blog;
-    let {
-      title,
-      snippet,
-      blogBody,
-      status,
-      publishedAt,
-      guestAuthor,
-      category,
-    } = req.body;
     try {
       blog = new BlogPost({
         blogPostCI: [{ url: null, publicId: null }],
-        title: title,
-        snippet: snippet,
+        title: req.newBody.title,
+        snippet: req.newBody.snippet,
         user: req.user.id,
-        blogBody: blogBody,
-        status: status,
-        category: category,
+        blogBody: req.newBody.blogBody,
+        status: req.newBody.status,
+        category: req.newBody.category,
         guestAuthor:
-          guestAuthor != null && guestAuthor != "" ? guestAuthor : "",
+          req.newBody.guestAuthor != null && req.newBody.guestAuthor != ""
+            ? req.newBody.guestAuthor
+            : "",
         publishedAt:
-          publishedAt != null && publishedAt != "" ? new Date(publishedAt) : "",
+          req.newBody.publishedAt != null && req.newBody.publishedAt != ""
+            ? new Date(req.newBody.publishedAt)
+            : "",
       });
       await uploadToCloudinaryAndSave(req, res, blog, next);
       const newBlog = await blog.save();
       res.redirect("/admin/blog");
     } catch (error) {
+      console.error(error);
       let errMsg;
       errMsg = returnErrMsg(error);
       basicGetRequestPresets(req, res, "create", blog, errMsg);
-      console.error(error);
     }
   }
 );
 
 router.get("/", async (req, res) => {
   try {
-    const blogs = await BlogPost.find();
+    const blogs = await BlogPost.find().sort({ createdAt: "desc" }).exec();
     basicGetRequestPresets(req, res, "index", blogs);
   } catch (error) {
     console.log(error);
@@ -83,20 +79,26 @@ router.get("/edit/:id", async (req, res) => {
   try {
     let blog = await BlogPost.findById(req.params.id);
     basicGetRequestPresets(req, res, "edit", blog);
+    if (!blog) {
+      return next(new AppError("No blog found with that slug", 404));
+    }
   } catch (error) {
-    res.redirect("/admin/blog");
+    // res.redirect("/admin/blog");
   }
 });
 
 router.delete("/:id", async (req, res) => {
   try {
     let blog = await BlogPost.findById(req.params.id);
+    if (!blog) {
+      return next(new AppError("No blog found with that slug", 404));
+    }
     deleteFromCloudinary(blog.blogPostCI[0].publicId);
     await blog.remove();
     res.redirect("/admin/blog");
   } catch (error) {
     console.log(error);
-    res.redirect("/admin/blog");
+    // res.redirect("/admin/blog");
   }
 });
 
@@ -109,30 +111,24 @@ router.put(
     let blog;
     try {
       blog = await BlogPost.findById(req.params.id);
-      let {
-        title,
-        snippet,
-        blogBody,
-        status,
-        publishedAt,
-        guestAuthor,
-        category,
-      } = req.body;
-      blog.title = title;
-      blog.snippet = snippet;
-      blog.blogBody = blogBody;
-      blog.status = status;
-      blog.category = category;
+      blog.title = req.newBody.title;
+      blog.snippet = req.newBody.snippet;
+      blog.blogBody = req.newBody.blogBody;
+      blog.status = req.newBody.status;
+      blog.category = req.newBody.category;
       blog.publishedAt =
-        publishedAt != null && publishedAt != "" ? new Date(publishedAt) : "";
+        req.newBody.publishedAt != null && req.newBody.publishedAt != ""
+          ? new Date(req.newBody.publishedAt)
+          : "";
       blog.guestAuthor =
-        guestAuthor != null && guestAuthor != "" ? guestAuthor : "";
+        req.newBody.guestAuthor != null && req.newBody.guestAuthor != ""
+          ? req.newBody.guestAuthor
+          : "";
 
       if (req.files.blogPostCI != null && req.files.blogPostCI != "") {
         deleteFromCloudinary(blog.blogPostCI[0].publicId);
         await uploadToCloudinaryAndSave(req, res, blog, next);
       }
-
       await blog.save();
       res.redirect("/admin/blog");
     } catch (error) {
@@ -154,6 +150,9 @@ router.get("/:slug", async (req, res) => {
     const blog = await BlogPost.findOne({ slug: req.params.slug }).populate(
       "user"
     );
+    if (!blog) {
+      return next(new AppError("No blog found with that slug", 404));
+    }
     res.render("blog/show", { blog });
   } catch (error) {
     console.log(error);

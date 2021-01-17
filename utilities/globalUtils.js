@@ -20,16 +20,8 @@ const fileCheck = async (filePath) => {
   }
 };
 
-const deleteFile = (filePath) => {
-  fs.unlink(filePath, (err) => {
-    if (err) throw err;
-    console.log("path/file.txt was deleted");
-  });
-};
-
 module.exports = {
   deleteFromCloudinary,
   returnErrMsg,
   fileCheck,
-  deleteFile,
 };

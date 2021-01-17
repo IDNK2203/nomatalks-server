@@ -2,9 +2,13 @@
 const dotenv = require("dotenv");
 dotenv.config({ path: `${__dirname}/config/config.env` });
 
-if (process.env.NODE_ENV === "production") {
-  dotenv.config({ path: `${__dirname}/config/dist.env` });
-}
+process.on("uncaughtException", (err) => {
+  console.log(err.name, err.message);
+  console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");
+  process.exit(1);
+});
+
+process.env.NODE_ENV = "production";
 
 var createError = require("http-errors");
 var express = require("express");
@@ -18,6 +22,10 @@ const passport = require("passport");
 const session = require("express-session");
 const mongoStore = require("connect-mongo")(session);
 var flash = require("connect-flash");
+
+// errors
+const AppError = require("./helpers/appError");
+const errorMdw = require("./helpers/errorMdw");
 
 // setup express app
 const app = express();
@@ -94,19 +102,17 @@ app.use("/auth", authRouter);
 app.use("/admin/category", adminCategoryRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
+app.all("*", (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
 // error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+app.use(errorMdw);
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+process.on("unhandledRejection", (err) => {
+  console.log(err.name, err.message);
+  console.log("UNHANDLED REJECTION! 💥 Shutting down...");
+  process.exit(1);
 });
 
 app.listen(process.env.PORT || 3000, () => {

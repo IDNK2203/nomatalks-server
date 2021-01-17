@@ -18,14 +18,13 @@ let uploadToCloudinaryAndSave = async (req, res, blog, next) => {
       tags: "blog-post",
     });
     fileCheck(fileImgPath);
-    console.log(imageObj);
     blog.blogPostCI[0].url = imageObj.url;
     blog.blogPostCI[0].publicId = imageObj.public_id;
   } catch (error) {
     console.log(error);
     if (imageObj === null) {
       throw new Error(
-        "unable to upload file to cloud storage check your internet"
+        "A cloudinary error has occured during file upload please check your internet."
       );
     }
   }
