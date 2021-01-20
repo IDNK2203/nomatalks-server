@@ -15,15 +15,19 @@
     "cloudinary": "^1.23.0",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^3.2.0",
-    "cookie-parser": "~1.4.4",
+    "cookie-parser": "^1.4.5",
+    "csurf": "^1.11.0",
     "debug": "~2.6.9",
     "dompurify": "^2.2.6",
     "dotenv": "^8.2.0",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "express-ejs-layouts": "^2.5.0",
+    "express-mongo-sanitize": "^2.0.2",
+    "express-rate-limit": "^5.2.3",
     "express-session": "^1.17.1",
     "express-validator": "^6.9.0",
+    "helmet": "^4.3.1",
     "html-word-count": "^2.0.0",
     "http-errors": "~1.6.3",
     "jsdom": "^16.4.0",
@@ -35,6 +39,7 @@
     "multer-storage-cloudinary": "^4.0.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "rate-limit-mongo": "^2.3.0",
     "slugify": "^1.4.6"
   }
 }

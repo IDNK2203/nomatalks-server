@@ -8,9 +8,8 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
-process.env.NODE_ENV = "production";
+// process.env.NODE_ENV = "production";
 
-var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 // var cookieParser = require("cookie-parser");
@@ -19,7 +18,11 @@ const methodOverride = require("method-override");
 const ejsLayouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
 const passport = require("passport");
+const cookieParser = require("cookie-parser");
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
 const session = require("express-session");
+// const csurf = require("csurf");
 const mongoStore = require("connect-mongo")(session);
 var flash = require("connect-flash");
 
@@ -35,7 +38,7 @@ require("./config/db")();
 
 //load other config files
 require("./config/passport");
-// setup server
+// app.use(require("./config/multer"));
 
 // application routes
 var indexRouter = require("./routes/index");
@@ -55,9 +58,36 @@ app.set("layout", "layouts/main");
 // boilerplate middleware
 app.use(methodOverride("_method"));
 app.use(logger("dev"));
-app.use(express.json());
+app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(mongoSanitize());
+app.use(cookieParser());
+// const csrfMiddleware = csurf({
+//   cookie: true,
+// });
+// app.use(csrfMiddleware);
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+      "script-src": [
+        "'self'",
+        "https://cdn.jsdelivr.net/",
+        "https://code.jquery.com/",
+        "https://cdn.tiny.cloud/",
+      ],
+      "img-src": [
+        "'self'",
+        "https://res.cloudinary.com/",
+        "https://sp.tinymce.com/",
+        "data:",
+      ],
+      "object-src": ["'none'"],
+    },
+  })
+);
 
 // primary middlewares
 
@@ -72,14 +102,19 @@ app.use(
     }),
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
+      httpOnly: true,
+      sameSite: true,
     },
   })
 );
 
+if (app.get("env") === "production") {
+  app.set("trust proxy", 1); // trust first proxy
+}
+
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-
 const { formatDate } = require("./helpers/locals");
 
 app.use((req, res, next) => {
@@ -89,7 +124,7 @@ app.use((req, res, next) => {
   res.locals.error_msg = req.flash("error_msg");
   res.locals.user = req.user;
   res.locals.formatDate = formatDate;
-  // console.log(res.locals.user, req.user);
+  console.log(req.session);
   next();
 });
 

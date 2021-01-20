@@ -4,11 +4,16 @@ const User = require("../models/user");
 const passport = require("passport");
 const { passwordGen } = require("../utilities/password");
 const { validationRules, validate } = require("../utilities/auth");
-
-// login routes
+const { authLimiter } = require("../helpers/rateLimiter");
+var csurf = require("csurf");
+const csrfMiddleware = csurf({
+  cookie: true,
+});
 
 router.post(
   "/register",
+  csrfMiddleware,
+  authLimiter,
   validationRules(),
   validate,
   async (req, res, next) => {
@@ -25,6 +30,7 @@ router.post(
           password2,
           valError: error,
           layout: "layouts/auth",
+          csrfToken: req.csrfToken(),
         });
       } else {
         let newUser = new User({
@@ -44,6 +50,8 @@ router.post(
 );
 router.post(
   "/login",
+  csrfMiddleware,
+  authLimiter,
   passport.authenticate("local", {
     successRedirect: "/dashboard",
     failureRedirect: "/auth/login",
@@ -57,11 +65,17 @@ router.get("/logout", (req, res, next) => {
   res.redirect("/");
 });
 // register routes
-router.get("/register", (req, res, next) => {
-  res.render("auth/register", { layout: "layouts/auth" });
+router.get("/register", csrfMiddleware, (req, res, next) => {
+  res.render("auth/register", {
+    layout: "layouts/auth",
+    csrfToken: req.csrfToken(),
+  });
 });
-router.get("/login", (req, res, next) => {
-  res.render("auth/login", { layout: "layouts/auth" });
+router.get("/login", csrfMiddleware, (req, res, next) => {
+  res.render("auth/login", {
+    layout: "layouts/auth",
+    csrfToken: req.csrfToken(),
+  });
 });
 
 module.exports = router;

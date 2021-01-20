@@ -1,5 +1,5 @@
 const { body, validationResult, matchedData } = require("express-validator");
-
+var csrf = require("csurf");
 let authCheck = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();
@@ -56,6 +56,7 @@ const validate = (req, res, next) => {
       password2,
       valError: extractedErrors,
       layout: "layouts/auth",
+      csrfToken: req.csrfToken(),
     });
   } else {
     const allData = matchedData(req);

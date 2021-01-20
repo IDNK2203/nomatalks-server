@@ -68,7 +68,7 @@ router.post(
 
 router.get("/", async (req, res) => {
   try {
-    const blogs = await BlogPost.find().sort({ createdAt: "desc" }).exec();
+    const blogs = await BlogPost.find().sort({ createdAt: 1 }).exec();
     basicGetRequestPresets(req, res, "index", blogs);
   } catch (error) {
     console.log(error);
