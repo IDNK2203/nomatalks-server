@@ -1,5 +1,5 @@
 <h2>Search for Blogs</h2>
-<form action="/blog/results" method="get">
+<form action="/results" method="get">
   <div class="input-group mb-3">
     <input
       type="search"
@@ -22,13 +22,53 @@
   </div>
 </form>
 
-<% blogs.forEach(blog => { %>
-<div class="card" style="width: 18rem">
-  <img src="<%=blog.blogPostCI[0].url %>" class="card-img-top" alt="..." />
-  <div class="card-body">
-    <h5 class="card-title"><%= blog.title %></h5>
-    <p class="card-text"><%= blog.snippet %></p>
-    <a href="/blog/<%= blog.slug %>" class="btn btn-primary">view</a>
+<div class="blog-content d-flex flex-wrap">
+  <% blogs.forEach(blog => { %>
+  <div class="card flex-fill m-2" style="max-width: 18rem">
+    <img src="<%=blog.blogPostCI[0].url %>" class="card-img-top" alt="..." />
+    <div class="card-body">
+      <h5 class="card-title"><%= blog.title %></h5>
+      <p class="card-text"><%= blog.snippet %></p>
+      <a class="btn btn-dark" href="/<%= blog.slug %>" class="btn btn-primary"
+        >view</a
+      >
+    </div>
+  </div>
+  <% }) %>
+</div>
+
+<div class="blog-pagination">
+  <div class="pagination">
+    <!-- check if user is at the first page -->
+    <% if (currentPage == 1 && totalPages > 1) { %>
+    <a class="btn btn-dark m-2" href="/page/<%= parseInt(currentPage) + 1 %>/"
+      ><span>
+        Page <%= parseInt(currentPage) + 1 %>
+        <i class="fa fa-arrow-right"></i>
+      </span>
+    </a>
+    <!-- check if user is at between the first and last page -->
+    <% } else if (currentPage < totalPages) { %>
+    <a class="btn btn-dark m-2" href="/page/<%= parseInt(currentPage) - 1 %>/"
+      ><span>
+        <i class="fa fa-arrow-left"></i>
+        Page <%= parseInt(currentPage) - 1 %>
+      </span>
+    </a>
+    <a class="btn btn-dark m-2" href="/page/<%= parseInt(currentPage) + 1 %>/"
+      ><span>
+        Page <%= parseInt(currentPage) + 1 %>
+        <i class="fa fa-arrow-right"></i>
+      </span>
+    </a>
+    <!-- check if user is at the last page -->
+    <% } else if (currentPage == totalPages && totalPages > 1) { %>
+    <a class="btn btn-dark m-2" href="/page/<%= parseInt(currentPage) - 1 %>/"
+      ><span>
+        <i class="fa fa-arrow-left"></i>
+        Page <%=parseInt(currentPage) - 1 %>
+      </span>
+    </a>
+    <% } %>
   </div>
 </div>
-<% }) %>

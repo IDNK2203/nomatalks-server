@@ -2,17 +2,11 @@
 const dotenv = require("dotenv");
 dotenv.config({ path: `${__dirname}/config/config.env` });
 
-process.on("uncaughtException", (err) => {
-  console.log(err.name, err.message);
-  console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");
-  process.exit(1);
-});
-
 // process.env.NODE_ENV = "production";
 
 var express = require("express");
+const compression = require("compression");
 var path = require("path");
-// var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const methodOverride = require("method-override");
 const ejsLayouts = require("express-ejs-layouts");
@@ -22,7 +16,6 @@ const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const session = require("express-session");
-// const csurf = require("csurf");
 const mongoStore = require("connect-mongo")(session);
 var flash = require("connect-flash");
 
@@ -33,12 +26,18 @@ const errorMdw = require("./helpers/errorMdw");
 // setup express app
 const app = express();
 
+if (app.get("env") === "production") {
+  process.on("uncaughtException", (err) => {
+    console.log(err.name, err.message);
+    console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");
+    process.exit(1);
+  });
+}
 // connect to db
 require("./config/db")();
 
 //load other config files
 require("./config/passport");
-// app.use(require("./config/multer"));
 
 // application routes
 var indexRouter = require("./routes/index");
@@ -56,17 +55,16 @@ app.use(ejsLayouts);
 app.set("layout", "layouts/main");
 
 // boilerplate middleware
+if (app.get("env") !== "production") {
+  app.use(logger("dev"));
+}
+app.use(compression());
 app.use(methodOverride("_method"));
-app.use(logger("dev"));
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize());
 app.use(cookieParser());
-// const csrfMiddleware = csurf({
-//   cookie: true,
-// });
-// app.use(csrfMiddleware);
 
 app.use(
   helmet.contentSecurityPolicy({
@@ -77,12 +75,23 @@ app.use(
         "https://cdn.jsdelivr.net/",
         "https://code.jquery.com/",
         "https://cdn.tiny.cloud/",
+        "https://platform.twitter.com/",
+        "'nonce-78377b525757b494427f89014f97d79928f3938d14eb51e20fb5dec9834eb304'",
+        "https://connect.facebook.net/",
       ],
       "img-src": [
         "'self'",
         "https://res.cloudinary.com/",
         "https://sp.tinymce.com/",
+        "https://syndication.twitter.com/",
         "data:",
+      ],
+      // " "default-src "
+      "default-src": [
+        "'self'",
+        "https://platform.twitter.com/",
+        // "https://connect.facebook.net/",
+        "https://web.facebook.com/",
       ],
       "object-src": ["'none'"],
     },
@@ -116,6 +125,7 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 const { formatDate } = require("./helpers/locals");
+// const navCategories = require("./helpers/navCategories");
 
 app.use((req, res, next) => {
   // errors
@@ -124,16 +134,16 @@ app.use((req, res, next) => {
   res.locals.error_msg = req.flash("error_msg");
   res.locals.user = req.user;
   res.locals.formatDate = formatDate;
-  console.log(req.session);
+  // res.locals.navCategories = navCategories;
   next();
 });
 
 app.use("/", indexRouter);
-app.use("/admin/magazine", adminMagazineRouter);
-app.use("/magazine", magazineRouter);
-app.use("/admin/blog", adminBlogRouter);
-app.use("/blog", blogRouter);
+app.use("/", blogRouter);
 app.use("/auth", authRouter);
+app.use("/magazine", magazineRouter);
+app.use("/admin/magazine", adminMagazineRouter);
+app.use("/admin/blog", adminBlogRouter);
 app.use("/admin/category", adminCategoryRouter);
 
 // catch 404 and forward to error handler
@@ -144,11 +154,13 @@ app.all("*", (req, res, next) => {
 // error handler
 app.use(errorMdw);
 
-process.on("unhandledRejection", (err) => {
-  console.log(err.name, err.message);
-  console.log("UNHANDLED REJECTION! 💥 Shutting down...");
-  process.exit(1);
-});
+if (app.get("env") === "production") {
+  process.on("unhandledRejection", (err) => {
+    console.log(err.name, err.message);
+    console.log("UNHANDLED REJECTION! 💥 Shutting down...");
+    process.exit(1);
+  });
+}
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(`server is running on port ${process.env.PORT}`);

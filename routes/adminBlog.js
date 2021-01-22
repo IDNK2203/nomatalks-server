@@ -22,7 +22,7 @@ const {
 
 // authentication utilities
 const { authCheck, adminCheck } = require("../utilities/auth");
-
+const blogsPerPage = 3; // results per page
 router.use(authCheck, adminCheck);
 
 router.get("/create", async (req, res) => {
@@ -68,8 +68,19 @@ router.post(
 
 router.get("/", async (req, res) => {
   try {
-    const blogs = await BlogPost.find().sort({ createdAt: 1 }).exec();
-    basicGetRequestPresets(req, res, "index", blogs);
+    const blogs = await BlogPost.find()
+      .sort({ createdAt: -1 })
+      .limit(blogsPerPage)
+      .exec();
+    const page = req.params.page || 1; // Page
+    const totalBlogsFound = await BlogPost.find().countDocuments({}).exec();
+    const totalPages = totalBlogsFound / blogsPerPage;
+    res.render("admin/blog/index", {
+      blogs,
+      currentPage: page,
+      totalBlogsFound,
+      totalPages,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -154,6 +165,29 @@ router.get("/:slug", async (req, res) => {
       return next(new AppError("No blog found with that slug", 404));
     }
     res.render("blog/show", { blog });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// paginated routes
+router.get("/page/:page", async (req, res, next) => {
+  const page = req.params.page || 1; // Page
+  try {
+    const blogsFound = await BlogPost.find()
+      .skip(blogsPerPage * page - blogsPerPage)
+      .sort({ createdAt: -1 })
+      .limit(blogsPerPage)
+      .exec();
+    const totalBlogsFound = await BlogPost.find().countDocuments({}).exec();
+    const totalPages = totalBlogsFound / blogsPerPage;
+    res.render("admin/blog/index", {
+      blogs: blogsFound,
+      currentPage: page,
+      totalBlogsFound,
+      totalPages,
+      layout: "layouts/dashboard",
+    });
   } catch (error) {
     console.log(error);
   }

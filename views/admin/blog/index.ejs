@@ -13,10 +13,10 @@
     <tbody>
       <% blogs.forEach( (blog , index )=>{ %>
       <tr>
-        <th scope="row"><%= index+1 %></th>
+        <th scope="row"><%= ((currentPage-1)*3)+(index+1) %></th>
         <td>
           <% if (blog.status=== "public") {%>
-          <a href="/blog/<%= blog.slug %> "> <%= blog.title %> </a>
+          <a href="/<%= blog.slug %> "> <%= blog.title %> </a>
           <% } else{%>
           <a href="/admin/blog/<%= blog.slug %> "> <%= blog.title %> </a>
           <%} %>
@@ -37,4 +37,40 @@
       <% }) %>
     </tbody>
   </table>
+</div>
+
+<div class="blog-pagination">
+  <div class="pagination">
+    <!-- check if user is at the first page -->
+    <% if (currentPage == 1 && totalPages > 1) { %>
+    <a href="/admin/blog/page/<%= parseInt(currentPage) + 1 %>/"
+      ><span>
+        Page <%= parseInt(currentPage) + 1 %>
+        <i class="fa fa-arrow-right"></i>
+      </span>
+    </a>
+    <!-- check if user is at between the first and last page -->
+    <% } else if (currentPage < totalPages) { %>
+    <a href="/admin/blog/page/<%= parseInt(currentPage) - 1 %>/"
+      ><span>
+        <i class="fa fa-arrow-left"></i>
+        Page <%= parseInt(currentPage) - 1 %>
+      </span>
+    </a>
+    <a href="/admin/blog/page/<%= parseInt(currentPage) + 1 %>/"
+      ><span>
+        Page <%= parseInt(currentPage) + 1 %>
+        <i class="fa fa-arrow-right"></i>
+      </span>
+    </a>
+    <!-- check if user is at the last page -->
+    <% } else if (currentPage == totalPages && totalPages > 1) { %>
+    <a href="/admin/blog/page/<%= parseInt(currentPage) - 1 %>/"
+      ><span>
+        <i class="fa fa-arrow-left"></i>
+        Page <%=parseInt(currentPage) - 1 %>
+      </span>
+    </a>
+    <% } %>
+  </div>
 </div>

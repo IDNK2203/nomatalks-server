@@ -13,11 +13,8 @@ let basicGetRequestPresets = (req, res, view, category, hasError = false) => {
 
 let validationRules = () => {
   return [
-    body("name", "Invalid category name ")
-      .exists()
-      .isLength({ min: 1 })
-      .trim()
-      .escape(),
+    body("name", "Invalid category name ").exists().isLength({ min: 1 }).trim(),
+    // .escape(),
   ];
 };
 

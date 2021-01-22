@@ -18,6 +18,49 @@
     </div>
   </div>
 </div>
+
 <% }) %> <% }else{ %>
 <p>There are no blogs in this category</p>
+<% } %>
+<!-- category pagination -->
+<%if (blogs.length > 0) { %>
+<div class="blog-pagination">
+  <div class="pagination">
+    <!-- check if user is at the first page -->
+    <% if (currentPage == 1 && totalPages > 1) { %>
+    <a
+      href="/category/page/<%= parseInt(currentPage) + 1 %>?category=<%= category%>"
+      ><span>
+        Page <%= parseInt(currentPage) + 1 %>
+        <i class="fa fa-arrow-right"></i>
+      </span>
+    </a>
+    <!-- check if user is at between the first and last page -->
+    <% } else if (currentPage < totalPages) { %>
+    <a
+      href="/category/page/<%= parseInt(currentPage) - 1 %>?category=<%= category%>"
+      ><span>
+        <i class="fa fa-arrow-left"></i>
+        Page <%= parseInt(currentPage) - 1 %>
+      </span>
+    </a>
+    <a
+      href="/category/page/<%= parseInt(currentPage) + 1 %>?category=<%= category%>"
+      ><span>
+        Page <%= parseInt(currentPage) + 1 %>
+        <i class="fa fa-arrow-right"></i>
+      </span>
+    </a>
+    <!-- check if user is at the last page -->
+    <% } else if (currentPage == totalPages && totalPages > 1) { %>
+    <a
+      href="/category/page/<%= parseInt(currentPage) - 1 %>?category=<%= category%>"
+      ><span>
+        <i class="fa fa-arrow-left"></i>
+        Page <%=parseInt(currentPage) - 1 %>
+      </span>
+    </a>
+    <% } %>
+  </div>
+</div>
 <% } %>

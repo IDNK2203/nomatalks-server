@@ -1,8 +1,8 @@
+const ert = require("estimated-reading-time");
 const mongoose = require("mongoose");
 
 const slugify = require("slugify");
 const createDOMPurify = require("dompurify");
-const wordCount = require("html-word-count");
 const { JSDOM } = require("jsdom");
 
 const window = new JSDOM("").window;
@@ -75,9 +75,13 @@ blogPostSchema.pre("validate", function (next) {
 });
 
 blogPostSchema.virtual("estReadTime").get(function () {
-  const wC = wordCount(this.blogBody);
-  let timeInMin = 1 + Math.floor(wC / 130);
-  timeInMin === 1
+  const { estimatedReadingTime, TextFormat } = ert;
+  const res = estimatedReadingTime(this.sanitizedHtml, TextFormat.HTML, {
+    isTechnical: false,
+    wordsPerMinute: 130,
+  });
+  let timeInMin = res.roundedMinutes;
+  timeInMin < 2
     ? (timeInMin = `about ${timeInMin} min`)
     : (timeInMin = `about ${timeInMin} mins`);
   return timeInMin;

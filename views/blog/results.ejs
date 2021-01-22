@@ -1,5 +1,5 @@
 <h2>Search for Blogs</h2>
-<form action="/blog/results" method="get">
+<form action="/results" method="get">
   <div class="input-group mb-3">
     <input
       type="search"
@@ -42,3 +42,44 @@
   </div>
 </div>
 <% }) %>
+
+<!-- category pagination  -->
+<div class="blog-pagination">
+  <div class="pagination">
+    <!-- check if user is at the first page -->
+    <% if (currentPage == 1 && totalPages > 1) { %>
+    <a
+      href="/results/page/<%= parseInt(currentPage) + 1 %>?blogTitle=<%= searchOpts.blogTitle%>"
+      ><span>
+        Page <%= parseInt(currentPage) + 1 %>
+        <i class="fa fa-arrow-right"></i>
+      </span>
+    </a>
+    <!-- check if user is at between the first and last page -->
+    <% } else if (currentPage < totalPages) { %>
+    <a
+      href="/results/page/<%= parseInt(currentPage) - 1 %>?blogTitle=<%= searchOpts.blogTitle%>"
+      ><span>
+        <i class="fa fa-arrow-left"></i>
+        Page <%= parseInt(currentPage) - 1 %>
+      </span>
+    </a>
+    <a
+      href="/results/page/<%= parseInt(currentPage) + 1 %>?blogTitle=<%= searchOpts.blogTitle%>"
+      ><span>
+        Page <%= parseInt(currentPage) + 1 %>
+        <i class="fa fa-arrow-right"></i>
+      </span>
+    </a>
+    <!-- check if user is at the last page -->
+    <% } else if (currentPage == totalPages && totalPages > 1) { %>
+    <a
+      href="/results/page/<%= parseInt(currentPage) - 1 %>?blogTitle=<%= searchOpts.blogTitle%>"
+      ><span>
+        <i class="fa fa-arrow-left"></i>
+        Page <%=parseInt(currentPage) - 1 %>
+      </span>
+    </a>
+    <% } %>
+  </div>
+</div>
