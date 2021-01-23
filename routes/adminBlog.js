@@ -80,6 +80,7 @@ router.get("/", async (req, res) => {
       currentPage: page,
       totalBlogsFound,
       totalPages,
+      layout: "layouts/dashboard",
     });
   } catch (error) {
     console.log(error);
@@ -104,12 +105,13 @@ router.delete("/:id", async (req, res) => {
     if (!blog) {
       return next(new AppError("No blog found with that slug", 404));
     }
-    deleteFromCloudinary(blog.blogPostCI[0].publicId);
+    await deleteFromCloudinary(blog.blogPostCI[0].publicId);
     await blog.remove();
     res.redirect("/admin/blog");
   } catch (error) {
     console.log(error);
-    // res.redirect("/admin/blog");
+    req.flash("error_msg", error.message);
+    res.redirect("/admin/blog");
   }
 });
 

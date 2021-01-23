@@ -1,15 +1,22 @@
 const cloudinary = require("cloudinary");
 const fs = require("fs");
+const { Error } = require("mongoose");
 const fsPromises = fs.promises;
 const returnErrMsg = (err) => {
   return [{ msg: err }];
 };
 
-const deleteFromCloudinary = (publicId) => {
-  cloudinary.v2.api.delete_resources([publicId], function (error, result) {
-    console.log(result, error);
-  });
+const deleteFromCloudinary = async (publicId) => {
+  try {
+    await cloudinary.v2.api.delete_resources([publicId]);
+  } catch (error) {
+    console.log(error);
+    throw new Error(
+      "CLOUDINARY_ERROR couldn't delete image from cloud storage pls check you internet"
+    );
+  }
 };
+
 const fileCheck = async (filePath) => {
   try {
     const access = await fsPromises.access(filePath, fs.constants.F_OK);

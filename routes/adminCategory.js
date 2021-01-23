@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const Category = require("../models/category");
-const BlogPost = require("../models/blogPost");
 // utilities
 const {
   basicGetRequestPresets,
@@ -11,7 +10,6 @@ const {
 // utilities
 const { returnErrMsg } = require("../utilities/globalUtils");
 const { authCheck, adminCheck } = require("../utilities/auth");
-const { Error } = require("mongoose");
 
 router.use(authCheck, adminCheck);
 
@@ -22,9 +20,9 @@ router.get("/create", async (req, res) => {
 router.post("/", validationRules(), validate("create"), async (req, res) => {
   let newCate;
   try {
-    const { name } = req.newBody;
     let category = new Category({
-      name: name,
+      name: req.newBody.name,
+      status: req.newBody.status,
     });
     newCate = await category.save();
     res.redirect("/admin/category");
@@ -67,15 +65,12 @@ router.delete("/:id", async (req, res) => {
 });
 
 router.put("/:id", validationRules(), validate("edit"), async (req, res) => {
-  let newCate;
   let category;
   try {
-    const { name } = req.newBody;
     category = await Category.findById(req.params.id);
-    console.log(req.params.id);
-    console.log(Category);
-    category.name = name;
-    newCate = await category.save();
+    category.name = req.newBody.name;
+    category.status = req.newBody.status;
+    let newCate = await category.save();
     res.redirect("/admin/category");
   } catch (error) {
     console.log(error);

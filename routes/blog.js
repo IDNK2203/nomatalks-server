@@ -19,8 +19,10 @@ router.get("/", async (req, res) => {
     let searchOpts = req.query;
     const page = req.params.page || 1; // Page
     const totalBlogsFound = await BlogPost.find().countDocuments({}).exec();
-    const navCategories = await Category.find();
     const totalPages = totalBlogsFound / blogsPerPage;
+    const navCategories = await Category.find()
+      .where("status")
+      .equals("primary");
     res.render("blog/index", {
       navCategories,
       blogs,
@@ -44,6 +46,9 @@ router.get("/results", async (req, res) => {
         query.regex("title", searchRegex).limit(blogsPerPage);
         // blogs found to be displayed on the selected page
         const blogsFound = await query
+          .populate("user")
+          .where("status")
+          .equals("public")
           .skip(blogsPerPage * page - blogsPerPage)
           .limit(blogsPerPage)
           .sort({ createdAt: -1 })
@@ -55,7 +60,11 @@ router.get("/results", async (req, res) => {
           .exec();
         const totalPages = totalBlogsFound / blogsPerPage;
         let searchOpts = req.query;
+        const navCategories = await Category.find()
+          .where("status")
+          .equals("primary");
         res.render("blog/results", {
+          navCategories,
           searchOpts,
           blogs: blogsFound,
           currentPage: page,
@@ -88,17 +97,25 @@ router.get("/:slug", async (req, res, next) => {
     if (!blog) {
       return next(new AppError("No blog found with that slug", 404));
     }
-    res.render("blog/show", { blog });
+    const navCategories = await Category.find()
+      .where("status")
+      .equals("primary");
+    res.render("blog/show", { blog, navCategories });
   } catch (error) {
     console.log(error);
   }
 });
 
-router.get("/category/:category", async (req, res) => {
+router.get("/category/:categorySlug", async (req, res, next) => {
   try {
-    const blogs = await BlogPost.find({
-      category: req.params.category,
-    })
+    const categoryName = await Category.findOne({
+      slug: req.params.categorySlug,
+    }).select("name");
+    if (!categoryName) {
+      return next(new AppError("This blog category does not exist", 404));
+    }
+    let query = BlogPost.find({ category: req.params.categorySlug });
+    const blogs = await query
       .sort({ createdAt: -1 })
       .populate("user")
       .limit(blogsPerPage)
@@ -108,12 +125,17 @@ router.get("/category/:category", async (req, res) => {
     let searchOpts = req.query;
     const page = req.params.page || 1; // Page
     const totalBlogsFound = await BlogPost.find({
-      category: req.params.category,
+      category: req.params.categorySlug,
     })
       .countDocuments({})
       .exec();
     const totalPages = totalBlogsFound / blogsPerPage;
+    const navCategories = await Category.find()
+      .where("status")
+      .equals("primary");
     res.render("blog/category", {
+      categoryName,
+      navCategories,
       category: req.params.category,
       searchOpts,
       blogs,
@@ -131,6 +153,9 @@ router.get("/page/:page", async (req, res, next) => {
   const page = req.params.page || 1; // Page
   try {
     const blogsFound = await BlogPost.find()
+      .populate("user")
+      .where("status")
+      .equals("public")
       .skip(blogsPerPage * page - blogsPerPage)
       .sort({ createdAt: -1 })
       .limit(blogsPerPage)
@@ -138,8 +163,12 @@ router.get("/page/:page", async (req, res, next) => {
     const totalBlogsFound = await BlogPost.find().countDocuments({}).exec();
     const totalPages = totalBlogsFound / blogsPerPage;
     let searchOpts = req.query;
+    const navCategories = await Category.find()
+      .where("status")
+      .equals("primary");
     res.render("blog/index", {
       searchOpts,
+      navCategories,
       blogs: blogsFound,
       currentPage: page,
       totalBlogsFound,
@@ -153,19 +182,33 @@ router.get("/page/:page", async (req, res, next) => {
 router.get("/category/page/:page", async (req, res, next) => {
   const page = req.params.page || 1; // Page
   try {
-    let query = BlogPost.find({
-      category: req.params.category,
-    });
+    const categoryName = await Category.findOne({
+      slug: req.query.category,
+    }).select("name");
+    if (!categoryName) {
+      return next(new AppError("This blog category does not exist", 404));
+    }
+    let query = BlogPost.find({ category: req.query.category })
+      .populate("user")
+      .where("status")
+      .equals("public");
     const blogsFound = await query
       .skip(blogsPerPage * page - blogsPerPage)
       .limit(blogsPerPage)
       .sort({ createdAt: -1 })
       .exec();
-    const totalBlogsFound = await BlogPost.find().countDocuments({}).exec();
+    const totalBlogsFound = await BlogPost.find({ category: catRegex })
+      .countDocuments({})
+      .exec();
     const totalPages = totalBlogsFound / blogsPerPage;
     let searchOpts = req.query;
+    const navCategories = await Category.find()
+      .where("status")
+      .equals("primary");
     res.render("blog/category", {
-      category: req.query.category,
+      categoryName,
+      navCategories,
+      category: req.query.categorySlug,
       searchOpts,
       blogs: blogsFound,
       currentPage: page,
@@ -185,6 +228,9 @@ router.get("/results/page/:page", async (req, res, next) => {
       const searchRegex = new RegExp(req.query.blogTitle, "i");
       if (safe(searchRegex)) {
         const blogsFound = await query
+          .populate("user")
+          .where("status")
+          .equals("public")
           .skip(blogsPerPage * page - blogsPerPage)
           .limit(blogsPerPage)
           .sort({ createdAt: -1 })
@@ -192,8 +238,12 @@ router.get("/results/page/:page", async (req, res, next) => {
         const totalBlogsFound = await BlogPost.find().countDocuments({}).exec();
         const totalPages = totalBlogsFound / blogsPerPage;
         let searchOpts = req.query;
+        const navCategories = await Category.find()
+          .where("status")
+          .equals("primary");
         res.render("blog/results", {
           searchOpts,
+          navCategories,
           blogs: blogsFound,
           currentPage: page,
           totalBlogsFound,

@@ -1,13 +1,32 @@
-<div class="form-group">
-  <label for="name">name</label>
-  <input
-    class="form-control"
-    name="name"
-    id="name"
-    type="text"
-    placeholder="Default input"
-    value="<%= typeof category.name != 'undefined' ? category.name : ''%>"
-  />
+<div class="row">
+  <div class="col">
+    <div class="form-group">
+      <label for="name">name</label>
+      <input
+        class="form-control"
+        name="name"
+        id="name"
+        type="text"
+        placeholder="Default input"
+        value="<%= typeof category.name != 'undefined' ? category.name : ''%>"
+      />
+    </div>
+  </div>
+  <div class="col">
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Status</label>
+      <select class="form-control" name="status" id="exampleFormControlSelect1">
+        <% if (typeof category.status != 'undefined' && category.status ===
+        "secondary") { %>
+        <option selected value="secondary">Secondry</option>
+        <option value="primary">Primary</option>
+        <% } else { %>
+        <option selected value="primary">Primary</option>
+        <option value="secondary">Secondry</option>
+        <% } %>
+      </select>
+    </div>
+  </div>
 </div>
 <div class="d-flex">
   <a href="/admin/category" class="btn btn-secondary mr-2"> cancel</a>

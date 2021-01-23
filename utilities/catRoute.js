@@ -13,15 +13,17 @@ let basicGetRequestPresets = (req, res, view, category, hasError = false) => {
 
 let validationRules = () => {
   return [
-    body("name", "Invalid category name ").exists().isLength({ min: 1 }).trim(),
-    // .escape(),
+    body("name", "Invalid category name").exists().isLength({ min: 1 }).trim(),
+    body("status", "Invalid category status")
+      .exists()
+      .isIn(["primary", "secondary"])
+      .trim(),
   ];
 };
 
 const validate = (view) => {
   return async (req, res, next) => {
     try {
-      const { name } = req.body;
       let cate;
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -32,7 +34,8 @@ const validate = (view) => {
         } else {
           cate = await Category.findById(req.params.id);
         }
-        cate.name = name;
+        cate.name = req.body.name;
+        cate.status = req.body.status;
         basicGetRequestPresets(req, res, view, cate, extractedErrors);
       } else {
         const allData = matchedData(req);

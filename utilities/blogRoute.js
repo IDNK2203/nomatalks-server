@@ -8,7 +8,7 @@ const multer = require("multer");
 
 let uploadToCloudinaryAndSave = async (req, res, blog, next) => {
   const { path: fileImgPath, filename } = req.files.blogPostCI[0];
-  let imageObj = null;
+  // let imageObj;
   try {
     const fileExtName = path.extname(filename);
     const uniqueFileName = path.basename(filename, fileExtName);
@@ -22,11 +22,10 @@ let uploadToCloudinaryAndSave = async (req, res, blog, next) => {
     blog.blogPostCI[0].publicId = imageObj.public_id;
   } catch (error) {
     console.log(error);
-    if (imageObj === null) {
-      throw new Error(
-        "A cloudinary error has occured during file upload please check your internet."
-      );
-    }
+    fileCheck(fileImgPath);
+    throw new Error(
+      "CLOUDINARY_ERROR  occured during file upload please check your internet."
+    );
   }
 };
 
@@ -69,8 +68,8 @@ let validationRules = () => {
       .isLength({ min: 5 })
       .trim(),
     body("status", "blog status should be private or public")
-      .optional()
-      .isIn(["private", "public"]),
+      .isIn(["private", "public"])
+      .trim(),
     body("guestAuthor", "Invalid Guest Author name").optional().trim().escape(),
     body("category", "Invalid category name").optional().trim().escape(),
     body("publishedAt").isISO8601().toDate(),

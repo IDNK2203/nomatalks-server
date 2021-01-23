@@ -64,9 +64,9 @@
       <select class="custom-select" id="inputGroupSelect01" name="category">
         <% categories.forEach(cate =>{ %> <% if ( cate.name == blog.category ) {
         %>
-        <option selected><%= cate.name %></option>
+        <option selected value="<%= cate.slug %>"><%= cate.name %></option>
         <% } %>
-        <option><%= cate.name %></option>
+        <option value="<%= cate.slug %>"><%= cate.name %></option>
         <% }) %>
       </select>
     </div>

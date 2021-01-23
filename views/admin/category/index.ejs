@@ -5,6 +5,7 @@
         <th scope="col">#</th>
         <th scope="col">name</th>
         <th scope="col">Date</th>
+        <th scope="col">Status</th>
         <th scope="col">Ops</th>
       </tr>
     </thead>
@@ -13,9 +14,10 @@
       <tr>
         <th scope="row"><%= index+1 %></th>
         <td>
-          <a href="/category/<%= category.name %>"> <%= category.name %> </a>
+          <a href="/category/<%=category.slug%>"> <%- category.name %> </a>
         </td>
         <td><%= formatDate(category.createdAt, 'YYYY DD MMMM') %></td>
+        <td><%= category.status %></td>
         <td>
           <a
             href="/admin/category/edit/<%= category.id %>"

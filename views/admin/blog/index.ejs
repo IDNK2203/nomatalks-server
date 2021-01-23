@@ -23,7 +23,7 @@
         </td>
         <td><%= formatDate(blog.createdAt, 'MMMM Do YYYY, h:mm:ss a') %></td>
         <td><%= blog.status %></td>
-        <td><%= blog.category || "Tech" %></td>
+        <td><%- blog.category || "Tech" %></td>
         <td>
           <a
             href="/admin/blog/edit/<%= blog.id %>"

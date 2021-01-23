@@ -86,11 +86,9 @@ app.use(
         "https://syndication.twitter.com/",
         "data:",
       ],
-      // " "default-src "
       "default-src": [
         "'self'",
         "https://platform.twitter.com/",
-        // "https://connect.facebook.net/",
         "https://web.facebook.com/",
       ],
       "object-src": ["'none'"],
@@ -99,7 +97,6 @@ app.use(
 );
 
 // primary middlewares
-
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -125,7 +122,6 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 const { formatDate } = require("./helpers/locals");
-// const navCategories = require("./helpers/navCategories");
 
 app.use((req, res, next) => {
   // errors
@@ -134,7 +130,6 @@ app.use((req, res, next) => {
   res.locals.error_msg = req.flash("error_msg");
   res.locals.user = req.user;
   res.locals.formatDate = formatDate;
-  // res.locals.navCategories = navCategories;
   next();
 });
 

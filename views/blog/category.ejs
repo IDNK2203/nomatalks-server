@@ -1,4 +1,5 @@
-<h2><%= category%> Category</h2>
+<h2><%= categoryName .name%> Category</h2>
+
 <%if (blogs.length > 0) { %> <% blogs.forEach(blog => { %>
 <div class="card mb-3" style="max-width: 540px">
   <div class="row no-gutters">
@@ -9,6 +10,7 @@
       <div class="card-body">
         <h5 class="card-title"><%= blog.title %></h5>
         <p class="card-text"><%= blog.snippet %></p>
+        <p class="card-text bg-dark text-light"><%- blog.category %></p>
         <p class="card-text">
           <small class="text-muted"
             ><%= formatDate(blog.publistedAt ,"MMM Do YY" ) %></small
