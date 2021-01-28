@@ -20,47 +20,29 @@
     value="<%= typeof blog.snippet != 'undefined' ? blog.snippet : ''%>"
   />
 </div>
-<div class="form-group">
-  <label for="author">Guest author</label>
-  <input
-    class="form-control"
-    name="guestAuthor"
-    id="guestAuthor"
-    type="text"
-    placeholder="Default input"
-    value="<%= typeof blog.guestAuthor != 'undefined' ? blog.guestAuthor : ''%>"
-  />
-</div>
 
 <div class="row">
-  <div class="col">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroupFileAddon01"
-          >Upload Cover Image</span
-        >
-      </div>
-      <div class="custom-file">
-        <input
-          type="file"
-          class="custom-file-input"
-          name="blogPostCI"
-          id="inputGroupFile01"
-          aria-describedby="inputGroupFileAddon01"
-        />
-        <label class="custom-file-label" for="inputGroupFile01"
-          >Choose file</label
-        >
-      </div>
+  <div class="col-12">
+    <div class="form-group">
+      <label for="author">Guest Author</label>
+      <input
+        class="form-control"
+        name="guestAuthor"
+        id="guestAuthor"
+        type="text"
+        placeholder="Default input"
+        value="<%= typeof blog.guestAuthor != 'undefined' ? blog.guestAuthor : ''%>"
+      />
     </div>
   </div>
-  <div class="col">
+  <div class="col-12">
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <label class="input-group-text" for="inputGroupSelect01"
           >Categories</label
         >
       </div>
+
       <select class="custom-select" id="inputGroupSelect01" name="category">
         <% categories.forEach(cate =>{ %> <% if ( cate.name == blog.category ) {
         %>
@@ -72,8 +54,40 @@
     </div>
   </div>
 </div>
+
 <div class="row">
-  <div class="col">
+  <div class="col-12">
+    <div class="input-group mb-3">
+      <div class="custom-file">
+        <input
+          type="file"
+          class="custom-file-input"
+          name="blogPostCI"
+          id="inputGroupFile01"
+          aria-describedby="inputGroupFileAddon01"
+        />
+        <label class="custom-file-label" for="inputGroupFile01"
+          >Upload a Cover Image</label
+        >
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="form-group">
+      <label for="author">Image Alt Text</label>
+      <input
+        class="form-control"
+        name="ImageAltText"
+        id="ImageAltText"
+        type="text"
+        placeholder="Default input"
+        value="<%= typeof blog.blogPostCI[0] != 'undefined' ? blog.blogPostCI[0].ImageAltText : ''%>"
+      />
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 col-md-6">
     <div class="form-group">
       <label for="author">Publish Date</label>
       <% const pubDate = blog.publishedAt.toISOString().split('T')[0] %> <input
@@ -81,7 +95,7 @@
       value="<%= typeof blog.publishedAt != 'undefined'? pubDate :"" %>" />
     </div>
   </div>
-  <div class="col">
+  <div class="col-12 col-md-6">
     <div class="form-group">
       <label for="exampleFormControlSelect1">Status</label>
       <select class="form-control" name="status" id="exampleFormControlSelect1">

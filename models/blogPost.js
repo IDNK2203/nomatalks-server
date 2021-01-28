@@ -46,6 +46,7 @@ const blogPostSchema = new mongoose.Schema(
       {
         url: String,
         publicId: String,
+        ImageAltText: String,
       },
     ],
     user: {

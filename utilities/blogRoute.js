@@ -63,7 +63,11 @@ let validationRules = () => {
       .isLength({ min: 5 })
       .trim()
       .escape(),
-    body("blogBody", "invalid Blog body input")
+    body("blogBody", "InvalId Blog body input")
+      .exists()
+      .isLength({ min: 5 })
+      .trim(),
+    body("ImageAltText", "Invalid image Alt text input")
       .exists()
       .isLength({ min: 5 })
       .trim(),
@@ -88,6 +92,7 @@ const validate = (view) => {
         publishedAt,
         guestAuthor,
         category,
+        ImageAltText,
       } = req.body;
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -100,6 +105,7 @@ const validate = (view) => {
         blog.status = status;
         blog.publishedAt = publishedAt;
         blog.category = category;
+        blog.ImageAltText = ImageAltText;
         blog.guestAuthor =
           guestAuthor != null && guestAuthor != "" ? guestAuthor : "";
         if (req.files.coverImage != null && req.files.coverImage != "") {

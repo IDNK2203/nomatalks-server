@@ -97,6 +97,7 @@ router.get("/:slug", async (req, res, next) => {
     if (!blog) {
       return next(new AppError("No blog found with that slug", 404));
     }
+    console.log(blog);
     const navCategories = await Category.find()
       .where("status")
       .equals("primary");

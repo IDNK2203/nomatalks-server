@@ -28,7 +28,7 @@ router.use(authCheck, adminCheck);
 router.get("/create", async (req, res) => {
   basicGetRequestPresets(req, res, "create", new BlogPost({}));
 });
-
+// ImageAltText
 router.post(
   "/",
   multerValidation(multerConfig, "create"),
@@ -38,10 +38,15 @@ router.post(
     let blog;
     try {
       blog = new BlogPost({
-        blogPostCI: [{ url: null, publicId: null }],
+        blogPostCI: [
+          { url: null, publicId: null, ImageAltText: req.newBody.ImageAltText },
+        ],
         title: req.newBody.title,
         snippet: req.newBody.snippet,
         user: req.user.id,
+        // blog.blogPostCI[0].ImageAltText = ImageAltText;
+
+        // ImageAltText: req.newBody.ImageAltText,
         blogBody: req.newBody.blogBody,
         status: req.newBody.status,
         category: req.newBody.category,
@@ -128,6 +133,9 @@ router.put(
       blog.snippet = req.newBody.snippet;
       blog.blogBody = req.newBody.blogBody;
       blog.status = req.newBody.status;
+      blog.blogPostCI[0].ImageAltText = req.newBody.ImageAltText;
+
+      // (blog.ImageAltText = req.newBody.ImageAltText),
       blog.category = req.newBody.category;
       blog.publishedAt =
         req.newBody.publishedAt != null && req.newBody.publishedAt != ""
