@@ -44,9 +44,6 @@ router.post(
         title: req.newBody.title,
         snippet: req.newBody.snippet,
         user: req.user.id,
-        // blog.blogPostCI[0].ImageAltText = ImageAltText;
-
-        // ImageAltText: req.newBody.ImageAltText,
         blogBody: req.newBody.blogBody,
         status: req.newBody.status,
         category: req.newBody.category,
@@ -135,7 +132,6 @@ router.put(
       blog.status = req.newBody.status;
       blog.blogPostCI[0].ImageAltText = req.newBody.ImageAltText;
 
-      // (blog.ImageAltText = req.newBody.ImageAltText),
       blog.category = req.newBody.category;
       blog.publishedAt =
         req.newBody.publishedAt != null && req.newBody.publishedAt != ""

@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
     let searchOpts = req.query;
     const page = req.params.page || 1; // Page
     const totalBlogsFound = await BlogPost.find().countDocuments({}).exec();
-    const totalPages = totalBlogsFound / blogsPerPage;
+    const totalPages = Math.ceil(totalBlogsFound / blogsPerPage);
     const navCategories = await Category.find()
       .where("status")
       .equals("primary");
@@ -58,7 +58,7 @@ router.get("/results", async (req, res) => {
           .regex("title", searchRegex)
           .countDocuments({})
           .exec();
-        const totalPages = totalBlogsFound / blogsPerPage;
+        const totalPages = Math.ceil(totalBlogsFound / blogsPerPage);
         let searchOpts = req.query;
         const navCategories = await Category.find()
           .where("status")
@@ -130,7 +130,7 @@ router.get("/category/:categorySlug", async (req, res, next) => {
     })
       .countDocuments({})
       .exec();
-    const totalPages = totalBlogsFound / blogsPerPage;
+    const totalPages = Math.ceil(totalBlogsFound / blogsPerPage);
     const navCategories = await Category.find()
       .where("status")
       .equals("primary");
@@ -162,7 +162,7 @@ router.get("/page/:page", async (req, res, next) => {
       .limit(blogsPerPage)
       .exec();
     const totalBlogsFound = await BlogPost.find().countDocuments({}).exec();
-    const totalPages = totalBlogsFound / blogsPerPage;
+    const totalPages = Math.ceil(totalBlogsFound / blogsPerPage);
     let searchOpts = req.query;
     const navCategories = await Category.find()
       .where("status")
@@ -201,7 +201,7 @@ router.get("/category/page/:page", async (req, res, next) => {
     const totalBlogsFound = await BlogPost.find({ category: catRegex })
       .countDocuments({})
       .exec();
-    const totalPages = totalBlogsFound / blogsPerPage;
+    const totalPages = Math.ceil(totalBlogsFound / blogsPerPage);
     let searchOpts = req.query;
     const navCategories = await Category.find()
       .where("status")
@@ -237,7 +237,7 @@ router.get("/results/page/:page", async (req, res, next) => {
           .sort({ createdAt: -1 })
           .exec();
         const totalBlogsFound = await BlogPost.find().countDocuments({}).exec();
-        const totalPages = totalBlogsFound / blogsPerPage;
+        const totalPages = Math.ceil(totalBlogsFound / blogsPerPage);
         let searchOpts = req.query;
         const navCategories = await Category.find()
           .where("status")
