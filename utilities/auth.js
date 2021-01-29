@@ -49,7 +49,7 @@ const validate = (req, res, next) => {
   if (!errors.isEmpty()) {
     const extractedErrors = [];
     errors.array().map((err) => extractedErrors.push({ msg: err.msg }));
-    res.render("register", {
+    res.render("auth/register", {
       name,
       email,
       password,

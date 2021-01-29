@@ -12,7 +12,7 @@ const {
   validationRules,
   validate,
   multerValidation,
-} = require("../utilities/blogRoute");
+} = require("../utilities/adminBlogRoute");
 
 // global route utilities
 const {

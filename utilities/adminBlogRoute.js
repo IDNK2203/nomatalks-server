@@ -1,7 +1,7 @@
 const cloudinary = require("cloudinary");
 const path = require("path");
 const { body, validationResult, matchedData } = require("express-validator");
-const { returnErrMsg, fileCheck } = require("../utilities/globalUtils");
+const { returnErrMsg, fileCheck } = require("./globalUtils");
 const BlogPost = require("../models/blogPost");
 const Category = require("../models/category");
 const multer = require("multer");

@@ -1,6 +1,6 @@
 <h2><%= categoryName .name%> Category</h2>
 
-<%if (blogs.length > 0) { %> <% blogs.forEach(blog => { %>
+<%if (blogsFound.length > 0) { %> <% blogsFound.forEach(blog => { %>
 <div class="card mb-3" style="max-width: 540px">
   <div class="row no-gutters">
     <div class="col-md-4">
@@ -29,7 +29,7 @@
 <p>There are no blogs in this category</p>
 <% } %>
 <!-- category pagination -->
-<%if (blogs.length > 0) { %>
+<%if (blogsFound.length > 0) { %>
 <div class="blog-pagination">
   <div class="pagination">
     <!-- check if user is at the first page -->
