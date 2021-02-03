@@ -1,4 +1,5 @@
 const Category = require("../models/category");
+const BlogPost = require("../models/blogPost");
 const blogsPerPage = 3;
 
 // public data
@@ -21,12 +22,18 @@ let getPageData = async (req, totalBlogsFound) => {
   const navCategories = await getCategories("primary");
   const subNavCategories = await getCategories("secondary");
   const totalPages = Math.ceil(totalBlogsFound / blogsPerPage);
+  const mostRecentBlogs = await BlogPost.find({})
+    .sort({ createdAt: -1 })
+    .limit(blogsPerPage)
+    .where("status")
+    .equals("public");
   let obj = {
     searchOpts: req.query,
     currentPage: req.params.page || 1,
     totalPages,
     navCategories,
     subNavCategories,
+    mostRecentBlogs,
   };
   return obj;
 };

@@ -1,0 +1,45 @@
+<div class="glide-container">
+  <div class="glide">
+    <div class="glide__track" data-glide-el="track">
+      <ul class="glide__slides">
+        <% mostRecentBlogs.forEach(blog => { %>
+          <li class="glide__slide">
+            <div class="blog-slide">
+              <div
+                class="blog-slide__img-holder"
+                style="background-image: url('<%=blog.blogPostCI[0].url %>')"
+              >
+                <!-- <img src="./images/pic-1.jpg" alt="" /> -->
+              </div>
+              <div class="overlay"></div>
+              <div class="blog-slide__content">
+                <p class="blog-slide__category"><%- blog.category %></p>
+                <h2 class="h2 pb-2">
+                  <%= blog.title %>
+                </h2>
+                <a href="/<%= blog.slug %>" class="_btn _btn--primary mt-2">Read More</a>
+              </div>
+            </div>
+          </li>
+      
+          <% }) %>
+      
+      </ul>
+    </div>
+    <div class="glide__arrows" data-glide-el="controls">
+      <button class="glide__arrow glide__arrow--left" data-glide-dir="<">
+        prev
+      </button>
+      <button class="glide__arrow glide__arrow--right" data-glide-dir=">">
+        next
+      </button>
+    </div>
+    <div class="glide__bullets" data-glide-el="controls[nav]">
+
+      <% mostRecentBlogs.forEach((blog , i)=> { %>
+        <button class="glide__bullet" data-glide-dir="=<%= i %>"></button>
+      <% }) %>
+    </div>
+  </div>
+</div>
+</main>

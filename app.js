@@ -66,6 +66,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize());
 app.use(cookieParser());
 
+app.use(helmet());
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -74,6 +75,7 @@ app.use(
         "'self'",
         "https://cdn.jsdelivr.net/",
         "https://code.jquery.com/",
+        "https://unpkg.com/",
         "https://cdn.tiny.cloud/",
         "https://platform.twitter.com/",
         "'nonce-78377b525757b494427f89014f97d79928f3938d14eb51e20fb5dec9834eb304'",
@@ -81,6 +83,7 @@ app.use(
       ],
       "img-src": [
         "'self'",
+
         "https://res.cloudinary.com/",
         "https://sp.tinymce.com/",
         "https://syndication.twitter.com/",
@@ -90,6 +93,7 @@ app.use(
         "'self'",
         "https://platform.twitter.com/",
         "https://web.facebook.com/",
+        "https://www.facebook.com/",
       ],
       "object-src": ["'none'"],
     },

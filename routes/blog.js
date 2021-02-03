@@ -20,6 +20,7 @@ router.get("/", async (req, res) => {
     let pageData = await getPageData(req, totalBlogsFound);
     pageData.blogsFound = blogsFound;
     pageData.totalBlogsFound = totalBlogsFound;
+    pageData.pageTitle = "Home";
     res.render("blog/index", pageData);
   } catch (error) {
     console.log(error);
@@ -40,6 +41,8 @@ router.get("/results", async (req, res) => {
         let pageData = await getPageData(req, totalBlogsFound);
         pageData.blogsFound = blogsFound;
         pageData.totalBlogsFound = totalBlogsFound;
+        pageData.pageTitle = "search results";
+
         res.render("blog/results", pageData);
       } else {
         req.flash("error_msg", "try Again");
@@ -69,7 +72,13 @@ router.get("/:slug", async (req, res, next) => {
     }
     const navCategories = await getCategories("primary");
     const subNavCategories = await getCategories("secondary");
-    res.render("blog/show", { blog, navCategories, subNavCategories });
+    res.render("blog/show", {
+      pageTitle: blog.title,
+      blog,
+      navCategories,
+      subNavCategories,
+      searchOpts: req.query,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -95,6 +104,8 @@ router.get("/category/:categorySlug", async (req, res, next) => {
     pageData.totalBlogsFound = totalBlogsFound;
     pageData.categoryName = categoryName;
     pageData.category = req.params.categorySlug;
+    pageData.pageTitle = `${categoryName.name} Category`;
+
     res.render("blog/category", pageData);
   } catch (error) {
     console.log(error);
@@ -110,6 +121,8 @@ router.get("/page/:page", async (req, res, next) => {
     let pageData = await getPageData(req, totalBlogsFound);
     pageData.blogsFound = blogsFound;
     pageData.totalBlogsFound = totalBlogsFound;
+    pageData.pageTitle = `Home | `;
+
     res.render("blog/index", pageData);
   } catch (error) {
     console.log(error);
@@ -136,6 +149,7 @@ router.get("/category/page/:page", async (req, res, next) => {
     pageData.totalBlogsFound = totalBlogsFound;
     pageData.categoryName = categoryName;
     pageData.category = req.query.category;
+    pageData.pageTitle = `${categoryName.name} Category`;
     res.render("blog/category", pageData);
   } catch (error) {
     console.log(error);
@@ -153,6 +167,7 @@ router.get("/results/page/:page", async (req, res, next) => {
         let pageData = await getPageData(req, totalBlogsFound);
         pageData.blogsFound = blogsFound;
         pageData.totalBlogsFound = totalBlogsFound;
+        pageData.pageTitle = `search results`;
         res.render("blog/results", pageData);
       } else {
         req.flash("error_msg", "Try a different search term.");

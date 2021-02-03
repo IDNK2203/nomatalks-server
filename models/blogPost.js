@@ -83,8 +83,8 @@ blogPostSchema.virtual("estReadTime").get(function () {
   });
   let timeInMin = res.roundedMinutes;
   timeInMin < 2
-    ? (timeInMin = `about ${timeInMin} min`)
-    : (timeInMin = `about ${timeInMin} mins`);
+    ? (timeInMin = `${timeInMin} min Read`)
+    : (timeInMin = `${timeInMin} mins Read`);
   return timeInMin;
 });
 

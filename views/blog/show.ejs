@@ -1,42 +1,53 @@
-<section class="blog-details">
-  <div class="container">
-    <header class="blog-details__header">
-      <a
-        href="https://twitter.com/share?ref_src=twsrc%5Etfw"
-        class="twitter-share-button"
-        data-hashtags="nomatalks"
-        data-lang="en"
-        data-via="Nomatalks"
-        data-hashtags="nomatalks"
-        data-related="Nomatalks"
-        data-show-count="true"
-        >Tweet</a
-      >
-      <!-- Your share button code -->
-      <div id="fb-root"></div>
-      <div
-        class="fb-share-button"
-        data-href="https://www.kptplans.com/index.html"
-        data-layout="button_count"
-      ></div>
-      <div class="blog-details__heading">
-        <h1 class="blog-details__title"><%= blog.title %></h1>
-        <div class="blog-details__info">
-          <span class="author"><%= blog.user.name%> </span>
-          <span class="publistedAt"
-            ><%= formatDate(blog.publistedAt ,"MMM Do YY" ) %>
-          </span>
-          <span class="estReadTime"> <%=blog.estReadTime %> </span>
+<div class="mtb-8">
+  <section class="blog-details">
+    <div class="container con-lg">
+      <header class="blog-details__header">
+        <div class="blog-details__heading">
+          <h1 class="blog-details__title"><%= blog.title %></h1>
+          <div class="blog-details_socials">
+            <p>Share this post on social media</p>
+            <span>
+              <a
+                href="https://twitter.com/share?ref_src=twsrc%5Etfw"
+                class="twitter-share-button"
+                data-hashtags="nomatalks"
+                data-lang="en"
+                data-via="Nomatalks"
+                data-hashtags="nomatalks"
+                data-related="Nomatalks"
+                data-show-count="true"
+                >Tweet</a
+              >
+            </span>
+            <!-- Your share button code -->
+            <span class="d-inline-flex">
+              <div id="fb-root"></div>
+              <div
+                class="fb-share-button"
+                data-href="https://www.thenomatalks.com/<%= blog.slug %>"
+                data-layout="button_count"
+              ></div>
+            </span>
+          </div>
+          <div class="blog-details__info">
+            <span class="author"
+              ><%=blog.guestAuthor || blog.user.name %>
+            </span>
+            <span class="publistedAt"
+              ><%= formatDate(blog.publistedAt ,"MMM Do YY" ) %>
+            </span>
+            <span class="estReadTime"> <%=blog.estReadTime %> </span>
+          </div>
         </div>
-      </div>
-      <div class="blog-details__img-holder">
-        <img
-          src="<%=blog.blogPostCI[0].url %>"
-          class="img-fluid"
-          alt="<%=blog.blogPostCI[0].ImageAltText %>"
-        />
-      </div>
-    </header>
-    <article class="blog-details__article"><%- blog.sanitizedHtml %></article>
-  </div>
-</section>
+        <div class="blog-details__img-holder">
+          <img
+            src="<%=blog.blogPostCI[0].url %>"
+            class="img-fluid"
+            alt="<%=blog.blogPostCI[0].ImageAltText %>"
+          />
+        </div>
+      </header>
+      <article class="blog-details__article"><%- blog.sanitizedHtml %></article>
+    </div>
+  </section>
+</div>
