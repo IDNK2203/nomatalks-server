@@ -79,11 +79,13 @@ app.use(
         "https://cdn.tiny.cloud/",
         "https://platform.twitter.com/",
         "'nonce-78377b525757b494427f89014f97d79928f3938d14eb51e20fb5dec9834eb304'",
+        "'nonce-79F68BC4D3D999914A98BEEF7EFCC'",
         "https://connect.facebook.net/",
+        "https://www.googletagmanager.com/",
       ],
+
       "img-src": [
         "'self'",
-
         "https://res.cloudinary.com/",
         "https://sp.tinymce.com/",
         "https://syndication.twitter.com/",
@@ -92,6 +94,7 @@ app.use(
       "default-src": [
         "'self'",
         "https://platform.twitter.com/",
+        "https://www.google-analytics.com/",
         "https://web.facebook.com/",
         "https://www.facebook.com/",
       ],
@@ -101,26 +104,25 @@ app.use(
 );
 
 // primary middlewares
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    saveUninitialized: true,
-    resave: false,
-    store: new mongoStore({
-      mongooseConnection: mongoose.connection,
-      collection: "session",
-    }),
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24,
-      httpOnly: true,
-      sameSite: true,
-    },
-  })
-);
-
+let sessObj = {
+  secret: process.env.SESSION_SECRET,
+  saveUninitialized: true,
+  resave: false,
+  store: new mongoStore({
+    mongooseConnection: mongoose.connection,
+    collection: "session",
+  }),
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24,
+    httpOnly: true,
+    sameSite: true,
+  },
+};
 if (app.get("env") === "production") {
   app.set("trust proxy", 1); // trust first proxy
+  sessObj.cookie.secure = true; // serve secure cookies
 }
+app.use(session(sessObj));
 
 app.use(flash());
 app.use(passport.initialize());

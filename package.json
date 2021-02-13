@@ -4,7 +4,7 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "NODE_ENV=production node app.js",
     "devstart": "nodemon app.js",
     "serverstart": "DEBUG=express-play-ground:* npm run devstart"
   },

@@ -1,6 +1,6 @@
 const Category = require("../models/category");
 const BlogPost = require("../models/blogPost");
-const blogsPerPage = 3;
+const blogsPerPage = 9;
 
 // public data
 const blogQueryChain = (query, req) => {
@@ -24,7 +24,7 @@ let getPageData = async (req, totalBlogsFound) => {
   const totalPages = Math.ceil(totalBlogsFound / blogsPerPage);
   const mostRecentBlogs = await BlogPost.find({})
     .sort({ createdAt: -1 })
-    .limit(blogsPerPage)
+    .limit(blogsPerPage / 3)
     .where("status")
     .equals("public");
   let obj = {
