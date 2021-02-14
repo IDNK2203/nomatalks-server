@@ -79,7 +79,7 @@ app.use(
         "https://cdn.tiny.cloud/",
         "https://platform.twitter.com/",
         "'nonce-78377b525757b494427f89014f97d79928f3938d14eb51e20fb5dec9834eb304'",
-        "'nonce-79F68BC4D3D999914A98BEEF7EFCC'",
+        "'nonce-wCCPXBRBeiNWrmLRTpJiufiiisncADVgshd'",
         "https://connect.facebook.net/",
         "https://www.googletagmanager.com/",
       ],

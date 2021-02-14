@@ -1,10 +1,5 @@
 <script
   async
-  src="https://platform.twitter.com/widgets.js"
-  charset="utf-8"
-></script>
-<script
-  async
   src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
   integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
   crossorigin="anonymous"
@@ -20,6 +15,13 @@
   src="https://unpkg.com/@glidejs/glide@3.4.1/dist/glide.js"
 ></script>
 <script src="/javascript/index.js"></script>
+
+<% if(typeof blog !="undefined"){%>
+<script
+  async
+  src="https://platform.twitter.com/widgets.js"
+  charset="utf-8"
+></script>
 <script
   nonce="78377b525757b494427f89014f97d79928f3938d14eb51e20fb5dec9834eb304"
 >
@@ -33,3 +35,5 @@
     fjs.parentNode.insertBefore(js, fjs);
   })(document, "script", "facebook-jssdk");
 </script>
+
+<%# }else{%> <% } %>
