@@ -1,4 +1,4 @@
 # Group 2
 User-agent: *
 Allow: /
-Sitemap: https://nomaspace.herokuapp.com/sitemap.xml
+Sitemap: https://thenomatalks.com/sitemap.xml
