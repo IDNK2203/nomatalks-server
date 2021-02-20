@@ -135,6 +135,7 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   res.locals.error_msg = req.flash("error_msg");
   res.locals.user = req.user;
+  res.locals.GA_ID = process.env.GA_ID;
   res.locals.formatDate = formatDate;
   next();
 });

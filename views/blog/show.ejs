@@ -24,7 +24,7 @@
               <div id="fb-root"></div>
               <div
                 class="fb-share-button"
-                data-href="https://www.thenomatalks.com/<%= blog.slug %>"
+                data-href="https://thenomatalks.com/<%= blog.slug %>"
                 data-layout="button_count"
               ></div>
             </span>
@@ -48,7 +48,9 @@
           />
         </div>
       </header>
-      <article class="blog-details__article"><%- blog.sanitizedHtml %></article>
+      <article class="blog-details__article py-3">
+        <%- blog.sanitizedHtml %>
+      </article>
     </div>
   </section>
 </div>
