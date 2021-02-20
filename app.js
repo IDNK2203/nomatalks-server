@@ -80,6 +80,7 @@ app.use(
         "https://platform.twitter.com/",
         "'nonce-78377b525757b494427f89014f97d79928f3938d14eb51e20fb5dec9834eb304'",
         "'nonce-wCCPXBRBeiNWrmLRTpJiufiiisncADVgshd'",
+        "'nonce-NniaIoDmeHdcisgCvYgxdjnIkdDWdtsduJNasHxcapdccjSdfX'",
         "https://connect.facebook.net/",
         "https://www.googletagmanager.com/",
       ],
@@ -89,6 +90,7 @@ app.use(
         "https://res.cloudinary.com/",
         "https://sp.tinymce.com/",
         "https://syndication.twitter.com/",
+        "https://www.google-analytics.com/",
         "data:",
       ],
       "default-src": [
@@ -136,6 +138,7 @@ app.use((req, res, next) => {
   res.locals.error_msg = req.flash("error_msg");
   res.locals.user = req.user;
   res.locals.GA_ID = process.env.GA_ID;
+  res.locals.UA_ID = process.env.UA_ID;
   res.locals.formatDate = formatDate;
   next();
 });
