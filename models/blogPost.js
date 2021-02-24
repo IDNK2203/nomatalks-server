@@ -71,7 +71,10 @@ blogPostSchema.pre("validate", function (next) {
     : console.log("title is not defined");
   this.blogBody
     ? (this.sanitizedHtml = DOMPurify.sanitize(this.blogBody))
-    : console.log("title is not defined");
+    : console.log("blog body is not defined");
+  this.snippet
+    ? (this.snippet = DOMPurify.sanitize(this.snippet))
+    : console.log("snippet is not defined");
   next();
 });
 

@@ -61,8 +61,7 @@ let validationRules = () => {
     body("snippet", "Snippet must have more than 5 characters")
       .exists()
       .isLength({ min: 5 })
-      .trim()
-      .escape(),
+      .trim(),
     body("blogBody", "InvalId Blog body input")
       .exists()
       .isLength({ min: 5 })
@@ -70,12 +69,13 @@ let validationRules = () => {
     body("ImageAltText", "Invalid image Alt text input")
       .exists()
       .isLength({ min: 5 })
-      .trim(),
+      .trim()
+      .escape(),
     body("status", "blog status should be private or public")
       .isIn(["private", "public"])
       .trim(),
     body("guestAuthor", "Invalid Guest Author name").optional().trim().escape(),
-    body("category", "Invalid category name").optional().trim().escape(),
+    body("category", "Invalid category name").optional().trim(),
     body("publishedAt").isISO8601().toDate(),
   ];
 };
