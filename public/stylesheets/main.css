@@ -12586,6 +12586,13 @@ footer hr {
   font-size: 0.75rem;
 }
 
+.blog-details .whatsapp_share {
+  font-size: 1.5rem;
+  padding: 0 0.5rem;
+  font-weight: 400;
+  color: green;
+}
+
 @media screen and (min-width: 768px) {
   .blog-details__title {
     font-size: 3rem;

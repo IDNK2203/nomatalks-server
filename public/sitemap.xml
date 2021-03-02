@@ -1,150 +1,167 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!--  created with Free Online Sitemap Generator www.xml-sitemaps.com  -->
+
 <url>
-<loc>https://thenomatalks.com/</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>1.00</priority>
+  <loc>https://thenomatalks.com/</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>1.00</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/category/naija-space</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/category/naija-space</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/category/inspired</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/category/inspired</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/category/politics</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/category/politics</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/category/interview-session</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/category/interview-session</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/category/crush-diary</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/category/crush-diary</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/category/naija-connect</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/category/naija-connect</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/category/fashion</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/category/fashion</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/category/business-and-finance</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/category/business-and-finance</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/category/shoot-your-shot</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/category/shoot-your-shot</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/category/stories</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/category/stories</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/category/omiiran</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/category/omiiran</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/category/health-and-fitness</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/category/health-and-fitness</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/a-view-on-nigeria-politics</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/the-irony-of-covid-19-in-nigeria</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/how-to-manage-and-reduce-stress</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/a-tribute-to-a-friend</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/why-relationship-no-dey-last-for-campus</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/a-view-on-nigeria-politics</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/oga-driver</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/how-to-manage-and-reduce-stress</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/amber-jae</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/why-relationship-no-dey-last-for-campus</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/fashion-and-you</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/oga-driver</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/all-you-need-to-know-about-pid</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/amber-jae</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/vibe-with-tkrayne-muzik</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/fashion-and-you</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/5-proven-tips-on-how-to-stick-to-your-budget</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/all-you-need-to-know-about-pid</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/page/2/</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/page/2/</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/policy</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/policy</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/about</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.80</priority>
+  <loc>https://thenomatalks.com/about</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/six-dangers-of-see-finish</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.64</priority>
+  <loc>https://thenomatalks.com/six-dangers-of-see-finish</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.64</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/tips-on-how-to-run-a-business</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.64</priority>
+  <loc>https://thenomatalks.com/vibe-with-tkrayne-muzik</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.64</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/the-mainstream-media</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.64</priority>
+  <loc>https://thenomatalks.com/5-proven-tips-on-how-to-stick-to-your-budget</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.64</priority>
 </url>
 <url>
-<loc>https://thenomatalks.com/page/1/</loc>
-<lastmod>2021-02-23T19:27:59+00:00</lastmod>
-<priority>0.64</priority>
+  <loc>https://thenomatalks.com/tips-on-how-to-run-a-business</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.64</priority>
 </url>
+<url>
+  <loc>https://thenomatalks.com/the-mainstream-media</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://thenomatalks.com/page/1/</loc>
+  <lastmod>2021-03-04T18:38:38+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
 </urlset>
