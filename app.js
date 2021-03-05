@@ -78,11 +78,15 @@ app.use(
         "https://unpkg.com/",
         "https://cdn.tiny.cloud/",
         "https://platform.twitter.com/",
+        "https://https-thenomatalks-com.disqus.com/",
         "'nonce-78377b525757b494427f89014f97d79928f3938d14eb51e20fb5dec9834eb304'",
         "'nonce-wCCPXBRBeiNWrmLRTpJiufiiisncADVgshd'",
         "'nonce-NniaIoDmeHdcisgCvYgxdjnIkdDWdtsduJNasHxcapdccjSdfX'",
+        "'nonce-thsladAKndkjnAMNIcvnknvAdwqgnjgpKSNKJNdvnxswzmb'",
         "https://connect.facebook.net/",
+        "https://c.disquscdn.com/next/embed/",
         "https://www.googletagmanager.com/",
+        // "https://https-thenomatalks-com.disqus.com/count.js",
       ],
 
       "img-src": [
@@ -91,6 +95,10 @@ app.use(
         "https://sp.tinymce.com/",
         "https://syndication.twitter.com/",
         "https://www.google-analytics.com/",
+        "https://referrer.disqus.com/",
+        "https://c.disquscdn.com/",
+        "https://cdn.viglink.com/images/",
+
         "data:",
       ],
       "default-src": [
@@ -99,6 +107,10 @@ app.use(
         "https://www.google-analytics.com/",
         "https://web.facebook.com/",
         "https://www.facebook.com/",
+        "https://c.disquscdn.com/",
+        "https://disqus.com/",
+        "https://disqus.com/next/config.js",
+        "https://links.services.disqus.com/",
       ],
       "object-src": ["'none'"],
     },

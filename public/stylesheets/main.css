@@ -12581,7 +12581,7 @@ footer hr {
 }
 
 .blog-details__info span {
-  padding-right: 1rem;
+  padding-right: 0.45rem;
   font-weight: 700;
   font-size: 0.75rem;
 }
@@ -12608,6 +12608,7 @@ footer hr {
   .blog-details__info span {
     font-weight: 700;
     font-size: 1rem;
+    padding-right: 1rem;
   }
 }
 
