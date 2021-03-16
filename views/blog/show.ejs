@@ -41,8 +41,8 @@
             <span class="author"
               ><%=blog.guestAuthor || blog.user.name %>
             </span>
-            <span class="publistedAt"
-              ><%= formatDate(blog.publistedAt ,"MMM Do YY" ) %>
+            <span class="publistedAt">
+              <%= formatDate(blog.publishedAt, 'MMM Do YY') %>
             </span>
             <span class="estReadTime"> <%=blog.estReadTime %> </span>
             <span>

@@ -72,6 +72,7 @@ router.get("/:slug", async (req, res, next) => {
     }
     const navCategories = await getCategories("primary");
     const subNavCategories = await getCategories("secondary");
+    console.log(blog);
     res.render("blog/show", {
       pageTitle: blog.title,
       blog,
