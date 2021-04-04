@@ -12,14 +12,10 @@
 
           <li class="post-list__item">
             <a href="/<%= blog.slug %>">
-              <div class="post-list__img-holder">
-                <img
-                  src="<%=blog.blogPostCI[0].url %>"
-                  class="card-img-top"
-                  loading="lazy"
-                  alt="<%=blog.blogPostCI[0].ImageAltText %>"
-                />
-              </div>
+              <div
+                class="post-list__img-holder"
+                style="background-image: url('<%=blog.blogPostCI[0].url %>')"
+              ></div>
               <div class="post-list__description">
                 <small class="post-list__category">
                   <%= blog.category %>

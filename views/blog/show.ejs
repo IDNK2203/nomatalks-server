@@ -94,4 +94,39 @@
       >
     </div>
   </section>
+  <% if (relatedBlogs.length > 0) { %>
+  <section class="related-post">
+    <div class="container">
+      <div class="mtb-2 related-post__heading">
+        <h3 class="h3">Related posts</h3>
+        <hr />
+      </div>
+
+      <ul class="post-list">
+        <% relatedBlogs.forEach(blog => { %>
+        <li class="post-list__item">
+          <a href="/<%= blog.slug %>">
+            <div
+              class="post-list__img-holder"
+              style="background-image: url('<%=blog.blogPostCI[0].url %>')"
+            ></div>
+            <div class="post-list__description--related">
+              <small class="post-list__category"> <%= blog.category %> </small>
+              <h3 class="post-list__title"><%= blog.title %></h3>
+              <p class="post-list__snippet"><%= blog.snippet %></p>
+              <small class="post-list__publishedAt">
+                <%= formatDate(blog.publishedAt, 'MMM Do YY') %>
+              </small>
+              <small class="post-list__ert mx-2">
+                <%= blog.estReadTime %>
+              </small>
+            </div>
+          </a>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
+  </section>
+
+  <% } %>
 </div>

@@ -1,9 +1,10 @@
 const Category = require("../models/category");
 const BlogPost = require("../models/blogPost");
+const { query } = require("express-validator");
 const blogsPerPage = 9;
 
 // public data
-const blogQueryChain = (query, req) => {
+const blogsQueryChain = (query, req) => {
   const page = req.params.page || 1; // Page
   return query
     .sort({ createdAt: -1 })
@@ -12,6 +13,11 @@ const blogQueryChain = (query, req) => {
     .limit(blogsPerPage)
     .where("status")
     .equals("public");
+};
+
+// public data
+const blogQueryChain = (query, related = false) => {
+  return query.populate("user").where("status").equals("public").limit(3);
 };
 
 const getCategories = (status) => {
@@ -37,9 +43,21 @@ let getPageData = async (req, totalBlogsFound) => {
   };
   return obj;
 };
+let getSinglePageData = async (req) => {
+  const navCategories = await getCategories("primary");
+  const subNavCategories = await getCategories("secondary");
+  let obj = {
+    navCategories,
+    searchOpts: req.query,
+    subNavCategories,
+  };
+  return obj;
+};
 
 module.exports = {
-  blogQueryChain,
+  blogsQueryChain,
   getCategories,
   getPageData,
+  blogQueryChain,
+  getSinglePageData,
 };

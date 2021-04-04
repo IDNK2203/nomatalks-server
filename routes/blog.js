@@ -3,20 +3,20 @@ const safe = require("safe-regex");
 const BlogPost = require("../models/blogPost");
 const Category = require("../models/category");
 const router = express.Router();
-
 const AppError = require("../helpers/appError");
 // utilities
 const {
   blogQueryChain,
-  getCategories,
+  blogsQueryChain,
   getPageData,
+  getSinglePageData,
 } = require("../utilities/blogRoutes");
 
 router.get("/", async (req, res) => {
   try {
     const query = BlogPost.find();
     const totalBlogsFound = await BlogPost.find().countDocuments({}).exec();
-    const blogsFound = await blogQueryChain(query, req).exec();
+    const blogsFound = await blogsQueryChain(query, req).exec();
     let pageData = await getPageData(req, totalBlogsFound);
     pageData.blogsFound = blogsFound;
     pageData.totalBlogsFound = totalBlogsFound;
@@ -33,7 +33,7 @@ router.get("/results", async (req, res) => {
       const searchRegex = new RegExp(req.query.blogTitle, "i");
       if (safe(searchRegex)) {
         let query = BlogPost.find().regex("title", searchRegex);
-        const blogsFound = await blogQueryChain(query, req).exec();
+        const blogsFound = await blogsQueryChain(query, req).exec();
         const totalBlogsFound = await BlogPost.find()
           .regex("title", searchRegex)
           .countDocuments({})
@@ -62,24 +62,22 @@ router.get("/results", async (req, res) => {
 
 router.get("/:slug", async (req, res, next) => {
   try {
-    const blog = await BlogPost.findOne({ slug: req.params.slug })
-      .populate("user")
-      .where("status")
-      .equals("public")
-      .exec();
+    let blogQuery = BlogPost.findOne({ slug: req.params.slug });
+    let blog = await blogQueryChain(blogQuery).exec();
     if (!blog) {
       return next(new AppError("No blog found with that slug", 404));
     }
-    const navCategories = await getCategories("primary");
-    const subNavCategories = await getCategories("secondary");
-    console.log(blog);
-    res.render("blog/show", {
-      pageTitle: blog.title,
-      blog,
-      navCategories,
-      subNavCategories,
-      searchOpts: req.query,
+    const relatedBlogsQuery = BlogPost.find({
+      category: blog.category,
+      _id: { $ne: blog.id },
     });
+    let relatedBlogs = await blogQueryChain(relatedBlogsQuery).exec();
+    let pageData = await getSinglePageData(req);
+    pageData.relatedBlogs = relatedBlogs;
+    pageData.pageTitle = blog.title;
+    pageData.blog = blog;
+
+    res.render("blog/show", pageData);
   } catch (error) {
     console.log(error);
   }
@@ -94,7 +92,7 @@ router.get("/category/:categorySlug", async (req, res, next) => {
       return next(new AppError("This blog category does not exist", 404));
     }
     let query = BlogPost.find({ category: req.params.categorySlug });
-    const blogsFound = await blogQueryChain(query, req).exec();
+    const blogsFound = await blogsQueryChain(query, req).exec();
     const totalBlogsFound = await BlogPost.find({
       category: req.params.categorySlug,
     })
@@ -117,7 +115,7 @@ router.get("/category/:categorySlug", async (req, res, next) => {
 router.get("/page/:page", async (req, res, next) => {
   try {
     let query = BlogPost.find();
-    const blogsFound = await blogQueryChain(query, req).exec();
+    const blogsFound = await blogsQueryChain(query, req).exec();
     const totalBlogsFound = await BlogPost.find().countDocuments({}).exec();
     let pageData = await getPageData(req, totalBlogsFound);
     pageData.blogsFound = blogsFound;
@@ -139,7 +137,7 @@ router.get("/category/page/:page", async (req, res, next) => {
       return next(new AppError("This blog category does not exist", 404));
     }
     let query = BlogPost.find({ category: req.query.category });
-    const blogsFound = await blogQueryChain(query, req).exec();
+    const blogsFound = await blogsQueryChain(query, req).exec();
     const totalBlogsFound = await BlogPost.find({
       category: req.query.category,
     })
@@ -163,7 +161,7 @@ router.get("/results/page/:page", async (req, res, next) => {
     if (req.query.blogTitle != null && req.query.blogTitle != "") {
       const searchRegex = new RegExp(req.query.blogTitle, "i");
       if (safe(searchRegex)) {
-        const blogsFound = await blogQueryChain(query, req).exec();
+        const blogsFound = await blogsQueryChain(query, req).exec();
         const totalBlogsFound = await BlogPost.find().countDocuments({}).exec();
         let pageData = await getPageData(req, totalBlogsFound);
         pageData.blogsFound = blogsFound;
