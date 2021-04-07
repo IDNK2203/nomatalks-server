@@ -43,4 +43,20 @@ router.get("/policy", async function (req, res, next) {
   }
 });
 
+router.get("/contact-us", async function (req, res, next) {
+  try {
+    const navCategories = await getCategories("primary");
+    const subNavCategories = await getCategories("secondary");
+    const pageTitle = "Contact-us";
+    res.render("contact", {
+      navCategories,
+      subNavCategories,
+      pageTitle,
+      searchOpts: req.query,
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
 module.exports = router;

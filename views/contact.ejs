@@ -1,0 +1,105 @@
+<main class="main">
+  <div class="container mtb-8">
+    <div class="main__illustration">
+      <img
+        src="./images/contact-img-2.jpg"
+        alt="illustration of a phone and an envelope"
+      />
+    </div>
+    <div class="main__intro-text">
+      <h1 class="main__headline">Contact Us Today</h1>
+      <p class="main__supporting-copy">
+        Email us for any question you may have or inquiries. We would be happy
+        to answer your question and set up a meeting with you.
+      </p>
+
+      <div class="cta-holder"></div>
+    </div>
+  </div>
+  <!-- <div class="bg-underlay bg-underlay--header"></div> -->
+</main>
+
+<!-- CONTACT-US-SECTION -->
+
+<section class="contact-us-section" id="contact-section">
+  <div class="container">
+    <div class="contact">
+      <div class="contact__intro-text">
+        <h2 class="contact__h2">Get a quote</h2>
+        <p class="contact__p">
+          Fil up the form and our team will get back to you within 24hours.
+        </p>
+      </div>
+      <div class="contact__methods">
+        <p class="contact__method">
+          <i class="fas fa-phone"></i
+          ><a href="tel:+2347014428614">+234-701-4428-614</a>
+        </p>
+        <p class="contact__method">
+          <i class="far fa-envelope"></i>
+          <a href="mailto:nomatalks@gmail.com">nomatalks@gmail.com</a>
+        </p>
+      </div>
+    </div>
+    <div class="form-container">
+      <form
+        novalidate
+        name="contact"
+        method="POST"
+        class="contact-us-form"
+        action="https://form.taxi/s/tnjks076"
+      >
+        <input type="text" name="_gotcha" value="" style="display: none" />
+        <p class="contact-us-form__item">
+          <label for="full-name"> Full Name</label>
+          <input
+            class="contact-us-form__input"
+            required
+            type="text"
+            id="full-name"
+            name="full-name"
+            placeholder="Full-name"
+          />
+          <span class="contact-us-form__indicator">
+            <img src="./images/icon-error.svg " alt="error-icon"
+          /></span>
+          <small class="contact-us-form__err-msg"></small>
+        </p>
+        <p class="contact-us-form__item">
+          <label for="email"> email</label>
+          <input
+            class="contact-us-form__input"
+            required
+            type="email"
+            id="email"
+            name="_replyto"
+            placeholder="Email Address"
+          />
+          <span class="contact-us-form__indicator">
+            <img src="./images/icon-error.svg" alt="error-icon"
+          /></span>
+          <small class="contact-us-form__err-msg"></small>
+        </p>
+        <p class="contact-us-form__item">
+          <label for="meassage">Message</label>
+          <textarea
+            class="contact-us-form__input contact-us-form__input--textarea"
+            required="true"
+            placeholder="what on your mind"
+            rows="5"
+            name="message"
+            id="message"
+          >
+          </textarea>
+          <span class="contact-us-form__indicator">
+            <img src="./images/icon-error.svg" alt="error-icon"
+          /></span>
+          <small class="contact-us-form__err-msg"></small>
+        </p>
+        <button type="submit" class="_btn _btn--secondary">
+          send<i class="far fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
