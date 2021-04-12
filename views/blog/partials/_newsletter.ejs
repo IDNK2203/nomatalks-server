@@ -1,0 +1,25 @@
+<!-- NEWSLETTER BANNER -->
+
+<section class="cta-banner" id="cta_banner">
+  <div class="container">
+    <div class="cta-banner__heading">
+      <p class="cta-banner__supporting-copy">
+        Recieve update when we post new content
+      </p>
+      <h2 class="cta-banner__headline">Subcribe to Our Newsletter</h2>
+    </div>
+    <form method="POST" action="/subcribe" novalidate class="newsletter-form">
+      <p class="newsletter-form__item">
+        <input
+          class="newsletter-form__input"
+          type="email"
+          name="email"
+          required
+          placeholder="randyjackson@gmail.com"
+        />
+        <small class="newsletter-form__err-msg"></small>
+      </p>
+      <button type="submit" class="_btn _btn--secondary w100">Subcribe</button>
+    </form>
+  </div>
+</section>

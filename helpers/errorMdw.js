@@ -8,7 +8,10 @@ const sendErrorDev = (err, res) => {
 const sendErrorProd = (err, res) => {
   err.stack = null;
   res.status(err.statusCode || 500);
-  res.render("error");
+  res.render("error", {
+    layout: "layouts/error",
+    pageTitle: "Error Page",
+  });
 };
 
 module.exports = (err, req, res, next) => {
@@ -20,7 +23,10 @@ module.exports = (err, req, res, next) => {
     let error = { ...err };
     if (error.statusCode == 404) {
       res.status(err.statusCode || 500);
-      return res.render("404");
+      return res.render("404", {
+        layout: "layouts/error",
+        pageTitle: "404 Page",
+      });
     }
     if (error.name === "CastError") error = handleCastErrorDB(error);
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
@@ -34,7 +40,7 @@ module.exports = (err, req, res, next) => {
 
 const handleDuplicateFieldsDB = (err) => {
   const value = err.errmsg.match(/(["'])(?:(?=(\\?))\2.)*?\1/)[0];
-  const message = `Duplicate field value: ${value}. Please use anothe value!`;
+  const message = `Duplicate field value: ${value}. Please use another value!`;
   return new AppError(message, 400);
 };
 

@@ -1,6 +1,24 @@
-<div class="mt-6">
-  <p>Error Message : <%= message %></p>
-  <p>status code : <%= statusCode %></p>
-  <p>operation status : <%= status %></p>
-  <pre><% error.stack %></pre>
+<div class="page-content--404">
+  <div class="container">
+    <main class="bsod container">
+      <h1 class="neg title">
+        <span class="bg">Error - <%= statusCode %></span>
+      </h1>
+      <p><%= status %></p>
+      <p><%= message %>, to continue:</p>
+      <p>
+        * Return to our homepage.<br />
+        * Send us an e-mail about this error and try later.
+      </p>
+      <nav class="nav">
+        <div class="nav-box">
+          <a href="/" class="link">HOME</a>&nbsp;|&nbsp;<a
+            href="/contact-us#contact-section"
+            class="link"
+            >CONTACT US</a
+          >
+        </div>
+      </nav>
+    </main>
+  </div>
 </div>

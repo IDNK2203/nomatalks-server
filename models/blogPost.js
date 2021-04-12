@@ -67,7 +67,11 @@ const blogPostSchema = new mongoose.Schema(
 
 blogPostSchema.pre("validate", function (next) {
   this.title
-    ? (this.slug = slugify(this.title, { lower: true, strict: true }))
+    ? (this.slug = slugify(this.title, {
+        lower: true,
+        strict: true,
+        remove: /[*+~.()'"!:@]/g,
+      }))
     : console.log("title is not defined");
   this.blogBody
     ? (this.sanitizedHtml = DOMPurify.sanitize(this.blogBody))

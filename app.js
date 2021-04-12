@@ -2,7 +2,7 @@
 const dotenv = require("dotenv");
 dotenv.config({ path: `${__dirname}/config/config.env` });
 
-// process.env.NODE_ENV = "production";
+process.env.NODE_ENV = "production";
 
 var express = require("express");
 const compression = require("compression");
@@ -47,6 +47,7 @@ var adminBlogRouter = require("./routes/adminBlog");
 var blogRouter = require("./routes/blog");
 var authRouter = require("./routes/auth");
 const adminCategoryRouter = require("./routes/adminCategory");
+const newslettersSub = require("./routes/newsletter");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -162,6 +163,7 @@ app.use("/magazine", magazineRouter);
 app.use("/admin/magazine", adminMagazineRouter);
 app.use("/admin/blog", adminBlogRouter);
 app.use("/admin/category", adminCategoryRouter);
+app.use("/subcribe", newslettersSub);
 
 // catch 404 and forward to error handler
 app.all("*", (req, res, next) => {

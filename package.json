@@ -9,6 +9,7 @@
     "serverstart": "DEBUG=express-play-ground:* npm run devstart"
   },
   "dependencies": {
+    "@mailchimp/mailchimp_marketing": "^3.0.37",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "bs-custom-file-input": "^1.3.4",

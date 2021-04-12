@@ -53,11 +53,7 @@ let basicGetRequestPresets = async (req, res, view, blog, hasError = false) => {
 
 let validationRules = () => {
   return [
-    body("title", "Invalid Blog Title ")
-      .exists()
-      .isLength({ min: 1 })
-      .trim()
-      .escape(),
+    body("title", "Invalid Blog Title ").exists().isLength({ min: 1 }).trim(),
     body("snippet", "Snippet must have more than 5 characters")
       .exists()
       .isLength({ min: 5 })

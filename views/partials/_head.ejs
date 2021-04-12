@@ -9,10 +9,18 @@
   <% } %>
 
   <!-- meta tags -->
+
+  <!-- meta tags -->
+  <% if(typeof blog !="undefined"){%>
+  <meta name="description" content="<%=blog.snippet %>" />
+
+  <% }else{%>
   <meta
     name="description"
     content="Welcome to nomatalks, your number one source for inspiring and engaging contents. We're dedicated to giving you the very best of entertaining contents, with a focus on being informative and inspiring."
   />
+  <% }%>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="index, follow" />
   <meta property="og:site_name" content="Nomatalks" />
@@ -26,6 +34,7 @@
   <meta property="og:image" content="<%=blog.blogPostCI[0].url %>" />
   <meta property="twitter:image" content="<%=blog.blogPostCI[0].url %>" />
   <meta property="og:url" content="https://thenomatalks.com/<%= blog.slug %>" />
+  <meta name="description" content="<%=blog.snippet %>" />
   <% }else{%>
   <meta
     property="og:image"
@@ -37,12 +46,12 @@
     content="https://thenomatalks.com/assets/nomatalks-logo.png"
   />
   <meta property="og:type" content="profile" />
-  <% }%>
-
   <meta
     property="og:description"
     content="Welcome to nomatalks, your number one source for inspiring and engaging contents. We're dedicated to giving you the very best of entertaining contents, with a focus on being informative and inspiring."
   />
+  <% }%>
+
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:site" content="@nomatalks" />
 
