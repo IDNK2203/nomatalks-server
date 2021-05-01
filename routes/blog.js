@@ -70,7 +70,7 @@ router.get("/:slug", async (req, res, next) => {
     const relatedBlogsQuery = BlogPost.find({
       category: blog.category,
       _id: { $ne: blog.id },
-    });
+    }).sort({ createdAt: -1 });
     let relatedBlogs = await blogQueryChain(relatedBlogsQuery).exec();
     let pageData = await getSinglePageData(req);
     pageData.relatedBlogs = relatedBlogs;

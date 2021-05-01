@@ -26,6 +26,7 @@ const verifyCallback = async (email, password, done) => {
     if (!match) {
       return done(null, false, { message: "Incorrect password." });
     }
+    console.log(user);
     return done(null, user);
   } catch (error) {
     console.log(error);

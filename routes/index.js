@@ -7,7 +7,7 @@ const getCategories = (status) => {
   return Category.find().where("status").equals(status);
 };
 
-router.get("/dashboard", authCheck, adminCheck, function (req, res, next) {
+router.get("/dashboard", adminCheck, function (req, res, next) {
   res.render("admin/index", { user: req.user, layout: "layouts/dashboard" });
 });
 

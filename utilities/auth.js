@@ -8,12 +8,13 @@ let authCheck = (req, res, next) => {
     res.redirect("/auth/login");
   }
 };
+
 let adminCheck = (req, res, next) => {
   if (req.isAuthenticated() && req.user.admin) {
     next();
   } else {
     req.flash("error_msg", "You are not authorized to view this resource");
-    res.redirect("/magazine");
+    res.redirect("/auth/login");
   }
 };
 

@@ -2,7 +2,7 @@
 const dotenv = require("dotenv");
 dotenv.config({ path: `${__dirname}/config/config.env` });
 
-process.env.NODE_ENV = "production";
+// process.env.NODE_ENV = "production";
 
 var express = require("express");
 const compression = require("compression");
@@ -137,8 +137,8 @@ if (app.get("env") === "production") {
   app.set("trust proxy", 1); // trust first proxy
   sessObj.cookie.secure = true; // serve secure cookies
 }
-app.use(session(sessObj));
 
+app.use(session(sessObj));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());

@@ -57,6 +57,8 @@ let validationRules = () => {
     body("snippet", "Snippet must have more than 5 characters")
       .exists()
       .isLength({ min: 5 })
+      .isLength({ max: 150 })
+      .withMessage("Snippet must have less than 150 characters")
       .trim(),
     body("blogBody", "InvalId Blog body input")
       .exists()
