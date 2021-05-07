@@ -5,6 +5,8 @@ dotenv.config({ path: `${__dirname}/config/config.env` });
 // process.env.NODE_ENV = "production";
 
 var express = require("express");
+const { forceDomain } = require("forcedomain");
+
 const compression = require("compression");
 var path = require("path");
 var logger = require("morgan");
@@ -25,6 +27,14 @@ const errorMdw = require("./helpers/errorMdw");
 
 // setup express app
 const app = express();
+
+if (app.get("env") === "production") {
+  app.use(
+    forceDomain({
+      hostname: "thenomatalks.com",
+    })
+  );
+}
 
 if (app.get("env") === "production") {
   process.on("uncaughtException", (err) => {
@@ -87,7 +97,6 @@ app.use(
         "https://connect.facebook.net/",
         "https://c.disquscdn.com/next/embed/",
         "https://www.googletagmanager.com/",
-        // "https://https-thenomatalks-com.disqus.com/count.js",
       ],
 
       "img-src": [
@@ -112,6 +121,7 @@ app.use(
         "https://disqus.com/",
         "https://disqus.com/next/config.js",
         "https://links.services.disqus.com/",
+        "https://tempest.services.disqus.com/",
       ],
       "object-src": ["'none'"],
     },
@@ -173,14 +183,16 @@ app.all("*", (req, res, next) => {
 // error handler
 app.use(errorMdw);
 
+const server = app.listen(process.env.PORT || 3000, () => {
+  console.log(`server is running on port ${process.env.PORT}`);
+});
+
 if (app.get("env") === "production") {
   process.on("unhandledRejection", (err) => {
     console.log(err.name, err.message);
     console.log("UNHANDLED REJECTION! 💥 Shutting down...");
-    process.exit(1);
+    server.close(() => {
+      process.exit(1);
+    });
   });
 }
-
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`server is running on port ${process.env.PORT}`);
-});

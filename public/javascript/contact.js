@@ -9,8 +9,8 @@ let err_msg = Array.from(
 );
 
 let textarea = document.querySelector(".contact-us-form__input--textarea");
+if (textarea) textarea.value = "";
 
-textarea.value = "";
 trial_form.addEventListener("submit", (e) => {
   trial_form_input.forEach((input) => {
     if (!input.validity.valid) {

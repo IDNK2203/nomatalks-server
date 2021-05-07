@@ -30,6 +30,7 @@
     "express-rate-limit": "^5.2.3",
     "express-session": "^1.17.1",
     "express-validator": "^6.9.0",
+    "forcedomain": "^2.2.4",
     "helmet": "^4.3.1",
     "http-errors": "~1.6.3",
     "jsdom": "^16.4.0",

@@ -1,4 +1,3 @@
-
 // FORM VALIDATION
 let newsletter_form = document.querySelector(".newsletter-form");
 let form__input = document.querySelector(".newsletter-form__input");
@@ -12,7 +11,7 @@ newsletter_form.addEventListener("submit", (e) => {
   e.preventDefault();
 });
 
-let check_input_validity = (field) => {
+let check_input_validity_nl = (field) => {
   let validity_value = field.validity.valid;
   let err_msg = field.parentElement.children[1];
   if (field.validity.valueMissing) {
@@ -32,5 +31,5 @@ let check_input_validity = (field) => {
 };
 
 form__input.addEventListener("input", (e) => {
-  check_input_validity(e.target);
+  check_input_validity_nl(e.target);
 });

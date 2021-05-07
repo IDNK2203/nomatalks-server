@@ -47,7 +47,7 @@ router.get("/contact-us", async function (req, res, next) {
   try {
     const navCategories = await getCategories("primary");
     const subNavCategories = await getCategories("secondary");
-    const pageTitle = "Contact-us";
+    const pageTitle = "Contact Us";
     res.render("contact", {
       navCategories,
       subNavCategories,

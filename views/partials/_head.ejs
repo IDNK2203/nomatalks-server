@@ -3,13 +3,11 @@
 
   <!-- page title -->
   <% if (typeof pageTitle !="undefined" ) { %>
-  <title><%=`${pageTitle} | Nomatalks`%></title>
+  <title><%= `${pageTitle} | Nomatalks` %></title>
+
   <% }else{%>
   <title>Home | Nomatalks</title>
   <% } %>
-
-  <!-- meta tags -->
-
   <!-- meta tags -->
   <% if(typeof blog !="undefined"){%>
   <meta name="description" content="<%=blog.snippet %>" />
@@ -17,7 +15,7 @@
   <% }else{%>
   <meta
     name="description"
-    content="Welcome to nomatalks, your number one source for inspiring and engaging contents. We're dedicated to giving you the very best of entertaining contents, with a focus on being informative and inspiring."
+    content="Welcome to nomatalks, We're dedicated to giving you the very best of entertaining contents, with a focus on being informative and inspiring."
   />
   <% }%>
 
@@ -30,11 +28,13 @@
   <% }else{%>
   <meta property="og:title" content="Home | Nomatalks" />
   <% } %> <% if(typeof blog !="undefined"){%>
+
   <meta property="“og:type”" content="“article”" />
   <meta property="og:image" content="<%=blog.blogPostCI[0].url %>" />
   <meta property="twitter:image" content="<%=blog.blogPostCI[0].url %>" />
   <meta property="og:url" content="https://thenomatalks.com/<%= blog.slug %>" />
-  <meta name="description" content="<%=blog.snippet %>" />
+  <meta property="og:description" content="<%=blog.snippet %>" />
+
   <% }else{%>
   <meta
     property="og:image"
