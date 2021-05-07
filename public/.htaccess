@@ -1,0 +1,3 @@
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^www\.thenomatalks\.com$
+RewriteRule ^/?$ "http\:\/\/thenomatalks\.com\/" [R=301,L]

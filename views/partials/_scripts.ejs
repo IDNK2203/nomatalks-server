@@ -11,10 +11,16 @@
   crossorigin="anonymous"
 ></script>
 <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
+<% if (typeof pageTitle === "undefined" ) { %>
 <script src="/javascript/index.js"></script>
-<script src="/javascript/newsletter.js"></script>
+
+<% }%> <% if (typeof pageTitle != "undefined" && pageTitle === "Contact Us" ) {
+%>
 <script src="/javascript/contact.js"></script>
 
+<% }%>
+
+<script src="/javascript/newsletter.js"></script>
 <% if(typeof blog !="undefined"){%>
 <script
   async
@@ -40,4 +46,4 @@
   })(document, "script", "facebook-jssdk");
 </script>
 
-<%# }else{%> <% } %>
+<% } %>
