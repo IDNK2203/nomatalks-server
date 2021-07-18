@@ -148,9 +148,29 @@ if (app.get("env") === "production") {
   sessObj.cookie.secure = true; // serve secure cookies
 }
 
+//create a session object for every request and store in the database
+// check if request has a cookie
+// if req has cookie with a session id
+// search data store from session data
+// set req.session to session obj
+// else
+// create your session obj data
+// store data in database
+// set req.session to session obj
+
 app.use(session(sessObj));
+// app.use((req, res, next) => {
+//   console.log(req.session);
+//   next();
+// });
+
+// create a flash object , with flash message . That gets stored in the session obj
 app.use(flash());
+
+// XXXXXX
 app.use(passport.initialize());
+
+// store user data in sessions object
 app.use(passport.session());
 const { formatDate } = require("./helpers/locals");
 

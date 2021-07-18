@@ -2,7 +2,7 @@ const AppError = require("../helpers/appError");
 
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode || 500);
-  res.render("error");
+  res.render("error", { layout: "layouts/error" });
 };
 
 const sendErrorProd = (err, res) => {
