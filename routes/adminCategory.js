@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const Category = require("../models/category");
-// utilities
+// controllers
 const {
   basicGetRequestPresets,
   validationRules,
   validate,
-} = require("../utilities/catRoute");
-// utilities
-const { returnErrMsg } = require("../utilities/globalUtils");
-const { authCheck, adminCheck } = require("../utilities/auth");
+} = require("../controllers/catRoute");
+// controllers
+const { returnErrMsg } = require("../controllers/globalUtils");
+const { authCheck, adminCheck } = require("../controllers/auth");
 
 router.use(authCheck, adminCheck);
 

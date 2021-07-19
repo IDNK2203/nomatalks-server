@@ -1,7 +1,7 @@
 const passport = require("passport");
 const passportLocal = require("passport-local").Strategy;
 const User = require("../models/user");
-const { isPasswordValid } = require("../utilities/password");
+const { isPasswordValid } = require("../controllers/password");
 
 passport.serializeUser(function (user, done) {
   done(null, user.id);

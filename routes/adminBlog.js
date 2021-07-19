@@ -5,23 +5,23 @@ const router = express.Router();
 const multerConfig = require("../config/multer");
 require("../config/cloudinary");
 
-// blog route utilities
+// blog route controllers
 const {
   uploadToCloudinaryAndSave,
   basicGetRequestPresets,
   validationRules,
   validate,
   multerValidation,
-} = require("../utilities/adminBlogRoute");
+} = require("../controllers/adminBlogRoute");
 
-// global route utilities
+// global route controllers
 const {
   returnErrMsg,
   deleteFromCloudinary,
-} = require("../utilities/globalUtils");
+} = require("../controllers/globalUtils");
 
-// authentication utilities
-const { authCheck, adminCheck } = require("../utilities/auth");
+// authentication controllers
+const { authCheck, adminCheck } = require("../controllers/auth");
 const blogsPerPage = 3; // results per page
 router.use(authCheck, adminCheck);
 

@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { authCheck, adminCheck } = require("../utilities/auth");
+const { authCheck, adminCheck } = require("../controllers/auth");
 const Category = require("../models/category");
 
 const getCategories = (status) => {

@@ -2,10 +2,10 @@
   "name": "express-play-ground",
   "version": "0.0.0",
   "private": true,
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=production node app.js",
-    "devstart": "nodemon app.js",
+    "start": "NODE_ENV=production node server.js",
+    "devstart": "nodemon server.js",
     "serverstart": "DEBUG=express-play-ground:* npm run devstart"
   },
   "dependencies": {

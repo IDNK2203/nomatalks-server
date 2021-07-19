@@ -4,13 +4,13 @@ const BlogPost = require("../models/blogPost");
 const Category = require("../models/category");
 const router = express.Router();
 const AppError = require("../helpers/appError");
-// utilities
+// controllers
 const {
   blogQueryChain,
   blogsQueryChain,
   getPageData,
   getSinglePageData,
-} = require("../utilities/blogRoutes");
+} = require("../controllers/blogRoutes");
 
 router.get("/", async (req, res) => {
   try {

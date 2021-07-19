@@ -10,7 +10,7 @@
   integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
   crossorigin="anonymous"
 ></script>
-<% if (typeof pageTitle === "undefined" && pageTitle === "Home" ) { %>
+<% if (typeof pageTitle !== "undefined" && pageTitle === "Home" ) { %>
 <script src="/javascript/index.js"></script>
 
 <% }%> <% if (typeof pageTitle != "undefined" && pageTitle === "Contact Us" ) {
@@ -26,11 +26,6 @@
   src="https://platform.twitter.com/widgets.js"
   charset="utf-8"
 ></script>
-<!-- <script
-  id="dsq-count-scr"
-   src="//https-thenomatalks-com.disqus.com/count.js"
-   async
- ></script> -->
 <script
   nonce="78377b525757b494427f89014f97d79928f3938d14eb51e20fb5dec9834eb304"
 >
