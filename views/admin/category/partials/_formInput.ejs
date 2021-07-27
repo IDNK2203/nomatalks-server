@@ -10,6 +10,12 @@
         placeholder="Default input"
         value="<%= typeof category.name != 'undefined' ? category.name : ''%>"
       />
+      <input
+        hidden
+        aria-hidden="true"
+        name="id"
+        value="<%= typeof category.id != 'undefined' ? category.id : ''%>"
+      />
     </div>
   </div>
   <div class="col">

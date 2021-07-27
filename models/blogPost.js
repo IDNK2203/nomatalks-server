@@ -36,6 +36,7 @@ const blogPostSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
+      trim: true,
     },
     status: {
       type: String,
@@ -95,6 +96,9 @@ blogPostSchema.virtual("estReadTime").get(function () {
   return timeInMin;
 });
 
+blogPostSchema.post("save", function () {
+  console.log(this);
+});
 const BlogPost = mongoose.model("blogpost", blogPostSchema);
 
 module.exports = BlogPost;

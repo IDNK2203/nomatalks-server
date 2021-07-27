@@ -3,13 +3,12 @@
 <section class="posts">
   <div class="container-custom con-xl">
     <main class="main">
+      <% if (mostRecentBlogs.length > 0){ %> <% blogsFound.forEach(blog => { %>
       <div class="posts-heading">
         <h2 class="posts__headline">Latest Posts</h2>
       </div>
       <div class="blog-post-holder">
         <ul class="post-list">
-          <% blogsFound.forEach(blog => { %>
-
           <li class="post-list__item">
             <a href="/<%= blog.slug %>">
               <div
@@ -32,7 +31,7 @@
             </a>
           </li>
 
-          <% }) %>
+          <% }) %> <% } %>
         </ul>
       </div>
     </main>

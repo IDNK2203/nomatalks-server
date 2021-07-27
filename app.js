@@ -26,7 +26,7 @@ var indexRouter = require("./routes/index");
 var adminBlogRouter = require("./routes/adminBlog");
 var blogRouter = require("./routes/blog");
 var authRouter = require("./routes/auth");
-const adminCategoryRouter = require("./routes/adminCategory");
+const adminCategoryRouter = require("./routes/categoryRoutes");
 const newslettersSub = require("./routes/newsletter");
 
 // setup express app
