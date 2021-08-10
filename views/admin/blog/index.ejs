@@ -43,7 +43,7 @@
   <div class="pagination">
     <!-- check if user is at the first page -->
     <% if (currentPage == 1 && totalPages > 1) { %>
-    <a href="/admin/blog/page/<%= parseInt(currentPage) + 1 %>/"
+    <a href="/admin/blog/?page=<%= parseInt(currentPage) + 1 %>&limit=3"
       ><span>
         Page <%= parseInt(currentPage) + 1 %>
         <i class="fa fa-arrow-right"></i>
@@ -51,13 +51,13 @@
     </a>
     <!-- check if user is at between the first and last page -->
     <% } else if (currentPage < totalPages) { %>
-    <a href="/admin/blog/page/<%= parseInt(currentPage) - 1 %>/"
+    <a href="/admin/blog/?page=<%= parseInt(currentPage) - 1 %>&limit=3"
       ><span>
         <i class="fa fa-arrow-left"></i>
         Page <%= parseInt(currentPage) - 1 %>
       </span>
     </a>
-    <a href="/admin/blog/page/<%= parseInt(currentPage) + 1 %>/"
+    <a href="/admin/blog/?page=<%= parseInt(currentPage) + 1 %>&limit=3"
       ><span>
         Page <%= parseInt(currentPage) + 1 %>
         <i class="fa fa-arrow-right"></i>
@@ -65,7 +65,7 @@
     </a>
     <!-- check if user is at the last page -->
     <% } else if (currentPage == totalPages && totalPages > 1) { %>
-    <a href="/admin/blog/page/<%= parseInt(currentPage) - 1 %>/"
+    <a href="/admin/blog/?page=<%= parseInt(currentPage) - 1 %>&limit="
       ><span>
         <i class="fa fa-arrow-left"></i>
         Page <%=parseInt(currentPage) - 1 %>

@@ -1,9 +1,10 @@
 // load env variables
 const dotenv = require("dotenv");
 dotenv.config({ path: `${__dirname}/config/config.env` });
+// console.log(err.name, err.message);
+process.env.NODE_ENV = process.env.ENV;
 
 process.on("uncaughtException", (err) => {
-  // console.log(err.name, err.message);
   console.log(err);
   console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");
   process.exit(1);

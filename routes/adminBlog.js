@@ -1,18 +1,11 @@
-const express = require("express");
+const router = require("express").Router();
 const BlogPost = require("../models/blogPost");
-const router = express.Router();
 // configs
 const multerConfig = require("../config/multer");
 require("../config/cloudinary");
 
 // blog route controllers
-const {
-  uploadToCloudinaryAndSave,
-  basicGetRequestPresets,
-  validationRules,
-  validate,
-  multerValidation,
-} = require("../controllers/adminBlogRoute");
+const blogControllers = require("../controllers/blogControllers");
 
 // global route controllers
 const {
@@ -22,18 +15,25 @@ const {
 
 // authentication controllers
 const { authCheck, adminCheck } = require("../controllers/auth");
-const blogsPerPage = 3; // results per page
+
 router.use(authCheck, adminCheck);
 
-router.get("/create", async (req, res) => {
-  basicGetRequestPresets(req, res, "create", new BlogPost({}));
-});
-// ImageAltText
+// @VIEW ROUTES
+router.get("/create", blogControllers.createBlogView);
+
+router.get("/edit/:id", blogControllers.editBlogView);
+
+router.get("/", blogControllers.getAllBlogsView);
+
+// @API ROUTES
+router.delete("/:id", blogControllers.deleteBlog);
+
+// api  post route
 router.post(
   "/",
-  multerValidation(multerConfig, "create"),
-  validationRules(),
-  validate("create"),
+  blogControllers.multerValidation(multerConfig, "create"),
+  blogControllers.validationRules(),
+  blogControllers.validate("create"),
   async (req, res, next) => {
     let blog;
     try {
@@ -56,72 +56,24 @@ router.post(
             ? new Date(req.newBody.publishedAt)
             : "",
       });
-      await uploadToCloudinaryAndSave(req, res, blog, next);
+      await blogControllers.uploadToCloudinaryAndSave(req, res, blog, next);
       const newBlog = await blog.save();
       res.redirect("/admin/blog");
     } catch (error) {
       console.error(error);
       let errMsg;
       errMsg = returnErrMsg(error);
-      basicGetRequestPresets(req, res, "create", blog, errMsg);
+      blogControllers.basicGetRequestPresets(req, res, "create", blog, errMsg);
     }
   }
 );
 
-router.get("/", async (req, res) => {
-  try {
-    const blogs = await BlogPost.find()
-      .sort({ createdAt: -1 })
-      .limit(blogsPerPage)
-      .exec();
-    const page = req.params.page || 1; // Page
-    const totalBlogsFound = await BlogPost.find().countDocuments({}).exec();
-    const totalPages = totalBlogsFound / blogsPerPage;
-    res.render("admin/blog/index", {
-      blogs,
-      currentPage: page,
-      totalBlogsFound,
-      totalPages,
-      layout: "layouts/dashboard",
-    });
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-router.get("/edit/:id", async (req, res) => {
-  try {
-    let blog = await BlogPost.findById(req.params.id);
-    basicGetRequestPresets(req, res, "edit", blog);
-    if (!blog) {
-      return next(new AppError("No blog found with that slug", 404));
-    }
-  } catch (error) {
-    // res.redirect("/admin/blog");
-  }
-});
-
-router.delete("/:id", async (req, res) => {
-  try {
-    let blog = await BlogPost.findById(req.params.id);
-    if (!blog) {
-      return next(new AppError("No blog found with that slug", 404));
-    }
-    await deleteFromCloudinary(blog.blogPostCI[0].publicId);
-    await blog.remove();
-    res.redirect("/admin/blog");
-  } catch (error) {
-    console.log(error);
-    req.flash("error_msg", error.message);
-    res.redirect("/admin/blog");
-  }
-});
-
+// api update route
 router.put(
   "/:id",
-  multerValidation(multerConfig, "edit"),
-  validationRules(),
-  validate("edit"),
+  blogControllers.multerValidation(multerConfig, "edit"),
+  blogControllers.validationRules(),
+  blogControllers.validate("edit"),
   async (req, res, next) => {
     let blog;
     try {
@@ -144,7 +96,7 @@ router.put(
 
       if (req.files.blogPostCI != null && req.files.blogPostCI != "") {
         deleteFromCloudinary(blog.blogPostCI[0].publicId);
-        await uploadToCloudinaryAndSave(req, res, blog, next);
+        await blogControllers.uploadToCloudinaryAndSave(req, res, blog, next);
       }
       await blog.save();
       res.redirect("/admin/blog");
@@ -155,48 +107,11 @@ router.put(
       } else {
         let errMsg;
         errMsg = returnErrMsg(error);
-        basicGetRequestPresets(req, res, "edit", blog, errMsg);
+        blogControllers.basicGetRequestPresets(req, res, "edit", blog, errMsg);
         console.error(error);
       }
     }
   }
 );
-
-router.get("/:slug", async (req, res) => {
-  try {
-    const blog = await BlogPost.findOne({ slug: req.params.slug }).populate(
-      "user"
-    );
-    if (!blog) {
-      return next(new AppError("No blog found with that slug", 404));
-    }
-    res.render("blog/show", { blog });
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-// paginated routes
-router.get("/page/:page", async (req, res, next) => {
-  const page = req.params.page || 1; // Page
-  try {
-    const blogsFound = await BlogPost.find()
-      .skip(blogsPerPage * page - blogsPerPage)
-      .sort({ createdAt: -1 })
-      .limit(blogsPerPage)
-      .exec();
-    const totalBlogsFound = await BlogPost.find().countDocuments({}).exec();
-    const totalPages = totalBlogsFound / blogsPerPage;
-    res.render("admin/blog/index", {
-      blogs: blogsFound,
-      currentPage: page,
-      totalBlogsFound,
-      totalPages,
-      layout: "layouts/dashboard",
-    });
-  } catch (error) {
-    console.log(error);
-  }
-});
 
 module.exports = router;

@@ -4,7 +4,7 @@ const User = require("../models/user");
 const passport = require("passport");
 const { passwordGen } = require("../controllers/password");
 const { validationRules, validate } = require("../controllers/auth");
-const { authLimiter } = require("../helpers/rateLimiter");
+const { authLimiter } = require("../utils/rateLimiter");
 var csurf = require("csurf");
 const csrfMiddleware = csurf({
   cookie: true,

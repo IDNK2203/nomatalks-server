@@ -15,11 +15,11 @@ const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const session = require("express-session");
 var flash = require("connect-flash");
-const middlewareObjs = require("./helpers/middlewareObjs");
+const middlewareObjs = require("./utils/middlewareObjs");
 
 // errors
-const AppError = require("./helpers/appError");
-const errorMdw = require("./helpers/errorMdw");
+const AppError = require("./utils/appError");
+const errorMdw = require("./controllers/errorControllers");
 
 // application routes
 var indexRouter = require("./routes/index");
@@ -75,7 +75,7 @@ app.use(passport.initialize());
 
 // store user data in sessions object
 app.use(passport.session());
-const { formatDate } = require("./helpers/locals");
+const { formatDate } = require("./utils/locals");
 
 app.use((req, res, next) => {
   // errors

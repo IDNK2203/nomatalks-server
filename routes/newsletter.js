@@ -3,7 +3,7 @@ const { body, validationResult, matchedData } = require("express-validator");
 var express = require("express");
 var router = express.Router();
 const mailchimp = require("@mailchimp/mailchimp_marketing");
-const AppError = require("../helpers/appError");
+const AppError = require("../utils/appError");
 
 mailchimp.setConfig({
   apiKey: process.env.MC_API_KEY,

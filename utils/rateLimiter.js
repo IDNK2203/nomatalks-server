@@ -1,4 +1,4 @@
-const AppError = require("../helpers/appError");
+const AppError = require("./appError");
 
 // login routes
 const rateLimit = require("express-rate-limit");

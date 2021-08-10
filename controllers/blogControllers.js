@@ -1,14 +1,19 @@
 const cloudinary = require("cloudinary");
 const path = require("path");
 const { body, validationResult, matchedData } = require("express-validator");
-const { returnErrMsg, fileCheck } = require("./globalUtils");
+const {
+  returnErrMsg,
+  fileCheck,
+  deleteFromCloudinary,
+} = require("./globalUtils");
 const BlogPost = require("../models/blogPost");
 const Category = require("../models/category");
 const multer = require("multer");
+const catchAsync = require("../utils/catchAsync");
+const ApiFeatures = require("../utils/ApiFeatures");
 
-let uploadToCloudinaryAndSave = async (req, res, blog, next) => {
+exports.uploadToCloudinaryAndSave = async (req, res, blog, next) => {
   const { path: fileImgPath, filename } = req.files.blogPostCI[0];
-  // let imageObj;
   try {
     const fileExtName = path.extname(filename);
     const uniqueFileName = path.basename(filename, fileExtName);
@@ -29,7 +34,13 @@ let uploadToCloudinaryAndSave = async (req, res, blog, next) => {
   }
 };
 
-let basicGetRequestPresets = async (req, res, view, blog, hasError = false) => {
+exports.basicGetRequestPresets = async (
+  req,
+  res,
+  view,
+  blog,
+  hasError = false
+) => {
   let params = {};
   try {
     params.layout = "layouts/dashboard";
@@ -51,7 +62,7 @@ let basicGetRequestPresets = async (req, res, view, blog, hasError = false) => {
   }
 };
 
-let validationRules = () => {
+exports.validationRules = () => {
   return [
     body("title", "Invalid Blog Title ").exists().isLength({ min: 1 }).trim(),
     body("snippet", "Snippet must have more than 5 characters")
@@ -78,7 +89,7 @@ let validationRules = () => {
   ];
 };
 
-const validate = (view) => {
+exports.validate = (view) => {
   return async (req, res, next) => {
     let blog;
     try {
@@ -123,7 +134,7 @@ const validate = (view) => {
   };
 };
 
-let multerValidation = (multerConfig, view) => {
+exports.multerValidation = (multerConfig, view) => {
   return async (req, res, next) => {
     multerConfig(req, res, function (err) {
       generalValidation(req, res, next, view, err);
@@ -160,10 +171,42 @@ const POSTVal = (req, res, next, view, blog) => {
   }
 };
 
-module.exports = {
-  uploadToCloudinaryAndSave,
-  basicGetRequestPresets,
-  validationRules,
-  validate,
-  multerValidation,
+exports.createBlogView = async (req, res) => {
+  basicGetRequestPresets(req, res, "create", new BlogPost({}));
 };
+
+exports.editBlogView = catchAsync(async (req, res) => {
+  let blog = await BlogPost.findById(req.params.id);
+  if (!blog) {
+    return next(new AppError("No blog found with that slug", 404));
+  }
+  basicGetRequestPresets(req, res, "edit", blog);
+});
+
+exports.getAllBlogsView = catchAsync(async (req, res, next) => {
+  const totalBlogsFound = await BlogPost.find().countDocuments({}).exec();
+  const apiQuery = new ApiFeatures(req.query, BlogPost.find(), totalBlogsFound)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  const blogs = await apiQuery.mongooseQuery.exec();
+  const currentPage = apiQuery.page;
+  const totalPages = Math.round(apiQuery.totalPages);
+  res.render("admin/blog/index", {
+    blogs,
+    currentPage,
+    totalPages,
+    layout: "layouts/dashboard",
+  });
+});
+
+exports.deleteBlog = catchAsync(async (req, res) => {
+  let blog = await BlogPost.findById(req.params.id);
+  if (!blog) {
+    return next(new AppError("No blog found with that slug", 404));
+  }
+  await deleteFromCloudinary(blog.blogPostCI[0].publicId);
+  await blog.remove();
+  res.redirect("/admin/blog");
+});

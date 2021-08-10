@@ -5,14 +5,14 @@ const { authCheck, adminCheck } = require("../controllers/auth");
 
 router.use(authCheck, adminCheck);
 
-// VIEW ROUTES
-router.get("/create", catControllers.showNewCategory);
+// @VIEW ROUTES
+router.get("/create", catControllers.createCatView);
 
-router.get("/", catControllers.showAllCategories);
+router.get("/edit/:id", catControllers.editCatView);
 
-router.get("/edit/:id", catControllers.showEditCategories);
+router.get("/", catControllers.getAllCatView);
 
-// API ROUTES
+// @API ROUTES
 router.post("/", catControllers.createCat);
 
 router.delete("/:id", catControllers.deleteCat);

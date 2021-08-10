@@ -1,7 +1,7 @@
 // const { body, validationResult, matchedData } = require("express-validator");
 const Category = require("../models/category");
-const catchAsync = require("../helpers/catchAsync");
-const AppError = require("../helpers/appError");
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
 
 let basicGetRequestPresets = (req, res, view, category, hasError = false) => {
   let params = {};
@@ -26,16 +26,16 @@ const validate = (req, res, err, view) => {
 };
 
 // // VIEW CONTROLLERS
-exports.showNewCategory = (req, res, next) => {
+exports.createCatView = (req, res, next) => {
   basicGetRequestPresets(req, res, "create", new Category({}));
 };
 
-exports.showAllCategories = catchAsync(async (req, res, next) => {
+exports.getAllCatView = catchAsync(async (req, res, next) => {
   const categories = await Category.find();
   basicGetRequestPresets(req, res, "index", categories);
 });
 
-exports.showEditCategories = catchAsync(async (req, res, next) => {
+exports.editCatView = catchAsync(async (req, res, next) => {
   let cat = await Category.findById(req.params.id);
   if (!cat) {
     return new AppError("There is no document with this ID.");

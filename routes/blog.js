@@ -3,7 +3,7 @@ const safe = require("safe-regex");
 const BlogPost = require("../models/blogPost");
 const Category = require("../models/category");
 const router = express.Router();
-const AppError = require("../helpers/appError");
+const AppError = require("../utils/appError");
 // controllers
 const {
   blogQueryChain,
