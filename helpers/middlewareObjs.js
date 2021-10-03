@@ -21,6 +21,7 @@ exports.helmetConfig = {
       "'nonce-thsladAKndkjnAMNIcvnknvAdwqgnjgpKSNKJNdvnxswzmb'",
       "https://connect.facebook.net/",
       "https://www.googletagmanager.com/",
+      "https://pagead2.googlesyndication.com/",
     ],
 
     "img-src": [
@@ -30,13 +31,17 @@ exports.helmetConfig = {
       "https://syndication.twitter.com/",
       "https://www.google-analytics.com/",
       "https://cdn.viglink.com/images/",
-
+      "https://pagead2.googlesyndication.com",
       "data:",
     ],
     "default-src": [
       "'self'",
       "https://platform.twitter.com/",
       "https://www.google-analytics.com/",
+      "https://pagead2.googlesyndication.com/",
+      "https://googleads.g.doubleclick.net/",
+      "https://tpc.googlesyndication.com/",
+      "https://www.google.com/",
       "https://web.facebook.com/",
       "https://www.facebook.com/",
     ],
