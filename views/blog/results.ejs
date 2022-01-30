@@ -9,13 +9,16 @@
   <section class="results-post">
     <div class="container con-lg">
       <%if (blogsFound.length > 0) { %>
+
       <ul class="results-post__list">
-        <% blogsFound.forEach(blog => { %>
+        <% blogsFound.forEach(blog => { %> <% const newUrl
+        =blog.blogPostCI[0].url.replace(/.jpg|.png/g,"")+".webp" %>
+
         <li class="results-post__item">
           <a href="<%= blog.slug %>">
             <div class="results-post__img-holder">
               <img
-                src="<%=blog.blogPostCI[0].url %>"
+                src="<%=newUrl %>"
                 alt="<%=blog.blogPostCI[0].ImageAltText %>"
                 loading="lazy"
               />

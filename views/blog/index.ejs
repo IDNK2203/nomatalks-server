@@ -8,13 +8,13 @@
       </div>
       <div class="blog-post-holder">
         <ul class="post-list">
-          <% blogsFound.forEach(blog => { %>
-
+          <% blogsFound.forEach(blog => { %> <% const newUrl
+          =blog.blogPostCI[0].url.replace(/.jpg|.png/g,"")+".webp" %>
           <li class="post-list__item">
             <a href="/<%= blog.slug %>">
               <div
                 class="post-list__img-holder"
-                style="background-image: url('<%=blog.blogPostCI[0].url %>')"
+                style="background-image: url('<%=newUrl%>')"
               ></div>
               <div class="post-list__description">
                 <small class="post-list__category">

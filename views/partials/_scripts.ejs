@@ -20,24 +20,4 @@
 <% }%>
 
 <script src="/javascript/newsletter.js"></script>
-<% if(typeof blog !="undefined"){%>
-<script
-  async
-  src="https://platform.twitter.com/widgets.js"
-  charset="utf-8"
-></script>
-<script
-  nonce="78377b525757b494427f89014f97d79928f3938d14eb51e20fb5dec9834eb304"
->
-  (function (d, s, id) {
-    var js,
-      fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s);
-    js.id = id;
-    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
-    fjs.parentNode.insertBefore(js, fjs);
-  })(document, "script", "facebook-jssdk");
-</script>
-
-<% } %>
+<% if(typeof blog !="undefined"){%> <% } %>

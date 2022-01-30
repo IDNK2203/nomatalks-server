@@ -3,11 +3,13 @@
     <div class="glide__track" data-glide-el="track">
       <ul class="glide__slides">
         <% mostRecentBlogs.forEach(blog => { %>
+          <% const newUrl =blog.blogPostCI[0].url.replace(/.jpg|.png/g,"")+".webp"   %> 
+
           <li class="glide__slide">
             <div class="blog-slide">
               <div
                 class="blog-slide__img-holder"
-                style="background-image: url('<%=blog.blogPostCI[0].url %>')"
+                style="background-image: url('<%=newUrl %>')"
               >
                 <!-- <img src="./images/pic-1.jpg" alt="" /> -->
               </div>

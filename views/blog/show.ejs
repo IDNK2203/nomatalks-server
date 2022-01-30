@@ -54,9 +54,12 @@
             </span>
           </div>
         </div>
+        <% const newUrl =blog.blogPostCI[0].url.replace(/.jpg|.png/g,"")+".webp"
+        %>
+
         <div class="blog-details__img-holder">
           <img
-            src="<%=blog.blogPostCI[0].url %>"
+            src="<%=newUrl%>"
             class="img-fluid"
             loading="lazy"
             alt="<%=blog.blogPostCI[0].ImageAltText %>"
@@ -103,12 +106,14 @@
       </div>
 
       <ul class="post-list">
-        <% relatedBlogs.forEach(blog => { %>
+        <% relatedBlogs.forEach(blog => { %> <% const newUrl
+        =blog.blogPostCI[0].url.replace(/.jpg|.png/g,"")+".webp" %>
+
         <li class="post-list__item">
           <a href="/<%= blog.slug %>">
             <div
               class="post-list__img-holder"
-              style="background-image: url('<%=blog.blogPostCI[0].url %>')"
+              style="background-image: url('<%=newUrl %>')"
             ></div>
             <div class="post-list__description--related">
               <small class="post-list__category"> <%= blog.category %> </small>

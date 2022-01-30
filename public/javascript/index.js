@@ -3785,3 +3785,16 @@ var glide = new Glide(".glide", {
 });
 
 glide.mount();
+
+const cookieBanner = document.querySelector(".cookie-banner");
+const closeBannerIcon = document.querySelector(".close");
+
+if (localStorage.getItem("cookieSeen") != "shown") {
+  cookieBanner.classList.toggle("fadein");
+  localStorage.setItem("cookieSeen", "shown");
+  console.log("Gangster paradise");
+}
+
+closeBannerIcon.addEventListener("click", function (e) {
+  cookieBanner.classList.toggle("fadein");
+});

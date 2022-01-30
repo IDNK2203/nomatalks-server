@@ -15,6 +15,7 @@ const sendErrorProd = (err, res) => {
 };
 
 module.exports = (err, req, res, next) => {
+  console.log(err);
   res.locals.message = err.message;
   res.locals.status = err.status || "error";
   res.locals.statusCode = err.statusCode || 500;
