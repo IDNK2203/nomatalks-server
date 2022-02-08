@@ -22,6 +22,7 @@ const AppError = require("./helpers/appError");
 const errorMdw = require("./helpers/errorMdw");
 
 // application routes
+const redirectRouter = require("./routes/redirects");
 var indexRouter = require("./routes/index");
 var adminBlogRouter = require("./routes/adminBlog");
 var blogRouter = require("./routes/blog");
@@ -90,6 +91,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/", indexRouter);
+app.use("/", redirectRouter);
 app.use("/", blogRouter);
 app.use("/auth", authRouter);
 app.use("/admin/blog", adminBlogRouter);
