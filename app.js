@@ -33,13 +33,13 @@ const newslettersSub = require("./routes/newsletter");
 // setup express app
 const app = express();
 
-if (app.get("env") === "production") {
-  app.use(
-    forceDomain({
-      hostname: "thenomatalks.com",
-    })
-  );
-}
+// if (app.get("env") === "production") {
+//   app.use(
+//     forceDomain({
+//       hostname: "thenomatalks.com",
+//     })
+//   );
+// }
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
